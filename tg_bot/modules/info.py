@@ -159,21 +159,20 @@ def info(update: Update, context: CallbackContext):
             mod_info = mod.__user_info__(user.id, chat.id)
         if mod_info:
             text += "\n" + mod_info
+    try:
+        profile = bot.get_user_profile_photos(user.id).photos[0][-1]
+        _file = bot.get_file(profile["file_id"])
+        _file.download(f"{user.id}.png")
 
-     try:
-         profile = bot.get_user_profile_photos(user.id).photos[0][-1]
-         _file = bot.get_file(profile["file_id"])
-         _file.download(f"{user.id}.png")
+        message.reply_document(
+         document=open(f"{user.id}.png", "rb"),
+         caption=(text),
+          parse_mode=ParseMode.HTML,
+          disable_web_page_preview=True)
 
-         message.reply_document(
-          document=open(f"{user.id}.png", "rb"),
-          caption=(text),
-           parse_mode=ParseMode.HTML,
-           disable_web_page_preview=True)
-
-     except IndexError:
-         message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-     finally:
+    except IndexError:
+        message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    finally:
         del_msg.delete()
 
     
