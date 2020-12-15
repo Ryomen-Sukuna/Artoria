@@ -679,7 +679,7 @@ Stickers made easy with stickers module!
 """
 
 __mod_name__ = "Stickers"
-KANG_HANDLER = DisableAbleCommandHandler(."steal" , addsticker, pass_args=True)
+KANG_HANDLER = DisableAbleCommandHandler("steal" , addsticker, pass_args=True)
 DEL_HANDLER = DisableAbleCommandHandler("delsticker", delsticker)
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
 ADD_FSTICKER_HANDLER = DisableAbleCommandHandler(["addfsticker","afs"], add_fvrtsticker, pass_args=True)
