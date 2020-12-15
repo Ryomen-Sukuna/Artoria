@@ -104,4 +104,4 @@ dispatcher.add_handler(HITLER_HANDLER)
 
 
 __command_list__ = ["mock", "kim", "hitler"]
-__handlers__ = [MOCK_HANDLER, KIM_HANDLER, G HITLER_HANDLER]
+__handlers__ = [MOCK_HANDLER, KIM_HANDLER,  HITLER_HANDLER]
