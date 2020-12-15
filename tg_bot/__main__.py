@@ -304,7 +304,7 @@ def get_help(update, context):
                 ]
             ),
         )
-        return
+         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
