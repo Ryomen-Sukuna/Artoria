@@ -6,16 +6,16 @@ import time
 import uuid
 from io import BytesIO
 
-import Shoko.modules.sql.feds_sql as sql
-from Shoko import (MESSAGE_DUMP, LOGGER, OWNER_ID, SUDO_USERS,
+import tg_bot.modules.sql.feds_sql as sql
+from tg_bot import (MESSAGE_DUMP, LOGGER, OWNER_ID, SUDO_USERS,
                           WHITELIST_USERS, dispatcher)
-from Shoko.modules.disable import DisableAbleCommandHandler
-from Shoko.modules.helper_funcs.alternate import send_message
-from Shoko.modules.helper_funcs.chat_status import is_user_admin
-from Shoko.modules.helper_funcs.extraction import (extract_unt_fedban,
+from tg_bot.modules.disable import DisableAbleCommandHandler
+from tg_bot.modules.helper_funcs.alternate import send_message
+from tg_bot.modules.helper_funcs.chat_status import is_user_admin
+from tg_bot.modules.helper_funcs.extraction import (extract_unt_fedban,
                                                           extract_user,
                                                           extract_user_fban)
-from Shoko.modules.helper_funcs.string_handling import markdown_parser
+from tg_bot.modules.helper_funcs.string_handling import markdown_parser
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, MessageEntity,
                       ParseMode, Update)
 from telegram.error import BadRequest, TelegramError, Unauthorized
@@ -80,7 +80,7 @@ def new_fed(update, context):
         x = sql.new_fed(user.id, fed_name, fed_id)
         if not x:
             update.effective_message.reply_text(
-                "Can't federate! Please contact @nina77chat if the problem persist."
+                "Can't federate! Please contact @fateunion if the problem persist."
             )
             return
 
@@ -598,15 +598,15 @@ def fed_ban(update, context):
         return
 
     if user_id == OWNER_ID:
-        message.reply_text("Disaster level God cannot be fed banned!")
+        message.reply_text(" God cannot be fed banned!")
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("Dragons cannot be fed banned!")
+        message.reply_text("omega  cannot be fed banned!")
         return
 
     if int(user_id) in WHITELIST_USERS:
-        message.reply_text("Wolves cannot be fed banned!")
+        message.reply_text("slogan cannot be fed banned!")
         return
 
     try:
@@ -649,7 +649,7 @@ def fed_ban(update, context):
                           fban_user_uname, reason, int(time.time()))
         if not x:
             message.reply_text(
-                "Failed to ban from the federation! If this problem continues, contact @nina77chat."
+                "Failed to ban from the federation! If this problem continues, contact @fateunion."
             )
             return
 
@@ -763,7 +763,7 @@ def fed_ban(update, context):
                       fban_user_uname, reason, int(time.time()))
     if not x:
         message.reply_text(
-            "Failed to ban from the federation! If this problem continues, contact @nina77chat."
+            "Failed to ban from the federation! If this problem continues, contact @fateunion."
         )
         return
 
@@ -1085,7 +1085,7 @@ def set_frules(update, context):
         x = sql.set_frules(fed_id, markdown_rules)
         if not x:
             update.effective_message.reply_text(
-                "Whoa! There was an error while setting federation rules! If you wondered why please ask it in @nina77chat !"
+                "Whoa! There was an error while setting federation rules! If you wondered why please ask it in @fateunion !"
             )
             return
 
