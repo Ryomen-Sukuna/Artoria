@@ -15,7 +15,6 @@ from telegram.utils.helpers import mention_html, escape_markdown
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.handlers import MessageHandlerChecker
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.extraction import extract_text
 from tg_bot.modules.helper_funcs.filters import CustomFilters
