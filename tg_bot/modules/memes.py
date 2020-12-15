@@ -537,8 +537,8 @@ SHRUG_HANDLER = DisableAbleCommandHandler("shrug", shrug)
 DECIDE_HANDLER = DisableAbleMessageHandler(
     Filters.regex(r"(?i)^Chizuru\?"), decide, friendly="decide"
 )
-ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse)
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
+ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse,pass_args=True)
+RUNS_HANDLER = DisableAbleCommandHandler("runs", runs ,pass_args=True)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap)
 HUG_HANDLER = DisableAbleCommandHandler("hug", hug)
 GBUN_HANDLER = CommandHandler("gbun", gbun)
