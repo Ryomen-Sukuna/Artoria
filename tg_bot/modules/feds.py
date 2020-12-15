@@ -7,7 +7,7 @@ import uuid
 from io import BytesIO
 
 import tg_bot.modules.sql.feds_sql as sql
-from tg import (MESSAGE_DUMP, LOGGER, OWNER_ID, SUDO_USERS,
+from tg_bot import (MESSAGE_DUMP, LOGGER, OWNER_ID, SUDO_USERS,
                           WHITELIST_USERS, DEV_USERS, SUPPORT_USERS, dispatcher)
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_message
