@@ -282,7 +282,8 @@ def get_help(update, context):
 
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
-
+      if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
+       module = args[1].lower()
         update.effective_message.reply_text(
             "Click the button below to get help manu in your pm.",
             reply_markup=InlineKeyboardMarkup(
