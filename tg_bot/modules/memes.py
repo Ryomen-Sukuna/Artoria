@@ -94,8 +94,8 @@ def slap(update, context):
         curr_user = "@" + escape_markdown(msg.from_user.username)
     else:
         curr_user = "[{}](tg://user?id={})".format(
-            msg.from_user.first_name, msg.from_user.id
-        )
+            msg.from_user.first_name, msg.from_user.id)
+        
 
     user_id = extract_user(update.effective_message, args)
     if user_id:
