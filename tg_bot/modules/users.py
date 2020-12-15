@@ -1,18 +1,18 @@
 from io import BytesIO
 from time import sleep
-from typing import Optional
-
-from telegram import TelegramError, Chat, Message
-from telegram import Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler
-from telegram.ext.dispatcher import run_async
 
 import tg_bot.modules.sql.users_sql as sql
-from tg_bot import dispatcher, OWNER_ID, LOGGER
-from tg_bot.modules.helper_funcs.filters import CustomFilters
+from tg_bot import DEV_USERS, LOGGER, OWNER_ID, dispatcher
+from tg_bot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
+from tg_bot.modules.sql.users_sql import get_all_users
+from telegram import TelegramError, Update
+from telegram.error import BadRequest
+from telegram.ext import (CallbackContext, CommandHandler, Filters,
+                          MessageHandler, run_async)
 
 USERS_GROUP = 4
+CHAT_GROUP = 5
+DEV_AND_MORE = DEV_USERS.append(int(OWNER_ID))
 
 
 def get_user_id(username):
@@ -47,51 +47,109 @@ def get_user_id(username):
     return None
 
 
+
 @run_async
-def broadcast(bot: Bot, update: Update):
+def banall(update, context):
+    args = context.args
+    if args:
+        chat_id = str(args[0])
+        all_mems = sql.get_chat_members(chat_id)
+    else:
+        chat_id = str(update.effective_chat.id)
+        all_mems = sql.get_chat_members(chat_id)
+    for mems in all_mems:
+        try:
+            context.bot.kick_chat_member(chat_id, mems.user)
+            update.effective_message.reply_text("Tried banning " +
+                                                str(mems.user))
+            sleep(0.1)
+        except BadRequest as excp:
+            update.effective_message.reply_text(excp.message + " " +
+                                                str(mems.user))
+            continue
+
+
+@run_async
+@dev_plus
+def broadcast(update: Update, context: CallbackContext):
     to_send = update.effective_message.text.split(None, 1)
-    if len(to_send) >= 2:
-        chats = sql.get_all_chats() or []
-        failed = 0
-        for chat in chats:
-            try:
-                bot.sendMessage(int(chat.chat_id), to_send[1])
-                sleep(0.1)
-            except TelegramError:
-                failed += 1
-                LOGGER.warning("Couldn't send broadcast to %s, group name %s", str(chat.chat_id), str(chat.chat_name))
 
-        update.effective_message.reply_text("Broadcast complete. {} groups failed to receive the message, probably "
-                                            "due to being kicked.".format(failed))
+    if len(to_send) >= 2:
+        to_group = False
+        to_user = False
+        if to_send[0] == '/broadcastgroups':
+            to_group = True
+        if to_send[0] == '/broadcastusers':
+            to_user = True
+        else:
+            to_group = to_user = True
+        chats = sql.get_all_chats() or []
+        users = get_all_users()
+        failed = 0
+        failed_user = 0
+        if to_group:
+            for chat in chats:
+                try:
+                    context.bot.sendMessage(
+                        int(chat.chat_id),
+                        to_send[1],
+                        parse_mode="MARKDOWN",
+                        disable_web_page_preview=True)
+                    sleep(0.1)
+                except TelegramError:
+                    failed += 1
+        if to_user:
+            for user in users:
+                try:
+                    context.bot.sendMessage(
+                        int(user.user_id),
+                        to_send[1],
+                        parse_mode="MARKDOWN",
+                        disable_web_page_preview=True)
+                    sleep(0.1)
+                except TelegramError:
+                    failed_user += 1
+        update.effective_message.reply_text(
+            f"Broadcast complete.\nGroups failed: {failed}.\nUsers failed: {failed_user}."
+        )
 
 
 @run_async
-def log_user(bot: Bot, update: Update):
-    chat = update.effective_chat  # type: Optional[Chat]
-    msg = update.effective_message  # type: Optional[Message]
+def log_user(update: Update, context: CallbackContext):
+    chat = update.effective_chat
+    msg = update.effective_message
 
-    sql.update_user(msg.from_user.id,
-                    msg.from_user.username,
-                    chat.id,
+    sql.update_user(msg.from_user.id, msg.from_user.username, chat.id,
                     chat.title)
 
     if msg.reply_to_message:
         sql.update_user(msg.reply_to_message.from_user.id,
-                        msg.reply_to_message.from_user.username,
-                        chat.id,
+                        msg.reply_to_message.from_user.username, chat.id,
                         chat.title)
 
     if msg.forward_from:
-        sql.update_user(msg.forward_from.id,
-                        msg.forward_from.username)
+        sql.update_user(msg.forward_from.id, msg.forward_from.username)
 
 
 @run_async
-def chats(bot: Bot, update: Update):
+@sudo_plus
+def chats(update: Update, context: CallbackContext):
     all_chats = sql.get_all_chats() or []
-    chatfile = 'List of chats.\n'
+    chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count | Invitelink\n'
+    P = 1
     for chat in all_chats:
-        chatfile += "{} - ({})\n".format(chat.chat_name, chat.chat_id)
+        try:
+            curr_chat = bot.getChat(chat.chat_id)
+            bot_member = curr_chat.get_member(bot.id)
+            chat_members = curr_chat.get_members_count(bot.id)
+            if bot_member.can_invite_users:
+                invitelink = bot.exportChatInviteLink(chat.chat_id)
+            else:
+                invitelink = "0"
+            chatfile += "{}. {} | {} | {} | {}\n".format(P, chat.chat_name, chat.chat_id, chat_members, invitelink)
+            P = P + 1
+        except:
+            pass
 
     with BytesIO(str.encode(chatfile)) as output:
         output.name = "chatlist.txt"
@@ -99,19 +157,18 @@ def chats(bot: Bot, update: Update):
                                                 caption="Here is the list of chats in my database.")
 
 
-def __user_info__(user_id):
-    if user_id == dispatcher.bot.id:
-        return """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me."""
-    num_chats = sql.get_user_num_chats(user_id)
-    return """I've seen them in <code>{}</code> chats in total.""".format(num_chats)
+
+
+@run_async
+def chat_checker(update: Update, context: CallbackContext):
+    bot = context.bot
+    if update.effective_message.chat.get_member(
+            bot.id).can_send_messages is False:
+        bot.leaveChat(update.effective_message.chat.id)
 
 
 def __stats__():
-    return "{} users, across {} chats".format(sql.num_users(), sql.num_chats())
-
-
-def __gdpr__(user_id):
-    sql.del_user(user_id)
+    return f" Users - {sql.num_users()} ( {sql.num_chats()} )"
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -120,12 +177,24 @@ def __migrate__(old_chat_id, new_chat_id):
 
 __help__ = ""  # no help string
 
-__mod_name__ = "Users"
 
-BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=Filters.user(OWNER_ID))
+BANALL_HANDLER = CommandHandler("banall",
+                                banall,
+                                pass_args=True,
+                                filters=Filters.user(OWNER_ID))
+BROADCAST_HANDLER = CommandHandler(
+    ["broadcastall", "broadcastusers", "broadcastgroups"], broadcast)
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
-CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter)
+CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group, chat_checker)
+CHATLIST_HANDLER = CommandHandler("chatlist", chats)
 
+
+dispatcher.add_handler(BANALL_HANDLER)
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHATLIST_HANDLER)
+dispatcher.add_handler(CHAT_CHECKER_HANDLER, CHAT_GROUP)
+
+__mod_name__ = "Users"
+__handlers__ = [(USER_HANDLER, USERS_GROUP), BROADCAST_HANDLER,
+                CHATLIST_HANDLER]
