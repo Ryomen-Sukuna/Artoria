@@ -159,7 +159,7 @@ def start(update, context):
                     [[
                         InlineKeyboardButton(
                             text="Add saber to your group",
-                            url="t.me/{}?startgroup=true".format(bot.username))
+                            url="t.me/{}?startgroup=true".format(context.bot.username))
                     ],
                     [
                         InlineKeyboardButton(
