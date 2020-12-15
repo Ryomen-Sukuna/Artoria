@@ -233,12 +233,12 @@ def info(update: Update, context: CallbackContext):
     elif user.id == bot.id:
         text+= "\n\nI've Seen Them In... Wow. Are They Stalking Me? They're In All The Same Places I Am... Oh. It's Me.\n"
 
-        text +="\n"
+    text +="\n"
     text += "\nCAS banned: "
     result = cas.banchecker(user.id)
     text += str(result)
     for mod in USER_INFO:
-        if mod.__mod_name__ == "WHOIS":
+        if mod.__mod_name__ == "info":
             continue
 
     for mod in USER_INFO:
