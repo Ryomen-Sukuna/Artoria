@@ -2,9 +2,9 @@ import html
 import os
 from typing import Optional
 
-from telegram import ParseMode
+from telegram import ParseMode ,Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters
+from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html, escape_markdown, mention_markdown
 
@@ -156,7 +156,7 @@ def demote(update, context):
 
 @run_async
 @user_admin
-def refresh_admin(update:_):
+def refresh_admin(update: Update, context: CallbackContext):
     try:
         ADMIN_CACHE.pop(update.effective_chat.id)
     except KeyError:
