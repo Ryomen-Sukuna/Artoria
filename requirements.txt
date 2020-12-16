@@ -8,6 +8,8 @@ beautifulsoup4
 requests
 pySmartDL
 sqlalchemy
+pyrogram>=1.0.7
+tgCrypto>=1.2.2
 pythonping
 python-telegram-bot==12.8
 psycopg2-binary
