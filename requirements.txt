@@ -3,6 +3,7 @@ redis
 cachetools
 emoji
 tswift
+pybase64
 lxml
 beautifulsoup4
 requests
