@@ -399,7 +399,7 @@ def clear_gbans(update: Update, context: CallbackContext):
     
 
 @run_async
-def check_gbanlist(update: Update, context: CallbackContext):
+def check_gbans(update: Update, context: CallbackContext):
     '''By @TheRealPhoenix'''
     banned = sql.get_gban_list()
     bot = context.bot
