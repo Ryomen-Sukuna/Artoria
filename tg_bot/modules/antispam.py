@@ -101,15 +101,15 @@ def gban(update, context):
 
     if user_id == OWNER_ID: 
        message.reply_text("There is no way I can gban this user.")
-        return
+       return
 
     if int(user_id) in DEV_USERS: 
        message.reply_text("I spy, with my little eye... a disaster! Why are you guys turning on each other?")
-        return
+       return
 
     if int(user_id) in SUDO_USERS: 
         message.reply_text("There is no way I can gban this user.")
-         return
+        return
     
     if int(user_id) in SUPPORT_USERS: 
         message.reply_text("OOOH someone's trying to gban a my  Disaster! *grabs popcorn*")
@@ -122,13 +122,13 @@ def gban(update, context):
         
 
     if int(user_id) in WHITELIST_USERS:
-      message.reply_text("my friends cannot be gbanned!")
+        message.reply_text("my friends cannot be gbanned!")
         return
         
 
     if user_id == context.bot.id: 
        message.reply_text("How about i leave this chat huh?")
-        return
+       return
         
 
     try:
