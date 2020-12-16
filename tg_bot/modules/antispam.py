@@ -493,16 +493,11 @@ def __chat_settings__(chat_id, user_id):
 __help__ = """
 *Admin only:*
  - /antispam <on/off/yes/no>: Check and/or change anti-spam settings.
- - /spamshield <on/off/yes/no>: Will disable or enable the effect of Spam protection in your group.
 
 Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
 you and your groups by removing spam flooders as quickly as possible. They can be disabled for your group by calling \
 /antispam off.
 
-Spam shield uses @Spamwatch API and Global bans to remove Spammers as much as possible from your chatroom!
-*What is SpamWatch?*
-[SpamWatch](https://telegra.ph/file/f584b643c6f4be0b1de53.jpg) maintains a large constantly updated ban-list of spambots, trolls, bitcoin spammers and unsavoury characters.
-Ani will constantly help banning spammers off from your group automatically So, you don't have to worry about spammers storming your group.
 """
 
 GBAN_HANDLER = CommandHandler("gban", gban)
