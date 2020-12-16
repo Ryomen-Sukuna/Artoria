@@ -60,7 +60,7 @@ if ENV:
         raise Exception(
             "Your whitelisted users list does not contain valid integers.")
     
-    
+    GBAN_LOGS= os.environ.get('GBAN_LOGS', None)
     START_IMG = os.environ.get('START_IMG', "")
     EVENT_LOGS = os.environ.get('EVENT_LOGS', None)
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None) 
