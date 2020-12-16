@@ -31,7 +31,7 @@ Hi {}, My name is {} !
 "I'm a part of the Fate Union and can easily manage your groups."
 𝓘 𝓪𝓶 𝒜𝓇𝓉𝑜𝓇𝒾𝒶 𝒫𝑒𝓃𝒹𝓇𝒶𝑔𝑜𝓃 𝓽𝓱𝓮 𝓼𝔀𝓸𝓻𝓭 𝓱𝓮𝓻𝓸  𝓸𝓷𝓮 𝓸𝓯 𝓽𝓱𝓮 𝓗𝓮𝓻𝓸 𝓸𝓯 𝓱𝓸𝓵𝔂 𝓰𝓻𝓪𝓲𝓵 𝔀𝓪𝓻 𝓘 𝓪𝓶 𝓼𝓾𝓶𝓶𝓸𝓷𝓮𝓭 𝓫𝔂 𝓶𝔂 𝓶𝓪𝓼𝓽𝓮𝓻 𝓽𝓸 𝓱𝓮𝓵𝓹 𝓱𝓲𝓶
 I HOPE I'LL BE ABLE TO MAINTAIN YOUR GROUP!
-Click on the help button below to get help supported module.
+Click on the /help button  to get help supported module.
 
 """
 
@@ -167,12 +167,8 @@ def start(update, context):
                             url=f"https://t.me/fateUnion"),
                         InlineKeyboardButton(
                             text="Updates ",
-                            url="https://t.me/fateunionupdates")
-                    ],
-                    [
-                        InlineKeyboardButton(
-                            text="help",
-                            callback_data="help_back")
+                            url="https://t.me/fateunionupdates"
+          
                     ]]))
                                                                  
 
