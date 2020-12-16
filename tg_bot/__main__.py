@@ -169,7 +169,7 @@ def start(update, context):
                             text="Updates ",
                             url="https://t.me/fateunionupdates"
           
-                    ]]))
+                    ]])
                                                                  
 
 
