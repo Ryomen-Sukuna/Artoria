@@ -610,9 +610,9 @@ def main():
         updater.start_polling(timeout=15, read_latency=4)
         
     if len(argv) not in (1, 3, 4):
-        oko.disconnect()
+        client.disconnect()
     else:
-        oko.run_until_disconnected()
+        client.run_until_disconnected()
 
  
     
