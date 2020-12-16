@@ -9,26 +9,23 @@ from bs4 import BeautifulSoup
 
 from telegram import InputMediaPhoto, TelegramError
 from telegram import Update
-from telegram.ext import run_async
+from telegram.ext import CallbackContext, run_async
 
 from tg_bot import dispatcher
-from typing import List
-
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import typing_action
 
 opener = urllib.request.build_opener()
 useragent = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36'
 opener.addheaders = [('User-agent', useragent)]
 
-@typing_action
 @run_async
-def reverse(update, context):
+def reverse(update: Update, context:CallbackContext):
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
 
     msg = update.effective_message
     chat_id = update.effective_chat.id
+    bot, args = context.bot, context.args
     rtmid = msg.message_id
     imagename = "okgoogle.png"
 
@@ -83,7 +80,7 @@ def reverse(update, context):
             msg.reply_text(f"{VE}\nPlease try again using http or https protocol.")
             return
     else:
-        msg.reply_markdown("Please reply to a sticker, or an image to search it!\nDo you know that you can search an image with a link too? /reverse [picturelink] <amount>.")
+        msg.reply_markdown("Please reply to a sticker, or an image to search it!\nDo you know that you can search an image with a link too? `/reverse [picturelink] <amount>`.")
         return
 
     try:
@@ -98,7 +95,7 @@ def reverse(update, context):
         else:
             xx = bot.send_message(chat_id, "Google told me to go away.", reply_to_message_id=rtmid)
             return
-           
+
         os.remove(imagename)
         match = ParseSauce(fetchUrl + "&hl=en")
         guess = match['best_guess']
@@ -180,6 +177,8 @@ def scam(imgspage, lim):
             break
 
     return imglinks
+
+
 
 
 REVERSE_HANDLER = DisableAbleCommandHandler(
