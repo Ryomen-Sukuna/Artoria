@@ -111,6 +111,7 @@ if ENV:
         raise Exception(
             "Your blacklisted chats list does not contain valid integers.")
 
+pbot = Client("saberPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 
 else:
      LOGGER.warning("Unknown Crash!")
@@ -140,7 +141,7 @@ api_hash = API_HASH
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 client = TelegramClient("saber", API_ID, API_HASH)
-pbot = Client("saberPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+
 dispatcher = updater.dispatcher
 
 SUDO_USERS = list(SUDO_USERS) + list(DEV_USERS)
