@@ -6,7 +6,7 @@ from threading import RLock
 
 
 from tg_bot import (DEL_CMDS, DEV_USERS, SUDO_USERS, SUPPORT_CHAT,	
-                          SUPPORT_USERS, TIGER_USERS, WHITELIST_USERS,	
+                          SUPPORT_USERS,  WHITELIST_USERS,	
                           dispatcher)	
 from tg_bot.mwt import MWT	
 from telegram import Chat, ChatMember, ParseMode, Update	
@@ -71,7 +71,7 @@ def is_user_ban_protected(chat: Chat,
                           member: ChatMember = None) -> bool:	
     if (chat.type == 'private' or user_id in SUDO_USERS or	
             user_id in DEV_USERS or user_id in WHITELIST_USERS or	
-            user_id in TIGER_USERS or chat.all_members_are_administrators or	
+            user_id in  chat.all_members_are_administrators or	
             user_id in [777000, 1087968824	
                        ]):  # Count telegram and Group Anonymous as admin	
         return True	
