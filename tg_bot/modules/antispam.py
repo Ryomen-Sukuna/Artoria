@@ -33,7 +33,7 @@ from html_telegraph_poster import TelegraphPoster
 from html_telegraph_poster.upload_images import upload_image
 
 Saber_Gban = TelegraphPoster(use_api=True)
-Saber_Gban_Gban.create_api_token('saber Gban', 'saber') 
+Saber_Gban.create_api_token('saber Gban', 'saber') 
 
 
 GBAN_ENFORCE_GROUP = 6
