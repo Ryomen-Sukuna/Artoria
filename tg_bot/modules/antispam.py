@@ -5,7 +5,7 @@ from io import BytesIO
 from tg_bot.modules.sql.users_sql import get_user_com_chats
 import tg_bot.modules.sql.global_bans_sql as sql
 from tg_bot import (DEV_USERS, EVENT_LOGS, OWNER_ID, STRICT_GBAN,
-                          SUDO_USERS, SUPPORT_CHAT, ,
+                          SUDO_USERS, SUPPORT_CHAT, 
                           SUPPORT_USERS,  WHITELIST_USERS,
                           spamwtc,
                           dispatcher)
