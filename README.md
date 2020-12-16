@@ -6,7 +6,7 @@ its original fork from [shoko](https://github.com/gizmostuffin/Shoko)
 its unstable repo fork on ur own risks
 
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hyper-ub/saber/tree/saber-)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/hyper-ub/saber-)
 
 
 A modular telegram Python bot running on python3 with an sqlalchemy database.
