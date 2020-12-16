@@ -169,12 +169,12 @@ def start(update, context):
                             text="Updates ",
                             url="https://t.me/fateunionupdates"
           
-                   ], 
-                   [
+                    ], 
+                    [
                         InlineKeyboardButton(
                             text="help",
                             callback_data="help_back")
-                   ]]))
+                    ]]))
                                                                  
                                                                  
 
