@@ -17,7 +17,7 @@ from tg_bot import (DEV_USERS, OWNER_ID, SUDO_USERS, SUPPORT_USERS,
                            WHITELIST_USERS, dispatcher, client)
 from tg_bot.__main__ import USER_INFO, TOKEN
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.sql.antispam_sql import is_user_gbanned
+from tg_bot.modules.sql.global_bans_sql import is_user_gbanned
 from tg_bot.modules.sql.redis import is_user_afk, afk_reason
 from tg_bot.modules.sql.users_sql import get_user_num_chats
 from tg_bot.modules.sql.feds_sql import get_user_fbanlist 
