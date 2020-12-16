@@ -15,6 +15,7 @@ from tg_bot.modules.helper_funcs.chat_status import (
     can_promote,
     user_admin,
     can_pin,
+    ADMIN_CACHE
 )
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.admin_rights import (
@@ -153,6 +154,15 @@ def demote(update, context):
         )
         return ""
 
+@run_async
+@user_admin
+def refresh_admin(update:context)
+    try:
+        ADMIN_CACHE.pop(update.effective_chat.id)
+    except KeyError:
+        pass
+
+    update.effective_message.reply_text("Admins cache refreshed!")
 
 @run_async
 @bot_admin
@@ -603,6 +613,7 @@ done easily using the bot.
  - /setsticker: As a reply to some sticker to set it as group sticker set!
  - /setdescription or /setdes <description>: Sets new chat description in group.
  - /zombies: list all the zombies in a chat.
+ - /admincache : force refresh the admins list
 
 *Note*: To set group sticker set chat must needs to have min 100 members.
 
@@ -634,6 +645,9 @@ ADMINLIST_HANDLER = DisableAbleCommandHandler(
     ["adminlist", "admins"], adminlist, filters=Filters.group
 )
 
+ADMIN_REFRESH_HANDLER = CommandHandler(
+    "admincache", refresh_admin, filters=Filters.group)
+
 dispatcher.add_handler(PIN_HANDLER)
 dispatcher.add_handler(UNPIN_HANDLER)
 dispatcher.add_handler(INVITE_HANDLER)
@@ -646,3 +660,4 @@ dispatcher.add_handler(DEL_CHAT_PIC_HANDLER)
 dispatcher.add_handler(SETCHAT_TITLE_HANDLER)
 dispatcher.add_handler(SETSTICKET_HANDLER)
 dispatcher.add_handler(SETDESC_HANDLER)
+dispatcher.add_handler(ADMIN_REFRESH_HANDLER)
