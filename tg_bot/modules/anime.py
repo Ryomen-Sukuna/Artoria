@@ -673,6 +673,7 @@ def button(update, context):
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
 *Available commands:*
+ - /whatanime : search source of anime reply to photo or gif
  - /anime <anime>: returns information about the anime.
  - /character <character>: returns information about the character.
  - /manga <manga>: returns information about the manga.
