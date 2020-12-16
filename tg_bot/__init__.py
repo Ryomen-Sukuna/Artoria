@@ -62,7 +62,7 @@ if ENV:
     
     
     START_IMG = os.environ.get('START_IMG', "")
-
+    EVENT_LOGS = os.environ.get('EVENT_LOGS', None)
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None) 
     GBAN_DUMP = os.environ.get('GBAN_DUMP', None)
     ERROR_DUMP = os.environ.get('ERROR_DUMP', None)
