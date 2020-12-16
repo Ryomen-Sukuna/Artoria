@@ -156,7 +156,7 @@ def demote(update, context):
 
 @run_async
 @user_admin
-def refresh_admin(update:context):
+def refresh_admin(update:_):
     try:
         ADMIN_CACHE.pop(update.effective_chat.id)
     except KeyError:
