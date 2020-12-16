@@ -15,7 +15,7 @@ from tg_bot.modules.helper_funcs.readable_time import get_readable_time
 
 from tg_bot import (dispatcher, since_time_start, updater, TOKEN, OWNER_ID, WEBHOOK,
                            CERT_PATH, PORT, URL, LOGGER, BLACKLIST_CHATS, WHITELIST_CHATS,
-                           SUPPORT_CHAT, START_IMG, REPOSITORY)
+                           SUPPORT_CHAT, START_IMG, REPOSITORY, pbot)
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -616,4 +616,8 @@ def main():
 if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     client.start(bot_token=TOKEN)
+    pbot.start()
+    main()
+    idle()
+ 
     main()
