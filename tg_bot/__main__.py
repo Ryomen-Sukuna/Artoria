@@ -617,6 +617,4 @@ if __name__ == "__main__":
     client.start(bot_token=TOKEN)
     pbot.start()
     main()
-    idle()
- 
-    main()
+   
