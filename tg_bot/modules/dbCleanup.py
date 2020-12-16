@@ -4,7 +4,7 @@ from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, CallbackQueryHandler, run_async, Filters
 
-import tg_bot.modules.sql.antispam_sql as gban_sql
+import tg_bot.modules.sql.global_bans_sql as gban_sql
 import tg_bot.modules.sql.users_sql as user_sql
 from tg_bot import dispatcher, OWNER_ID
 
