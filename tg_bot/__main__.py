@@ -167,14 +167,10 @@ def start(update, context):
                             url=f"https://t.me/fateUnion"),
                         InlineKeyboardButton(
                             text="Updates ",
-                            url="https://t.me/fateunionupdates"
+                            url="https://t.me/fateunionupdates")
           
-                    ], 
-                    [
-                        InlineKeyboardButton(
-                            text="help",
-                            callback_data="help_back")
-                    ]]))
+                     ]]))
+                    
                                                                  
                                                                  
 
