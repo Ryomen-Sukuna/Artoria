@@ -2,6 +2,7 @@ import importlib, traceback, html, json
 import re
 import random
 import time
+from sys import argv
 import subprocess
 from typing import Optional, List
 from telegram.ext import CallbackContext
@@ -602,12 +603,18 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-            client.run_until_disconnected()
+            
 
     else:
         LOGGER.info("Using long polling.")
         updater.start_polling(timeout=15, read_latency=4)
-        client.run_until_disconnected()
+        
+    if len(argv) not in (1, 3, 4):
+        oko.disconnect()
+    else:
+        oko.run_until_disconnected()
+
+ 
     
     updater.idle()
 
