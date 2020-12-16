@@ -16,12 +16,11 @@ from tg_bot.modules.helper_funcs.readable_time import get_readable_time
 
 from tg_bot import (dispatcher, since_time_start, updater, TOKEN, OWNER_ID, WEBHOOK,
                            CERT_PATH, PORT, URL, LOGGER, BLACKLIST_CHATS, WHITELIST_CHATS,
-                           SUPPORT_CHAT, START_IMG, REPOSITORY, pbot)
+                           SUPPORT_CHAT, START_IMG, REPOSITORY, pbot,client )
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from tg_bot.modules import ALL_MODULES
-from tg_bot.modules.purge import client
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 from tg_bot.modules.helper_funcs.alternate import typing_action
@@ -618,4 +617,3 @@ if __name__ == "__main__":
     client.start(bot_token=TOKEN)
     pbot.start()
     main()
-    idle()
