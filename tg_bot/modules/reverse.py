@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 from telegram import InputMediaPhoto, TelegramError
 from telegram import Update
-from telegram.ext import run_async , 
+from telegram.ext import run_async
 
 from tg_bot import dispatcher
 from typing import List
