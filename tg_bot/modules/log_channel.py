@@ -12,7 +12,7 @@ if is_module_loaded(FILENAME):
     from telegram.ext import CommandHandler, run_async
     from telegram.utils.helpers import escape_markdown
 
-    from tg_bot import dispatcher, LOGGER, MESSAGE_DUMP
+    from tg_bot import dispatcher, LOGGER, MESSAGE_DUMP ,GBAN_LOGS
     from tg_bot.modules.helper_funcs.chat_status import user_admin
     from tg_bot.modules.sql import log_channel_sql as sql
 
@@ -66,7 +66,7 @@ if is_module_loaded(FILENAME):
 
                 if message.chat.type == chat.SUPERGROUP and message.chat.username:
                     result += f'\n<b>Link:</b> <a href="https://t.me/{chat.username}/{message.message_id}">click here</a>'
-                log_chat = str(MESSAGE_DUMP)
+                log_chat = str(GBAN_LOGS)
                 if log_chat:
                     send_log(context, log_chat, chat.id, result)
 
