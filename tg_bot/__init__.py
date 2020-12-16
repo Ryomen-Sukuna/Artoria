@@ -4,6 +4,7 @@ import sys
 import time
 import spamwatch
 from redis import StrictRedis
+from pyrogram import Client, errors
 
 import telegram.ext as tg
 from telethon import TelegramClient
@@ -139,6 +140,7 @@ api_hash = API_HASH
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 client = TelegramClient("saber", API_ID, API_HASH)
+pbot = Client("saberPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
 
 SUDO_USERS = list(SUDO_USERS) + list(DEV_USERS)
