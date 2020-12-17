@@ -124,13 +124,6 @@ def covid(update: Update, context: CallbackContext):
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 
-__help__ ="""
-
- - /covid :To get Global data
- - /covid` <country>:To get data of a country
- - /cash : currency converter Example syntax: /cash 1 USD 
- - /app <app name> : finds an app in playstore for you
-"""
 APP_HANDLER = DisableAbleCommandHandler("app", app)
 COVID_HANDLER = DisableAbleCommandHandler(["covid", "corona"], covid)
 CONVERTER_HANDLER = DisableAbleCommandHandler('cash', convert)
@@ -139,7 +132,6 @@ dispatcher.add_handler(APP_HANDLER)
 dispatcher.add_handler(COVID_HANDLER)
 dispatcher.add_handler(CONVERTER_HANDLER)
 
-__mod_name__ = "Extras"
 __command_list__ = [
     "cash",
     "covid",
