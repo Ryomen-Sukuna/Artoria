@@ -42,7 +42,7 @@ BOT_IMG = "https://telegra.ph/file/98cb413468829dc59a74c.mp4"
 
 
 HELP_STRINGS = f"""
-*Helpful Commands :*
+*Helpful Commands :* [.](https://telegra.ph/file/1a79c86d28aae591687c6.jpg)
 ✧ /start: Starts me! You've probably already used this.
 ✧ /help: Sends this message; I'll tell you more about myself!
 ✧ /donate: Gives you info on how to support me and my creator.
