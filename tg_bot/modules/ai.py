@@ -2,7 +2,7 @@ import html
 # AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
 from time import sleep, time
 
-import tg_bot.modules.sql.ai_bot_sql as sql
+import tg_bot.modules.sql.chatbot_sql as sql
 from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError as CFError
 from coffeehouse.lydia import LydiaAI
@@ -24,7 +24,6 @@ api_client = LydiaAI(CoffeeHouseAPI)
 
 @run_async
 @user_admin
-@gloggable
 def add_chat(update: Update, context: CallbackContext):
     global api_client
     chat = update.effective_chat
@@ -48,7 +47,6 @@ def add_chat(update: Update, context: CallbackContext):
 
 @run_async
 @user_admin
-@gloggable
 def remove_chat(update: Update, context: CallbackContext):
     msg = update.effective_message
     chat = update.effective_chat
