@@ -667,8 +667,8 @@ Stickers made easy with stickers module!
 
 - /stickers: Find stickers for given term on combot sticker catalogue 
 
-- /addsticker: Reply to a sticker to add it to your pack.
-- /delsticker: Reply to your anime exist sticker to your pack to delete it.
+- /steal: Reply to a sticker to add it to your pack.
+- /remove: Reply to your anime exist sticker to your pack to delete it.
 - /stickerid: Reply to a sticker to me to tell you its file ID.
 - /getsticker: Reply to a sticker to me to upload its raw PNG file.
 - /addfsticker or /afs <custom name>: Reply to a sticker to add it into your favorite pack list.
@@ -680,7 +680,7 @@ Stickers made easy with stickers module!
 
 __mod_name__ = "Stickers"
 KANG_HANDLER = DisableAbleCommandHandler("steal" , addsticker, pass_args=True)
-DEL_HANDLER = DisableAbleCommandHandler("delsticker", delsticker)
+DEL_HANDLER = DisableAbleCommandHandler("remove", delsticker)
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
 ADD_FSTICKER_HANDLER = DisableAbleCommandHandler(["addfsticker","afs"], add_fvrtsticker, pass_args=True)
 REMOVE_FSTICKER_HANDLER = DisableAbleCommandHandler(["removefsticker","rfs"], remove_fvrtsticker, pass_args=True)
