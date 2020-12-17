@@ -8,7 +8,7 @@ from tg_bot.mwt import MWT
 
 # stores admemes in memory for 10 min.
 ADMIN_CACHE = TTLCache(maxsize=512, ttl=60 * 10)
-
+THREAD_LOCK = RLock()	
 
 def can_delete(chat: Chat, bot_id: int) -> bool:
     return chat.get_member(bot_id).can_delete_messages
