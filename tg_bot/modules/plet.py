@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 from tg_bot.events import register
 import random
 
-@register(pattern="^/sticklet (.*)")
+@register(pattern="^/plet (.*)")
 async def sticklet(event):
     sticktext = event.pattern_match.group(1)
     if not sticktext:
