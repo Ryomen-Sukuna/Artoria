@@ -169,7 +169,12 @@ def start(update, context):
                             text="Updates ",
                             url="https://t.me/fateunionupdates")
           
-                     ]]))
+                    [
+                        InlineKeyboardButton(
+                            text="help",
+                            url="https://t.me/saber_herobot?start=help")
+                    ]]))
+                                                                 
                     
                                                                  
                                                                  
