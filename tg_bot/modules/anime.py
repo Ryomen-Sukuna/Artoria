@@ -680,6 +680,7 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  - /user <user>: returns information about a MyAnimeList user.
  - /upcoming: returns a list of new anime in the upcoming seasons.
  - /airing <anime>: returns anime airing info.
+ - /imdb : check imdb score of anime or movies
  - /watchlist: to get your saved watchlist.
  - /mangalist: to get your saved manga read list.
  - /characterlist | fcl: to get your favorite characters list.
