@@ -502,6 +502,10 @@ Some dank memes for fun or whatever!
  - /clap: Claps on someones message!
  - /owo: UwU-fy whole text XD.
  - /roll: Rolls a dice.
+ - /covid :To get Global data	
+ - /covid <country>:To get data of a country	
+ - /cash : currency converter Example syntax: /cash 1 USD 	
+ - /app  : search app on Google Play Store	
  - /recite: Logical quotes to change your life.
  - /stretch:  streeeeeeetch iiiiiiit.
  - /hug: Hug a user warmly, or get hugged if not a reply.
@@ -528,7 +532,7 @@ All regex filters can be disabled incase u don't want... like: `/disable goodnig
 
 """
 
-__mod_name__ = "Memes"
+__mod_name__ = "Extra"
 
 
 
