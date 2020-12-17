@@ -131,7 +131,6 @@ CONVERTER_HANDLER = DisableAbleCommandHandler('cash', convert)
 
 dispatcher.add_handler(APP_HANDLER)
 dispatcher.add_handler(COVID_HANDLER)
-dispatcher.add_handler(REVERSE_HANDLER)
 dispatcher.add_handler(CONVERTER_HANDLER)
 
 __mod_name__ = "Extras"
