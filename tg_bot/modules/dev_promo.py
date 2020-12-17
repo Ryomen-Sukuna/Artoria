@@ -390,7 +390,7 @@ UNWHITELIST_HANDLER = CommandHandler("removewhitelist",removewhitelist)
 WHITELISTLIST_HANDLER = CommandHandler("whitelistlist", whitelistlist)                                       
 SUPPORTLIST_HANDLER = CommandHandler("supportlist", supportlist)
 SUDOLIST_HANDLER = CommandHandler("sudolist",  sudolist)
-DEVLIST_HANDLER = CommandHandler("devlist", , devlist)
+DEVLIST_HANDLER = CommandHandler("devlist",  devlist)
 
 dispatcher.add_handler(SUDO_HANDLER)
 dispatcher.add_handler(SUPPORT_HANDLER)
