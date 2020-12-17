@@ -492,7 +492,6 @@ def goodmorning(update, context):
 __help__ = """
 Some dank memes for fun or whatever!
  - /sanitize: Sanitize Your Self
- - /rmeme: Sends random meme scraped from reddit.
  - /shrug or /cri: Get shrug or ToT.
  - /decide: Randomly answer yes no etc.
  - /abuse: Abuses the retard!
@@ -511,7 +510,11 @@ Some dank memes for fun or whatever!
 
  - /truth or /dare: Send random truth or dare.
 
-
+*Memes*
+- /hitler: Quote a message and type this command to make a caption of hitler
+- /mock: Does the same as /hitler but spongemock instead
+- /kim: Does the same as /hitler but with Kim Jong Un instead (O no plox dont bomb my house)
+- /rmeme: Sends random meme scraped from reddit
 *Regex based memes:*
 
 `/decide` can be also used with regex like: `saber? <question>: randomly answer "Yes, No" etc.`
