@@ -141,6 +141,5 @@ __command_list__ = [
     "app"]
 __handlers__ = [
     CONVERTER_HANDLER,
-    REVERSE_HANDLER,
     APP_HANDLER]
 
