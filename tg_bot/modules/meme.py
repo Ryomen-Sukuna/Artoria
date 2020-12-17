@@ -100,8 +100,14 @@ HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
 dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
+__mod_name__ = "Tools"    	
 
-
+__help__ = """ 	
+ - /covid :To get Global data	
+ - /covid` <country>:To get data of a country	
+ - /cash : currency converter Example syntax: /cash 1 USD 	
+ - /app  : search app on Google Play Store	
+"""    
 
 __command_list__ = ["mock", "kim", "hitler"]
 __handlers__ = [MOCK_HANDLER, KIM_HANDLER,  HITLER_HANDLER]
