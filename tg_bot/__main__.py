@@ -175,8 +175,11 @@ def start(update, context):
                             url="https://t.me/saber_herobot?start=help")
                     ]]))
        
-    elif query.data == "home_back":
-          query.message.edit_text(
+@run_async
+def tg_bot_about_callback(update, context):
+query = update.callback_query
+If query.data == "home_back":
+        query.message.edit_text(
                 PM_START_TEXT,
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
@@ -584,7 +587,7 @@ def main():
     
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
-
+    about_callback_handler = CallbackQueryHandler(tg_bot_about_callback, pattern=r"home_back")
 
     
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
@@ -600,7 +603,7 @@ def main():
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
     dispatcher.add_handler(is_chat_allowed_handler)
-
+    dispatcher.add_handler(about_callback_handler)
     dispatcher.add_error_handler(error_handler)
 
     if WEBHOOK:
