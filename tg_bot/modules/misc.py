@@ -536,11 +536,7 @@ __help__ = """
 *Info:*
  - /info: Get information about a user.
  - /id: Get the current group id. If used by replying to a message, gets that user's id.
-
-*Lyrics:*
-Want to get the lyrics of your favorite songs straight from the app? This cmd is perfect for that!
- - /lyrics <song>: returns the lyrics of that song.
- You can either enter just the song name or both the artist and song name.
+ - /whois :- Get information about user using pyrogram  method
 
 *Translator:*
  - /tr or /tl: - To translate to your language, by default language is set to english, use `/tr <lang code>` for some other language!
@@ -551,6 +547,9 @@ Want to get the lyrics of your favorite songs straight from the app? This cmd is
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40) 
 
+*Covid*
+ - /covid :To get Global data	
+ - /covid <country>:To get data of a countr
 *More:*
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
@@ -565,6 +564,7 @@ Want to get the lyrics of your favorite songs straight from the app? This cmd is
  - /app <app name>: Finds an app in playstore for you
  - /cash: currency converter
  - /time <query>: Gives information about a timezone.
+ - /plet <text> : make ur text sticker in different colours
 
 \
 """
