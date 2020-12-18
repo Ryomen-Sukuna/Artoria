@@ -12,7 +12,7 @@ if is_module_loaded(FILENAME):
     from telegram.ext import CommandHandler, run_async
     from telegram.utils.helpers import escape_markdown
 
-    from tg_bot import dispatcher, LOGGER, MESSAGE_DUMP ,GBAN_LOGS ,EVENT_LOGS
+    from tg_bot import dispatcher, LOGGER, MESSAGE_DUMP ,EVENT_LOGS
     from tg_bot.modules.helper_funcs.chat_status import user_admin
     from tg_bot.modules.sql import log_channel_sql as sql
 
