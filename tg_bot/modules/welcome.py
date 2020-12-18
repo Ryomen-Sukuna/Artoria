@@ -180,34 +180,10 @@ def new_member(update: Update, context: CallbackContext):
               update.effective_message.reply_text("My Dev User Just Joined Your Chat.")
               continue
 
-            
             # Welcome yourself
             elif new_mem.id == bot.id:
-                creator = None
-                for x in bot.get_chat_administrators(
-                        update.effective_chat.id):
-                    if x.status == 'creator':
-                        creator = x.user
-                        break
-                if creator:
-                    bot.send_message(
-                        JOIN_LOGGER,
-                        "#NEW_GROUP\n\n<b>Group Name :</b> {}\n\n<b>Chat ID :</b> <code>{}</code>\n\n<b>Creator :</b> <code>{}</code> \n\n<b>Adder :</b> <code>{}</code>"
-                        .format(chat.title, chat.id, creator, user.id),
-                        parse_mode=ParseMode.HTML)
-                else:
-                    bot.send_message(
-                        JOIN_LOGGER,
-                        "#NEW_GROUP\n\n<b>Group Name :</b> {}\n\n<b>Chat ID :</b> <code>{}</code> \n\n<b>Adder :</b> <code>{}</code>"
-                        .format(chat.title, chat.id, user.id),
-                        parse_mode=ParseMode.HTML)
-                update.effective_message.reply_text("Hey There, \nI'm <b>{}!</b> Thank You For Adding Me To <b>{}</b>\n".format(bot.first_name, chat.title), parse_mode=ParseMode.HTML)
-                continue
-
+                update.effective_message.reply_text("Thank you for adding me in your group join @fateunion for help")
             else:
-                buttons = sql.get_welc_buttons(chat.id)
-                keyb = build_keyboard(buttons)
-
                 if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                     media_wel = True
 
