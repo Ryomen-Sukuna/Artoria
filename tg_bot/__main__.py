@@ -174,8 +174,14 @@ def start(update, context):
                             text="help",
                             url="https://t.me/saber_herobot?start=help")
                     ]]))
-                                                                 
-                    
+       
+      elif query.data == "home_back":
+        query.message.edit_text(
+                PM_START_TEXT,
+                reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=ParseMode.MARKDOWN,
+                timeout=60, 
+            )
                                                                  
                                                                  
 
