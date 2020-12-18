@@ -178,7 +178,7 @@ def start(update, context):
 @run_async
 def tg_bot_about_callback(update, context):
     query = update.callback_query
-If query.data == "home_back":
+    if query.data == "home_back":
         query.message.edit_text(
                 PM_START_TEXT,
                 reply_markup=InlineKeyboardMarkup(buttons),
