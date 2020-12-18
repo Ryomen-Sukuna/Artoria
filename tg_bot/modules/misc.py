@@ -542,14 +542,18 @@ __help__ = """
  - /tr or /tl: - To translate to your language, by default language is set to english, use `/tr <lang code>` for some other language!
  - /splcheck: - As a reply to get grammar corrected text of gibberish message.
  - /tts: - To some message to convert it into audio format!
- 
+ - /stt :- convert audio to text ( only English)
+
+*Use in bot pm* ( admin can use in group)
+ - /google <text> :- search google queries
+
 *Github:*
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40) 
 
 *Covid*
  - /covid :To get Global data	
- - /covid <country>:To get data of a countr
+ - /covid <country>:To get data of a country
 *More:*
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
