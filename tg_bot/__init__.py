@@ -61,11 +61,9 @@ if ENV:
         raise Exception(
             "Your whitelisted users list does not contain valid integers.")
     
-    GBAN_LOGS= os.environ.get('GBAN_LOGS', None)
     START_IMG = os.environ.get('START_IMG', "")
     EVENT_LOGS = os.environ.get('EVENT_LOGS', None)
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None) 
-    GBAN_DUMP = os.environ.get('GBAN_DUMP', None)
     ERROR_DUMP = os.environ.get('ERROR_DUMP', None)
     JOIN_LOGGER = os.environ.get('JOIN_LOGGER', None)
 
@@ -97,7 +95,10 @@ if ENV:
     REDIS_URL = os.environ.get('REDIS_URL', None)
     CUSTOM_CMD = os.environ.get('CUSTOM_CMD', ('/', '!'))
     REPOSITORY = os.environ.get('REPOSITORY', "")
-    
+    IBM_WATSON_CRED_URL = os.environ.get("IBM_WATSON_CRED_URL", None)
+    IBM_WATSON_CRED_PASSWORD = os.environ.get("IBM_WATSON_CRED_PASSWORD", None)
+    TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", "./")
+
 
     try:
         WHITELIST_CHATS = set(int(x) for x in os.environ.get('WHITELIST_CHATS', "").split())
