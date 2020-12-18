@@ -181,8 +181,8 @@ def tg_bot_about_callback(update, context):
     if query.data == "home_back":
         query.message.edit_text(
                 PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
+                reply_markup=InlineKeyboardMarkup(buttons),
                 timeout=60, 
             )
                                                                  
