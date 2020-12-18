@@ -587,7 +587,7 @@ def main():
     
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
-    ₹about_callback_handler = CallbackQueryHandler(tg_bot_about_callback, pattern=r"home_back")
+    #about_callback_handler = CallbackQueryHandler(tg_bot_about_callback, pattern=r"home_back")
 
     
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
