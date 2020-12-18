@@ -204,14 +204,3 @@ Now go to https://dashboard.heroku.com/apps/(app-name)/resources ( Replace (app-
 Turn on worker dyno (Don't worry It's free :D)
 Now send the bot /start , If it doesn't respond go to https://dashboard.heroku.com/apps/(app-name)/settings and remove webhook and port.  
 </details>  
-
-## Credits
-The bot is based of on the original work done by [PaulSonOfLars](https://github.com/PaulSonOfLars)
-This repo was just reamped to suit an Anime-centric community. All original credits go to Paul and his dedication, Without his efforts, this fork would not have been possible!
-
-Also, missing proper credit for blacklistusers taken from TheRealPhoenixBot (will add it later, this note says unless its done)
-
-Any other authorship/credits can be seen through the commits.
-
-
-Should any be missing kindly let us know at [fate union](https://t.me/fateunion) or simply submit a pull request on the readme.
