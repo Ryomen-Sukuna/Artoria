@@ -78,7 +78,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
     #            (EqInlineKeyboardButton("<<<", callback_data="{}_prev({})".format(prefix, modulo_page)),
     #             EqInlineKeyboardButton(">>>", callback_data="{}_next({})".format(prefix, modulo_page)))]
     else:
-        pairs += [[EqInlineKeyboardButton("Back",  callback_data="aboutmanu_")]]
+        pairs += [[EqInlineKeyboardButton("Back",  callback_data="bot_start")]]
 
 
     return pairs
