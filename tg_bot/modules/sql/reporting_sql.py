@@ -1,9 +1,8 @@
 import threading
 from typing import Union
 
-from sqlalchemy import Column, Integer, String, Boolean
-
-from tg_bot.modules.sql import SESSION, BASE
+from tg_bot.modules.sql import BASE, SESSION
+from sqlalchemy import Boolean, Column, Integer, String
 
 
 class ReportingUserSettings(BASE):
@@ -42,7 +41,7 @@ def chat_should_report(chat_id: Union[str, int]) -> bool:
         chat_setting = SESSION.query(ReportingChatSettings).get(str(chat_id))
         if chat_setting:
             return chat_setting.should_report
-        return True
+        return False
     finally:
         SESSION.close()
 
@@ -81,11 +80,8 @@ def set_user_setting(user_id: int, setting: bool):
 
 def migrate_chat(old_chat_id, new_chat_id):
     with CHAT_LOCK:
-        chat_notes = (
-            SESSION.query(ReportingChatSettings)
-            .filter(ReportingChatSettings.chat_id == str(old_chat_id))
-            .all()
-        )
+        chat_notes = SESSION.query(ReportingChatSettings).filter(
+            ReportingChatSettings.chat_id == str(old_chat_id)).all()
         for note in chat_notes:
             note.chat_id = str(new_chat_id)
         SESSION.commit()
