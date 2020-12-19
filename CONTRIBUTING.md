@@ -4,7 +4,7 @@ Contributions are very welcome! Here are some guidelines on how the project is d
 
 ### CodeStyle
 
-- Adhere to PEP8 as much as possible.
+- Adhere to PEP8 as much as possible..
 
 - Line lengths should be under 120 characters, use list comprehensions over map/filter, don't leave trailing whitespace.
 
