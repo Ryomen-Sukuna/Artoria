@@ -681,6 +681,7 @@ Get information about anime, manga or characters from [AniList](anilist.co).
  - /upcoming: returns a list of new anime in the upcoming seasons.
  - /airing <anime>: returns anime airing info.
  - /imdb : check imdb score of anime or movies.
+ - /ganime <anime>`*:* search an anime on gogoanime.so
  - /kaizoku <anime>`*:* search an anime on animekaizoku.com
  - /kayo <anime>`*:* search an anime on animekayo.com
  - /watchlist: to get your saved watchlist.
