@@ -1,6 +1,6 @@
 """Get Administrators of any Chat*
 Syntax: .userlist"""
-from telethon import events
+from tg_bot.events import register
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from telethon.errors.rpcerrorlist import (UserIdInvalidError, MessageTooLongError, ChatAdminRequiredError)
                                                                                     
