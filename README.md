@@ -4,7 +4,7 @@
 #⚠️ Fork your own risk
 
 its original fork from [shoko](https://github.com/gizmostuffin/Shoko)
-Don't use this it's repo still under development
+Saber repo still under development
 its unstable repo fork on ur own risks
 
 
