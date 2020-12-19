@@ -15,6 +15,7 @@ from telegram.ext import CallbackContext, CallbackQueryHandler, run_async
 info_btn = "More Information"
 kaizoku_btn = "Kaizoku ☠️"
 kayo_btn = "Kayo 🏴‍☠️"
+ganime_btn = "Ganime ☠️"
 prequel_btn = "⬅️ Prequel"
 sequel_btn = "Sequel ➡️"
 close_btn = "Close ❌"
@@ -64,6 +65,24 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a['href']
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
+           
+    elif site == "ganime":
+        search_url = f"https://gogoanime.so/?s={search_query}"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {'class': "title"})
+
+        result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>CoolsAnime</code>: \n"
+        for entry in search_result:
+
+            if entry.text.strip() == "Nothing Found":
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>CoolsAnime</code>"
+                more_results = False
+                break
+
+            post_link = entry.a['href']
+            post_name = html.escape(entry.text.strip())
+            result += f"• <a href='{post_link}'>{post_name}</a>\n"
 
     buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
 
@@ -86,14 +105,21 @@ def kaizoku(update: Update, context: CallbackContext):
 @run_async
 def kayo(update: Update, context: CallbackContext):
     site_search(update, context, "kayo")
+    
+@run_async
+def ganime(update: Update, context: CallbackContext):
+    site_search(update, context, "ganime")
+ 
 
 
 
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
+GANIME_SEARCH_HANDLER = DisableAbleCommandHandler("ganime", ganime)
 
 
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)
+dispatcher.add_handler(GANIME_SEARCH_HANDLER)
 
-__handlers__ = [ KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER]
+__handlers__ = [ KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,  GANIME_SEARCH_HANDLER]
