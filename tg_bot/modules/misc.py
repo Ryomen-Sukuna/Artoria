@@ -526,9 +526,8 @@ def reply_keyboard_remove(update, context):
 
 @run_async
 def stats(update, context):
-    stats = f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n" + "\n┋\n".join([mod.__stats__() for mod in STATS])
-    result = re.sub(r'(\d+)', r'<code>\1</code>', stats)
-    update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_text("Current stats:\n" + "\n".join([mod.__stats__() for mod in STATS]))
+
 
 
 # /ip is for private use
