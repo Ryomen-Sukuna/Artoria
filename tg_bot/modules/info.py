@@ -66,7 +66,9 @@ def info(update: Update, context: CallbackContext):
     if user.username:
         text += f"\n∘ Username: @{html.escape(user.username)}"
 
-    
+   
+    text += f"\nPermanent user link: {mention_html(user.id, 'link🚪')}"
+
     isafk = is_user_afk(user.id)
     try:
         text += "\n\n∘ Currently AFK: "
