@@ -467,12 +467,6 @@ def __chat_settings__(chat_id, user_id):
     blacklisted = sql.num_stickers_chat_filters(chat_id)
     return "There are `{} `blacklisted stickers.".format(blacklisted)
 
-
-def __stats__():
-    return " BL Stickers - {} ( {} )".format(
-        sql.num_stickers_filters(), sql.num_stickers_filter_chats())
-
-
 __mod_name__ = "BL Stickers"
 
 BLACKLIST_STICKER_HANDLER = DisableAbleCommandHandler(
