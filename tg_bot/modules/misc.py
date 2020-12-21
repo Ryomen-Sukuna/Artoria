@@ -48,23 +48,22 @@ def lyrics(update: Update, context: CallbackContext):
     if not query:
         msg.reply_text("You haven't specified which song to look for!")
         return
+    song = Song.find_song(query)
+    if song:
+        if song.lyrics:
+            reply = song.format()
+        else:
+            reply = "Couldn't find any lyrics for that song!"
     else:
-        song = Song.find_song(query)
-        if song:
-            if song.lyrics:
-                reply = song.format()
-            else:
-                reply = "Couldn't find any lyrics for that song!"
-        else:
-            reply = "Song not found!"
-        if len(reply) > 4090:
-            with open("lyrics.txt", 'w') as f:
-                f.write(f"{reply}\n\n\nOwO UwU OmO")
-            with open("lyrics.txt", 'rb') as f:
-                msg.reply_document(document=f,
-                caption="Message length exceeded max limit! Sending as a text file.")
-        else:
-            msg.reply_text(reply)
+        reply = "Song not found!"
+    if len(reply) > 4090:
+        with open("lyrics.txt", 'w') as f:
+            f.write(f"{reply}\n\n\nOwO UwU OmO")
+        with open("lyrics.txt", 'rb') as f:
+            msg.reply_document(document=f,
+            caption="Message length exceeded max limit! Sending as a text file.")
+    else:
+        msg.reply_text(reply)
 
 
 @run_async
@@ -462,8 +461,7 @@ def rmemes(update, context):
     if res.status_code != 200:  # Like if api is down?
         msg.reply_text("Sorry some error occurred :(")
         return
-    else:
-        res = res.json()
+    res = res.json()
 
     rpage = res.get(str("subreddit"))  # Subreddit
     title = res.get(str("title"))  # Post title

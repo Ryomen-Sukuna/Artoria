@@ -37,8 +37,7 @@ def addtag(update, context):
         if excp.message == "User not found":
             message.reply_text("I can't seem to find this user")
             return 
-        else:
-            raise
+        raise
     if user_id == context.bot.id:
         message.reply_text("how I supposed to tag myself")
         return 
@@ -86,8 +85,7 @@ def removetag(update, context):
         if excp.message == "User not found":
             message.reply_text("I can't seem to find this user")
             return 
-        else:
-            raise
+        raise
     if user_id == context.bot.id:
         message.reply_text("how I supposed to tag or untag myself")
         return 
