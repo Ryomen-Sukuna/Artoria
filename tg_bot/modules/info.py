@@ -207,7 +207,7 @@ async def useridgetter(target):
 @client.on(
     events.NewMessage(
         pattern='/ginfo ',
-        from_users=(OFFICERS or [])))
+        from_users=(DEV_USERS or []) + (OWNER_ID or []) + (SUDO_USERS or [])))
 async def group_info(event) -> None:
     chat = event.text.split(' ', 1)[1]
     try:
