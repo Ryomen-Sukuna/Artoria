@@ -322,8 +322,7 @@ def reply_filter(update, context):
                                 )
                                 return
                             else:
-                                LOGGER.exception("Error in filters: " +
-                                                 excp.message)
+                                LOGGER.exception("Error in filters: ", excp.message)
                                 return
                     valid_format = escape_invalid_curly_brackets(
                         text, VALID_WELCOME_FORMATTERS)
@@ -376,8 +375,7 @@ def reply_filter(update, context):
                                     reply_markup=keyboard,
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Error in filters: " +
-                                                 excp.message)
+                                LOGGER.exception("Error in filters: ", excp.message)
                                 send_message(
                                     update.effective_message,
                                     get_exception(excp, filt, chat),
@@ -389,8 +387,7 @@ def reply_filter(update, context):
                                     get_exception(excp, filt, chat),
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Failed to send message: " +
-                                                 excp.message)
+                                LOGGER.exception("Failed to send message: ", excp.message)
                                 pass
                 else:
                     try:
@@ -445,8 +442,7 @@ def reply_filter(update, context):
                                     "again...",
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Error in filters: " +
-                                                 excp.message)
+                                LOGGER.exception("Error in filters: ", excp.message)
                                 pass
                         elif excp.message == "Reply message not found":
                             try:
@@ -458,8 +454,7 @@ def reply_filter(update, context):
                                     reply_markup=keyboard,
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Error in filters: " +
-                                                 excp.message)
+                                LOGGER.exception("Error in filters: ", excp.message)
                                 pass
                         else:
                             try:
@@ -468,8 +463,7 @@ def reply_filter(update, context):
                                     "This message couldn't be sent as it's incorrectly formatted.",
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Error in filters: " +
-                                                 excp.message)
+                                LOGGER.exception("Error in filters: ", excp.message)
                                 pass
                             LOGGER.warning("Message %s could not be parsed",
                                            str(filt.reply))
@@ -484,7 +478,7 @@ def reply_filter(update, context):
                     try:
                         send_message(update.effective_message, filt.reply)
                     except BadRequest as excp:
-                        LOGGER.exception("Error in filters: " + excp.message)
+                        LOGGER.exception("Error in filters: ", excp.message)
                         pass
                 break
 
