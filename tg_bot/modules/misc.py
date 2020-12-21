@@ -10,7 +10,6 @@ from requests import get
 from datetime import datetime
 from io import BytesIO
 from random import randint
-import requests as r
 from tswift import Song
 from bs4 import BeautifulSoup
 

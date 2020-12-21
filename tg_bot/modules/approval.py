@@ -2,7 +2,6 @@ import html
 from telegram import Chat, User, ParseMode
 from telegram.error import BadRequest
 from telegram.utils.helpers import mention_html
-from telegram import ParseMode
 from telegram.ext import (run_async,
                           Filters, CommandHandler)
 
