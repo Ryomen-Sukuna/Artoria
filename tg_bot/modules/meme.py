@@ -143,13 +143,27 @@ def rmemes(update, context):
     except BadRequest as excp:
         return msg.reply_text(f"Error! {excp.message}")
     
+#plugin by t.me/RCage
+@run_async
+def meme(update: Update, context: CallbackContext):
+    msg = update.effective_message
+    meme = requests.get("https://meme-api.herokuapp.com/gimme/Animemes/").json()
+    image = meme.get("url")
+    caption = meme.get("title")
+    if not image:
+        msg.reply_text("No URL was received from the API!")
+        return
+    msg.reply_photo(
+                photo=image, caption=caption)
 
 
+MEME_HANDLER = DisableAbleCommandHandler("meme", meme)
 MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, admin_ok=True)
 KIM_HANDLER = DisableAbleCommandHandler("kim", kimtext, admin_ok=True)
 HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
 REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes)
 
+dispatcher.add_handler(MEME_HANDLER)
 dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
