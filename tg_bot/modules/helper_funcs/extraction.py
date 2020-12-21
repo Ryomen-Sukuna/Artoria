@@ -5,12 +5,8 @@ from telegram.error import BadRequest
 
 from tg_bot import LOGGER
 from tg_bot.modules.users import get_user_id
-
-from tg_bot import client
-from telethon import events
 from telethon.tl.types import MessageEntityMentionName
 from telethon.tl.functions.users import GetFullUserRequest
-from telethon.utils import pack_bot_file_id
 
 def id_from_reply(message):
     prev_message = message.reply_to_message

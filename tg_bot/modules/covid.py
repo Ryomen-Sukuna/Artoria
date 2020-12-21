@@ -1,18 +1,11 @@
 
-import datetime
-from random import randint
-import os
-import re
-import urllib
 from datetime import datetime
 import urllib.request
-from urllib.error import URLError, HTTPError
-from bs4 import BeautifulSoup
 import requests
 from typing import List
 from tg_bot import dispatcher
-from telegram import ParseMode, InputMediaPhoto, Update, TelegramError, ChatAction
-from telegram.ext import CommandHandler, run_async, CallbackContext
+from telegram import ParseMode, Update
+from telegram.ext import run_async, CallbackContext
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 @run_async

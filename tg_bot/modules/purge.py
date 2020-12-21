@@ -4,7 +4,6 @@ import asyncio
 from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
-from tg_bot.modules.helper_funcs.extraction import get_user
 # Check if user has admin rights
 async def is_administrator(user_id: int, message):
     admin = False

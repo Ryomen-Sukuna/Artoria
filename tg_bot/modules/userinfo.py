@@ -1,7 +1,7 @@
 import html
 from typing import Optional, List
 
-from telegram import Message, User, Update
+from telegram import Message, Update
 from telegram import ParseMode, MAX_MESSAGE_LENGTH
 from telegram.ext.dispatcher import run_async, CallbackContext
 from telegram.utils.helpers import escape_markdown
@@ -9,11 +9,7 @@ from telegram.utils.helpers import escape_markdown
 import tg_bot.modules.sql.userinfo_sql as sql
 from tg_bot import (
     dispatcher,
-    OWNER_ID,
-    DEV_USERS,
-    SUDO_USERS,
-    SUPPORT_USERS,
-)
+    DEV_USERS)
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.alternate import typing_action

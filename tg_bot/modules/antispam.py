@@ -15,7 +15,6 @@ from tg_bot.modules.helper_funcs.chat_status import (is_user_admin,
 from tg_bot.modules.helper_funcs.extraction import (extract_user,
                                                           extract_user_and_text)
 from tg_bot.modules.helper_funcs.misc import send_to_list
-from tg_bot.modules.sql.users_sql import get_all_chats
 from telegram import ParseMode, Update
 from telegram.error import BadRequest, TelegramError
 from telegram.ext import (CallbackContext, CommandHandler, Filters,

@@ -3,7 +3,7 @@ from telegram import Update, User, Chat, ChatMember
 from telegram.ext import CallbackContext
 from threading import RLock
 from cachetools import TTLCache
-from tg_bot import DEL_CMDS, SUDO_USERS, WHITELIST_USERS, SUPPORT_USERS, DEV_USERS, REDIS
+from tg_bot import DEL_CMDS, SUDO_USERS, WHITELIST_USERS, SUPPORT_USERS, DEV_USERS
 from tg_bot.mwt import MWT
 
 # stores admemes in memory for 10 min.

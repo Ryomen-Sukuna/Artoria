@@ -1,18 +1,14 @@
 from typing import Optional
 import time
-
-from telegram import Message, User
-from telegram import MessageEntity, ParseMode
+from telegram import MessageEntity
 from telegram.error import BadRequest
 from telegram.ext import Filters, MessageHandler, run_async
 
 from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
+from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.sql.redis import start_afk, end_afk, is_user_afk, afk_reason
 from tg_bot import REDIS
 from tg_bot.modules.users import get_user_id
-
-from tg_bot.modules.helper_funcs.alternate import send_message
 from tg_bot.modules.helper_funcs.readable_time import get_readable_time
 import tg_bot.modules.helper_funcs.fun_strings as fun
 

@@ -1,5 +1,4 @@
 
-import asyncio
 from asyncio import sleep
 
 from telethon import events

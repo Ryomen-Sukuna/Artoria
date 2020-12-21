@@ -26,7 +26,6 @@ from tg_bot.modules.helper_funcs.admin_rights import (
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.connection import connected
 from tg_bot.modules.log_channel import loggable
-from telethon.tl.functions.users import GetFullUserRequest
 
 @run_async
 @bot_admin

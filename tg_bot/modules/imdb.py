@@ -1,13 +1,8 @@
 import bs4
 import requests
-import asyncio
-import os
 import re
-import subprocess
-import time
-from datetime import datetime
 from tg_bot.events import register
-from tg_bot import LOGGER, client
+from tg_bot import client
 from telethon import types
 from telethon.tl import functions
 

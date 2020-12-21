@@ -13,9 +13,9 @@ from tg_bot.modules.helper_funcs.string_handling import extract_time
 
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.warns import warn
-from telegram import (Chat, Message, ParseMode, Update, User, ChatPermissions)
+from telegram import (Chat, Message, ParseMode, User, ChatPermissions)
 from telegram.error import BadRequest
-from telegram.ext import (CallbackContext, CommandHandler, Filters,
+from telegram.ext import (CommandHandler, Filters,
                           MessageHandler)
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html, mention_markdown

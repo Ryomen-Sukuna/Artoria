@@ -1,7 +1,6 @@
 #This Module (Tagall) Is Taken From @zoldycktmbot
 
-import html
-from telegram import Chat, User, ParseMode
+from telegram import ParseMode
 from telegram.error import BadRequest
 from telegram.utils.helpers import mention_html
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton

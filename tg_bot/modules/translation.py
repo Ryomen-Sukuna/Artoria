@@ -3,7 +3,6 @@ from gtts import gTTS
 import os
 import requests
 import json
-from emoji import UNICODE_EMOJI
 
 from telegram import ChatAction
 from telegram.ext import run_async

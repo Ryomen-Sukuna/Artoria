@@ -1,18 +1,7 @@
 from telegram.ext import CallbackContext
 import io
 import os
-# Common imports for eval
-import sys
-import inspect
-import shutil
-import glob
-import math
 import textwrap
-import requests
-import json
-import gc
-import datetime
-import time
 import traceback
 from contextlib import redirect_stdout
 
