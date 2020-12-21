@@ -7,7 +7,7 @@ from telegram.error import BadRequest
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
+from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.chat_status import (
@@ -16,7 +16,7 @@ from tg_bot.modules.helper_funcs.chat_status import (
     is_user_admin,
     can_restrict,
 )
-from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text, get_user
+from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.string_handling import extract_time
 from tg_bot.modules.helper_funcs.admin_rights import user_can_ban
 from tg_bot.modules.helper_funcs.alternate import typing_action

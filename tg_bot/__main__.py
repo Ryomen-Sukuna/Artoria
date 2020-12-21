@@ -1,9 +1,5 @@
 import importlib, traceback, html, json
 import re
-import random
-import time
-from sys import argv
-import subprocess
 from typing import Optional, List
 from telegram.ext import CallbackContext
 from telegram import Message, Chat, User ,Update
@@ -11,12 +7,10 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import escape_markdown
-from tg_bot.modules.helper_funcs.admin_rights import user_can_ban
-from tg_bot.modules.helper_funcs.readable_time import get_readable_time
 
-from tg_bot import (dispatcher, since_time_start, updater, TOKEN, OWNER_ID, WEBHOOK,
+from tg_bot import (dispatcher, updater, TOKEN, OWNER_ID, WEBHOOK,
                            CERT_PATH, PORT, URL, LOGGER, BLACKLIST_CHATS, WHITELIST_CHATS,
-                           SUPPORT_CHAT, START_IMG, REPOSITORY, pbot,client )
+                           pbot,client )
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!

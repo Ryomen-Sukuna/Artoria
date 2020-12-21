@@ -22,10 +22,8 @@ import tg_bot.modules.sql.rules_sql as rules_sql
 from tg_bot.modules.helper_funcs.chat_status import (
     is_user_admin,
     bot_admin,
-    user_admin_no_reply,
     user_admin,
-    can_restrict,
-)
+    can_restrict)
 from tg_bot.modules.helper_funcs.extraction import (
     extract_text,
     extract_user_and_text,

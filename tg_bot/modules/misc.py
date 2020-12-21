@@ -1,5 +1,3 @@
-import os
-import html
 import requests
 import random, re
 import wikipedia
@@ -9,22 +7,20 @@ from requests import get
 
 from datetime import datetime
 from io import BytesIO
-from random import randint
 from tswift import Song
 from bs4 import BeautifulSoup
 
-from telegram import (Message, Chat, MessageEntity, ParseMode, ChatAction, TelegramError, Update,
+from telegram import (Chat, ParseMode, ChatAction, TelegramError, Update,
                       InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove)
 
 from telegram.ext import CallbackContext ,CommandHandler, run_async, Filters
-from telegram.utils.helpers import escape_markdown, mention_html
+from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
 
 from tg_bot import (OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, DEV_USERS,
-                           spamwtc, dispatcher)
-from tg_bot.__main__ import STATS, USER_INFO, GDPR
+                           dispatcher)
+from tg_bot.__main__ import STATS, GDPR
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.extraction import extract_user, get_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
 

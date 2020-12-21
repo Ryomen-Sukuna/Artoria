@@ -1,13 +1,6 @@
-import asyncio
-import os
 import requests
-from bs4 import BeautifulSoup
-from datetime import datetime
 from tg_bot.events import register
 from tg_bot import client
-import sys
-import shutil
-from re import findall
 from telethon import *
 from telethon.tl import functions
 from telethon.tl import types

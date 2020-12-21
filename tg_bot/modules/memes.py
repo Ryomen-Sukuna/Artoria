@@ -2,15 +2,14 @@ import html
 import random, re
 import requests as r
 
-from telegram import Update, ParseMode, TelegramError, MAX_MESSAGE_LENGTH
+from telegram import Update, ParseMode, MAX_MESSAGE_LENGTH
 from telegram.ext import Filters, CallbackContext, CommandHandler, run_async
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot.modules.helper_funcs.extraction import extract_user
-from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.alternate import typing_action
-from tg_bot import dispatcher, SUDO_USERS, SUPPORT_USERS, LOGGER
+from tg_bot import dispatcher, SUDO_USERS, SUPPORT_USERS
 from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 
 import tg_bot.modules.helper_funcs.fun_strings as fun

@@ -1,9 +1,8 @@
-import html
-from telegram import Chat, User, ParseMode
+from telegram import ParseMode
 from telegram.error import BadRequest
 from telegram.utils.helpers import mention_html
 from telegram.ext import (run_async,
-                          Filters, CommandHandler)
+                          Filters)
 
 from tg_bot import dispatcher, REDIS
 from tg_bot.modules.disable import DisableAbleCommandHandler

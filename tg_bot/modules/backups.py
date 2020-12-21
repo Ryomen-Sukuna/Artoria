@@ -6,7 +6,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 
 import tg_bot.modules.sql.notes_sql as sql
-from tg_bot import dispatcher, LOGGER, OWNER_ID, JOIN_LOGGER, SUPPORT_CHAT
+from tg_bot import dispatcher, LOGGER, OWNER_ID, JOIN_LOGGER
 from tg_bot.__main__ import DATA_IMPORT
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.alternate import typing_action

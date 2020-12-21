@@ -7,10 +7,9 @@ from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError as CFError
 from coffeehouse.lydia import LydiaAI
 
-from tg_bot import AI_API_KEY, OWNER_ID, SUPPORT_CHAT, dispatcher
+from tg_bot import AI_API_KEY, OWNER_ID, dispatcher
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.filters import CustomFilters
-from tg_bot.modules.log_channel import gloggable
 
 from telegram import Update
 from telegram.error import BadRequest, RetryAfter, Unauthorized

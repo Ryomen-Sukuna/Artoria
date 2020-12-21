@@ -14,7 +14,7 @@ from telegram import ParseMode, __version__
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, run_async
 
-from tg_bot import MESSAGE_DUMP, OWNER_ID, dispatcher ,EVENT_LOGS
+from tg_bot import OWNER_ID, dispatcher ,EVENT_LOGS
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 

@@ -1,8 +1,5 @@
-import html
-import random, re, string, io, asyncio
-import requests as r
+import random, io
 from PIL import Image
-from io import BytesIO
 import base64
 from spongemock import spongemock
 import os
@@ -10,15 +7,10 @@ from pathlib import Path
 import glob
 
 from typing import Optional, List
-from telegram import ParseMode, TelegramError, MAX_MESSAGE_LENGTH
-from telegram import Message, Update, Bot, User
-from telegram import MessageEntity
-from telegram.ext import Filters, MessageHandler,  CommandHandler, run_async
-from telegram.utils.helpers import mention_html, escape_markdown
+from telegram.ext import run_async
 
-from tg_bot import dispatcher, SUDO_USERS, SUPPORT_USERS, LOGGER, SUPPORT_CHAT
+from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.extraction import extract_user
 
 
 @run_async

@@ -7,7 +7,7 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.blacklist_sql as sql
-from tg_bot import dispatcher, LOGGER, REDIS, ERROR_DUMP
+from tg_bot import dispatcher, REDIS, ERROR_DUMP
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from tg_bot.modules.helper_funcs.extraction import extract_text
