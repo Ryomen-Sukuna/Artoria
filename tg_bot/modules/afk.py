@@ -34,10 +34,8 @@ def afk(update, context):
     fname = update.effective_user.first_name
 
     try:
-        afksend = update.effective_message.reply_text(
+        update.effective_message.reply_text(
             "{} is now AFK!".format(fname))
-    sleep(5)
-    afksend.delete()
 
     except BadRequest:
         pass
