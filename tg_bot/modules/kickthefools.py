@@ -2,7 +2,7 @@ from telethon import events
 from telethon.tl.types import UserStatusEmpty, UserStatusLastMonth, UserStatusLastWeek, UserStatusOffline, UserStatusOnline, UserStatusRecently, ChannelParticipantsKicked, ChatBannedRights
 from telethon.tl import functions, types
 from time import sleep
-import async
+import asyncio
 from tg_bot.events import register
 from telethon import *
 from telethon.tl.functions.channels import (EditAdminRequest,
