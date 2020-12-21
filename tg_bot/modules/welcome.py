@@ -743,13 +743,12 @@ def welcomemute(update, context) -> str:
             parse_mode=ParseMode.MARKDOWN,
         )
         return ""
-    else:
-        curr_setting = sql.welcome_mutes(chat.id)
-        reply = "\n Give me a setting! Choose one of: `off`/`no` or `soft` or `strong` only! \nCurrent setting: `{}`"
-        msg.reply_text(
-            reply.format(curr_setting),
-            parse_mode=ParseMode.MARKDOWN)
-        return ""
+    curr_setting = sql.welcome_mutes(chat.id)
+    reply = "\n Give me a setting! Choose one of: `off`/`no` or `soft` or `strong` only! \nCurrent setting: `{}`"
+    msg.reply_text(
+        reply.format(curr_setting),
+        parse_mode=ParseMode.MARKDOWN)
+    return ""
 
 
 @run_async
