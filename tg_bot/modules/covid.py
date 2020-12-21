@@ -1,5 +1,4 @@
 
-from datetime import datetime
 import urllib.request
 import requests
 from typing import List
