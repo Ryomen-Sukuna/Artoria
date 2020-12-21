@@ -1,19 +1,15 @@
 
 import asyncio, time, os, asyncio, json
 from telethon.tl.types import DocumentAttributeAudio
-
 from tg_bot.events import register
 from tg_bot.utils import progress
 from youtube_dl import YoutubeDL
-
 from youtube_dl.utils import (DownloadError, ContentTooShortError,
 
                               ExtractorError, GeoRestrictedError,
                               MaxDownloadsReached, PostProcessingError,
                               UnavailableVideoError, XAttrMetadataError)
-
 try:
-
    from youtubesearchpython import SearchVideos 
 
 except:
