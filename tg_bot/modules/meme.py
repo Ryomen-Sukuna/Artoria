@@ -7,7 +7,7 @@ from pathlib import Path
 import glob
 import requests as r
 
-from typing import Optional, List, Update
+from typing import Optional, List
 from telegram.ext import run_async,CallbackContext
 from telegram import (
     Chat,
@@ -15,6 +15,7 @@ from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
+    Update,
     MessageEntity,
     ParseMode,
     TelegramError,
