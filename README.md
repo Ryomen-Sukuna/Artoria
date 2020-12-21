@@ -3,11 +3,6 @@
 
 
 # Saber bot - telegram
-<p align="center">
-    <a href="https://github.com/hyper-ub/saber/commits/master"><img src="https://img.shields.io/github/last-commit/p-rinc-e/Elizabeth/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070" alt="Commit" /></a>
-    <a href="https://github.com/hyper-ub/saber/stargazers"><img src="https://img.shields.io/github/stars/p-rinc-e/Elizabeth?label=Stars&style=flat-square&logo=github&color=F10070" alt="Stars" /></a>
-    <a href="https://github.com/hyper-ub/saber/network/members"><img src="https://img.shields.io/github/forks/p-rinc-e/Elizabeth?label=Fork&style=flat-square&logo=github&color=F10070" alt="Fork" /></a>
-</p>
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cfb691a93a064d9ea753ef2b5fccf797)](https://www.codacy.com/manual/hyper-ub/saber?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hyper-ub/saber&amp;utm_campaign=Badge_Grade)
