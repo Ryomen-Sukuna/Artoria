@@ -281,7 +281,7 @@ def connected(bot, update, chat, user_id, need_admin=True):
             or (user.id in SUDO_USERS)
             
         ):
-            if need_admin == True:
+            if need_admin is True:
                 if (
                     getstatusadmin.status in ("administrator", "creator")
                     or user_id in SUDO_USERS

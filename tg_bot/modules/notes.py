@@ -244,7 +244,7 @@ def save(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(context.bot, update, chat, user.id)
-    if not conn == False:
+    if not conn is False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -289,7 +289,7 @@ def clear(update, context):
     conn = connected(context.bot, update, chat, user.id)
     note_name, text, data_type, content, buttons = get_note_type(msg)
 
-    if not conn == False:
+    if not conn is False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -324,7 +324,7 @@ def list_notes(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
-    if not conn == False:
+    if not conn is False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
         msg = "*Notes in {}:*\n"
