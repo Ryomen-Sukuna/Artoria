@@ -4,7 +4,7 @@ from telegram.ext import BaseFilter
 from tg_bot import DEV_USERS, SUPPORT_USERS, SUDO_USERS
 
 
-class CustomFilters(object):
+class CustomFilters():
     class _Supporters(BaseFilter):
         @staticmethod
         def filter(message: Message):
