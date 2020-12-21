@@ -9,6 +9,16 @@ import requests as r
 
 from typing import Optional, List
 from telegram.ext import run_async
+from telegram import (
+    Chat,
+    ChatAction,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    MessageEntity,
+    ParseMode,
+    TelegramError,
+)
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
