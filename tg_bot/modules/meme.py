@@ -148,7 +148,7 @@ def rmemes(update, context):
 @run_async
 def meme(update: Update, context: CallbackContext):
     msg = update.effective_message
-    meme = requests.get("https://meme-api.herokuapp.com/gimme/Animemes/").json()
+    meme = r.get("https://meme-api.herokuapp.com/gimme/Animemes/").json()
     image = meme.get("url")
     caption = meme.get("title")
     if not image:
