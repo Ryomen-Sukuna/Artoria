@@ -5,13 +5,14 @@ from spongemock import spongemock
 import os
 from pathlib import Path
 import glob
+import requests as r
 
 from typing import Optional, List
 from telegram.ext import run_async
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-
+from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
 
 @run_async
 def kimtext(update, context):
@@ -81,17 +82,68 @@ def spongemocktext(update, context):
         message.reply_to_message.reply_photo(photo=mockedphoto, reply=message.reply_to_message)
     os.remove('mocked{}.jpg'.format(randint))
     
+@run_async
+@send_action(ChatAction.UPLOAD_PHOTO)
+def rmemes(update, context):
+    msg = update.effective_message
+    chat = update.effective_chat
+
+    SUBREDS = [
+        "meirl",
+        "dankmemes",
+        "AdviceAnimals",
+        "memes",
+        "meme",
+        "memes_of_the_dank",
+        "PornhubComments",
+        "teenagers",
+        "memesIRL",
+        "insanepeoplefacebook",
+        "terriblefacebookmemes",
+    ]
+
+    subreddit = random.choice(SUBREDS)
+    res = r.get(f"https://meme-api.herokuapp.com/gimme/{subreddit}")
+
+    if res.status_code != 200:  # Like if api is down?
+        msg.reply_text("Sorry some error occurred :(")
+        return
+    else:
+        res = res.json()
+
+    rpage = res.get(str("subreddit"))  # Subreddit
+    title = res.get(str("title"))  # Post title
+    memeu = res.get(str("url"))  # meme pic url
+    plink = res.get(str("postLink"))
+
+    caps = f"× <b>Title</b>: {title}\n"
+    caps += f"× <b>Subreddit:</b> <pre>r/{rpage}</pre>"
+
+    keyb = [[InlineKeyboardButton(text="Subreddit Postlink 🔗", url=plink)]]
+    try:
+        context.bot.send_photo(
+            chat.id,
+            photo=memeu,
+            caption=(caps),
+            reply_markup=InlineKeyboardMarkup(keyb),
+            timeout=60,
+            parse_mode=ParseMode.HTML,
+        )
+
+    except BadRequest as excp:
+        return msg.reply_text(f"Error! {excp.message}")
     
 
 
 MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, admin_ok=True)
 KIM_HANDLER = DisableAbleCommandHandler("kim", kimtext, admin_ok=True)
 HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
-
+REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes)
 
 dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
+dispatcher.add_handler(REDDIT_MEMES_HANDLER)
 
 __command_list__ = ["mock", "kim", "hitler"]
 __handlers__ = [MOCK_HANDLER, KIM_HANDLER,  HITLER_HANDLER]
