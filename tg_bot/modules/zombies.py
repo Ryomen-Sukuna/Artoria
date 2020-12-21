@@ -49,7 +49,7 @@ async def is_administrator(user_id: int, message):
 
 
 
-@client.on(events.NewMessage(pattern=f"^[!/]zombies ?(.*)"))
+@client.on(events.NewMessage(pattern="^[!/]zombies ?(.*)"))
 async def zombies(event):
     """ For .zombies command, list all the zombies in a chat. """
 

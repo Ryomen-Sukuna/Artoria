@@ -35,7 +35,7 @@ BOT_IMG = "https://telegra.ph/file/98cb413468829dc59a74c.mp4"
 
 
 
-HELP_STRINGS = f"""
+HELP_STRINGS = """
 *Helpful Commands :* [.](https://telegra.ph/file/1a79c86d28aae591687c6.jpg)
 ✧ /start: Starts me! You've probably already used this.
 ✧ /help: Sends this message; I'll tell you more about myself!
@@ -157,7 +157,7 @@ def start(update, context):
                     [
                         InlineKeyboardButton(
                             text="Support Chat ",
-                            url=f"https://t.me/fateUnion"),
+                            url="https://t.me/fateUnion"),
                         InlineKeyboardButton(
                             text="Updates ",
                             url="https://t.me/fateunionupdates")

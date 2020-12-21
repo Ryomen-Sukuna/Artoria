@@ -74,7 +74,7 @@ def mute(update, context):
                                    [
                                        [
                                            InlineKeyboardButton(text="Unmute", callback_data=f"muteb_mute={user_id}"),
-                                           InlineKeyboardButton(text="Delete", callback_data=f"muteb_del")  
+                                           InlineKeyboardButton(text="Delete", callback_data="muteb_del")  
                                         ]
                                     ]
                                    ),
@@ -258,7 +258,7 @@ def temp_mute(update, context):
             message.reply_text(reply_msg,
                                reply_markup=InlineKeyboardMarkup(
                                    [[InlineKeyboardButton(text="Unmute", callback_data=f"muteb_mute={user_id}"),
-                                     InlineKeyboardButton(text="Delete", callback_data=f"muteb_del")]]
+                                     InlineKeyboardButton(text="Delete", callback_data="muteb_del")]]
                                    ),
                                parse_mode=ParseMode.MARKDOWN
                                )
