@@ -19,7 +19,6 @@ from tg_bot.modules.helper_funcs.chat_status import (
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text, get_user
 from tg_bot.modules.helper_funcs.string_handling import extract_time
 from tg_bot.modules.helper_funcs.admin_rights import user_can_ban
-from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.log_channel import loggable
 
