@@ -7,8 +7,8 @@ from pathlib import Path
 import glob
 import requests as r
 
-from typing import Optional, List
-from telegram.ext import run_async
+from typing import Optional, List, Update
+from telegram.ext import run_async,CallbackContext
 from telegram import (
     Chat,
     ChatAction,
