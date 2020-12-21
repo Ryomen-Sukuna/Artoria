@@ -14,7 +14,7 @@ from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from tg_bot import (DEV_USERS, OWNER_ID, SUDO_USERS, SUPPORT_USERS,
-                           WHITELIST_USERS, dispatcher, client)
+                           WHITELIST_USERS, dispatcher, client,spamwtc)
 from tg_bot.__main__ import USER_INFO, TOKEN
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.sql.global_bans_sql import is_user_gbanned
@@ -66,6 +66,8 @@ def info(update: Update, context: CallbackContext):
     if user.username:
         text += f"\n∘ Username: @{html.escape(user.username)}"
 
+    text += f"\nPermalink: {mention_html(user.id, 'link')}"
+
     isafk = is_user_afk(user.id)
     try:
         text += "\n\n∘ Currently AFK: "
@@ -101,7 +103,16 @@ def info(update: Update, context: CallbackContext):
     except BadRequest:
         pass
     
-    
+    try:
+       spamwtc = sw.get_ban(int(user.id))
+       if spamwtc:
+           text += "\n\n<b>This person is Spamwatched!</b>"
+           text += f"\nReason: <pre>{spamwtc.reason}</pre>"
+           text += "\nAppeal at @SpamWatchSupport"
+       else:
+           pass
+    except:
+       pass
     
     try:
         user_member = chat.get_member(user.id)
