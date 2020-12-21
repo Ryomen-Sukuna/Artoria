@@ -197,8 +197,7 @@ def temp_mute(update, context):
         if excp.message == "User not found":
             message.reply_text("I can't seem to find this user")
             return ""
-        else:
-            raise
+        raise
 
     if is_user_admin(chat, user_id, member):
         message.reply_text("I really wish I could mute admins.")
@@ -264,24 +263,22 @@ def temp_mute(update, context):
                                parse_mode=ParseMode.MARKDOWN
                                )
             return log
-        else:
-            message.reply_text("This user is already muted.")
+        message.reply_text("This user is already muted.")
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
             message.reply_text("shut up! muted for {}!".format(time_val), quote=False)
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception(
-                "ERROR muting user %s in chat %s (%s) due to %s",
-                user_id,
-                chat.title,
-                chat.id,
-                excp.message,
-            )
-            message.reply_text("Well damn, I can't mute that user.")
+        LOGGER.warning(update)
+        LOGGER.exception(
+            "ERROR muting user %s in chat %s (%s) due to %s",
+            user_id,
+            chat.title,
+            chat.id,
+            excp.message,
+        )
+        message.reply_text("Well damn, I can't mute that user.")
 
     return ""
 
@@ -302,60 +299,58 @@ def muteb_callback(update, context):
                                                 text="You don't have enough rights to unmute people",
                                                 show_alert=True)
                 return ""
-            else:
-                member = chat.get_member(int(user_id))
+            member = chat.get_member(int(user_id))
 
-                if member.status != "kicked" and member.status != "left":
-                    if (
-                        member.can_send_messages
-                        and member.can_send_media_messages
-                        and member.can_send_other_messages
-                        and member.can_add_web_page_previews
-                    ):
-                        query.message.edit_text("This user already has the right to speak.")
-                    else:
-                        context.bot.restrict_chat_member(
-                            chat.id,
-                            int(user_id),
-                            permissions=ChatPermissions(
-                                can_send_messages=True,
-                                can_invite_users=True,
-                                can_pin_messages=True,
-                                can_send_polls=True,
-                                can_change_info=True,
-                                can_send_media_messages=True,
-                                can_send_other_messages=True,
-                                can_add_web_page_previews=True,
-                            ),
+            if member.status != "kicked" and member.status != "left":
+                if (
+                    member.can_send_messages
+                    and member.can_send_media_messages
+                    and member.can_send_other_messages
+                    and member.can_add_web_page_previews
+                ):
+                    query.message.edit_text("This user already has the right to speak.")
+                else:
+                    context.bot.restrict_chat_member(
+                        chat.id,
+                        int(user_id),
+                        permissions=ChatPermissions(
+                            can_send_messages=True,
+                            can_invite_users=True,
+                            can_pin_messages=True,
+                            can_send_polls=True,
+                            can_change_info=True,
+                            can_send_media_messages=True,
+                            can_send_other_messages=True,
+                            can_add_web_page_previews=True,
+                        ),
+                    )
+                    query.message.edit_text(f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
+                           parse_mode=ParseMode.MARKDOWN)
+                    context.bot.answer_callback_query(query.id,
+                                          text="Unmuted!"
+                                          )
+                    return (
+                        "<b>{}:</b>"
+                        "\n#UNMUTE"
+                        "\n<b>Admin:</b> {}"
+                        "\n<b>User:</b> {}".format(
+                            html.escape(chat.title),
+                            mention_html(user.id, user.first_name),
+                            mention_html(member.user.id, member.user.first_name),
                         )
-                        query.message.edit_text(f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
-                               parse_mode=ParseMode.MARKDOWN)
-                        context.bot.answer_callback_query(query.id,
-                                              text="Unmuted!"
-                                              )
-                        return (
-                            "<b>{}:</b>"
-                            "\n#UNMUTE"
-                            "\n<b>Admin:</b> {}"
-                            "\n<b>User:</b> {}".format(
-                                html.escape(chat.title),
-                                mention_html(user.id, user.first_name),
-                                mention_html(member.user.id, member.user.first_name),
-                            )
-                        )
-                        
+                    )
+        
     else:
         if not is_user_admin(chat, int(user.id)):
             context.bot.answer_callback_query(query.id,
                                               text="You don't have enough rights to delete this message.",
                                               show_alert=True)
             return ""
-        else:
-            query.message.delete()
-            context.bot.answer_callback_query(query.id,
-                                              text="Deleted!"
-                                              )
-            return ""
+        query.message.delete()
+        context.bot.answer_callback_query(query.id,
+                                          text="Deleted!"
+                                          )
+        return ""
         
         
 

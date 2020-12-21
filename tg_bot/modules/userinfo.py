@@ -158,12 +158,11 @@ def __user_info__(user_id):
         return "</b>About User:</b>\n{me}\n\n<b>What Others Say:</b>\n{bio}".format(
             me=me, bio=bio
         )
-    elif me:
+    if me:
         return "<b>About User:</b>\n{me}" "\n".format(me=me)
-    elif bio:
+    if bio:
         return "<b>What others say:</b>\n{bio}".format(bio=bio)
-    else:
-        return ""
+    return ""
 
 
 __help__ = """
