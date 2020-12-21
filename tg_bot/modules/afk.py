@@ -32,9 +32,13 @@ def afk(update, context):
     start_afk(update.effective_user.id, reason)
     REDIS.set(f'afk_time_{update.effective_user.id}', start_afk_time)
     fname = update.effective_user.first_name
+
     try:
-        update.effective_message.reply_text(
+        afksend = update.effective_message.reply_text(
             "{} is now AFK!".format(fname))
+    sleep(5)
+    afksend.delete()
+
     except BadRequest:
         pass
 
