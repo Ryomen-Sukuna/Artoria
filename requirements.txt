@@ -17,6 +17,7 @@ youtube-dl
 python-telegram-bot==12.8
 psycopg2-binary
 spongemock
+nudepy==0.5.1
 zalgo-text
 geopy
 nltk
