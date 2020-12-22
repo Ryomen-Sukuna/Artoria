@@ -165,10 +165,10 @@ def info(update: Update, context: CallbackContext):
         _file.download(f"{user.id}.png")
 
         message.reply_document(
-         document=open(f"{user.id}.png", "rb"),
-         caption=(text),
-          parse_mode=ParseMode.HTML,
-          disable_web_page_preview=True)
+        document=open(f"{user.id}.png", "rb"),
+        caption=(text),
+        parse_mode=ParseMode.HTML,
+        disable_web_page_preview=True)
 
     except IndexError:
         message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
