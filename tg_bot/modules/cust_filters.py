@@ -556,7 +556,7 @@ doin?
  - /stop <filter keyword>: Stop that filter.
 
 *Chat creator only:*
- - /rmallfilter: Stop all chat filters at once.
+ - /stopall: Stop all chat filters at once.
 
 *Note*: Filters also support markdown formatters like: {first}, {last} etc.. and buttons.
 Check `/markdownhelp` to know more!
@@ -568,7 +568,7 @@ __mod_name__ = "FILTERS"
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
 RMALLFILTER_HANDLER = CommandHandler(
-    "rmallfilter", rmall_filters, filters=Filters.group
+    "Stopall", rmall_filters, filters=Filters.group
 )
 LIST_HANDLER = DisableAbleCommandHandler(
     "filters", list_handlers, admin_ok=True)
