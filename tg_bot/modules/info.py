@@ -1,4 +1,6 @@
 import html
+import re
+import os
 import requests
 
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -9,14 +11,16 @@ from telegram import Update, ParseMode
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CallbackContext
 from telegram.error import BadRequest
-from telegram.utils.helpers import mention_html
+from telegram.utils.helpers import escape_markdown, mention_html
 
 from tg_bot import (DEV_USERS, OWNER_ID, SUDO_USERS, SUPPORT_USERS,
                            WHITELIST_USERS, dispatcher, client)
 from tg_bot.__main__ import USER_INFO, TOKEN
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.sql.redis import is_user_afk
+from tg_bot.modules.sql.global_bans_sql import is_user_gbanned
+from tg_bot.modules.sql.redis import is_user_afk, afk_reason
 from tg_bot.modules.sql.users_sql import get_user_num_chats
+from tg_bot.modules.sql.feds_sql import get_user_fbanlist 
 from tg_bot.modules.helper_funcs.extraction import extract_user, get_user
 import tg_bot.modules.sql.userinfo_sql as sql
 import tg_bot.modules.helper_funcs.cas_api as cas
@@ -62,8 +66,7 @@ def info(update: Update, context: CallbackContext):
     if user.username:
         text += f"\n∘ Username: @{html.escape(user.username)}"
 
-    text += f"\n∘ Permalink: {mention_html(user.id, 'link')}"
-
+    
     isafk = is_user_afk(user.id)
     try:
         text += "\n\n∘ Currently AFK: "
@@ -99,16 +102,7 @@ def info(update: Update, context: CallbackContext):
     except BadRequest:
         pass
     
-    try:
-       spamwtc = sw.get_ban(int(user.id))
-       if spamwtc:
-           text += "\n\n<b>This person is Spamwatched!</b>"
-           text += f"\nReason: <pre>{spamwtc.reason}</pre>"
-           text += "\nAppeal at @SpamWatchSupport"
-       else:
-           pass
-    except:
-       pass
+    
     
     try:
         user_member = chat.get_member(user.id)
