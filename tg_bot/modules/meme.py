@@ -20,10 +20,22 @@ from telegram import (
     ParseMode,
     TelegramError,
 )
+from deeppyer import deepfry
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
+
+import nltk  # shitty lib, but it does work
+
+nltk.download("punkt")
+nltk.download("averaged_perceptron_tagger")
+
+
+MAXNUMURL = "https://raw.githubusercontent.com/atanet90/expression-pack/master/meta"
+WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
+WIDE_MAP[0x20] = 0x3000
+
 
 @run_async
 def kimtext(update, context):
@@ -158,16 +170,104 @@ def meme(update: Update, context: CallbackContext):
                 photo=image, caption=caption)
 
 
+
+
+@run_async
+def deepfryer(update: Update, context: CallbackContext):
+    bot = context.bot
+    message = update.effective_message
+    if message.reply_to_message:
+        data = message.reply_to_message.photo
+        data2 = message.reply_to_message.sticker
+    else:
+        data = []
+        data2 = []
+
+    # check if message does contain media and cancel when not
+    if not data and not data2:
+        message.reply_text("What am I supposed to do with this?!")
+        return
+
+    # download last photo (highres) as byte array
+    if data:
+        photodata = data[len(data) - 1].get_file().download_as_bytearray()
+        image = Image.open(io.BytesIO(photodata))
+    elif data2:
+        sticker = bot.get_file(data2.file_id)
+        sticker.download('sticker.png')
+        image = Image.open("sticker.png")
+
+    # the following needs to be executed async (because dumb lib)
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(process_deepfry(image, message.reply_to_message, bot))
+    loop.close()
+
+
+async def process_deepfry(image: Image, reply: Message, bot: Bot):
+    # DEEPFRY IT
+    image = await deepfry(
+        img=image,
+        token=os.getenv('DEEPFRY_TOKEN', ''),
+        url_base='westeurope'
+    )
+
+    bio = BytesIO()
+    bio.name = 'image.jpeg'
+    image.save(bio, 'JPEG')
+
+    # send it back
+    bio.seek(0)
+    reply.reply_photo(bio)
+    if Path("sticker.png").is_file():
+        os.remove("sticker.png")
+
+
+@run_async
+def chinesememes(update: Update, context: CallbackContext) -> str:
+    bot = context.bot
+    args = context.args
+    message = update.effective_message
+    maxnum = urllib.request.urlopen(MAXNUMURL)
+    maxnum = maxnum.read().decode("utf8")
+    if args:
+        num = message.text.split(None, 1)[1]
+    else:
+        num = random.randint(0, int(maxnum))
+    try:
+        IMG = "https://raw.githubusercontent.com/atanet90/expression-pack/master/img/{}.jpg".format(
+            num
+        )
+        maxnum = int(maxnum)
+        maxnum -= 1
+        bot.send_photo(
+            chat_id=message.chat_id,
+            photo=IMG,
+            caption="Image: {} - (0-{})".format(num, maxnum),
+            reply_to_message_id=message.message_id,
+        )
+    except BadRequest as e:
+        message.reply_text("Image not found!")
+        print(e)
+
+
+
+
 MEME_HANDLER = DisableAbleCommandHandler("meme", meme)
+DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
+CHINESEMEMES_HANDLER = CommandHandler(
+    "dllm", chinesememes, pass_args=True, run_async=True
+)
 MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, admin_ok=True)
 KIM_HANDLER = DisableAbleCommandHandler("kim", kimtext, admin_ok=True)
 HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
 REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes)
 
 dispatcher.add_handler(MEME_HANDLER)
+dispatcher.add_handler(DEEPFRY_HANDLER
 dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
+dispatcher.add_handler(CHINESEMEMES_HANDLER)
 dispatcher.add_handler(REDDIT_MEMES_HANDLER)
 
 __command_list__ = ["mock", "kim", "hitler"]
