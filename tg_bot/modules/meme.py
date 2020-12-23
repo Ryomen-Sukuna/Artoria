@@ -7,7 +7,7 @@ from pathlib import Path
 import glob
 import requests as r
 
-from typing import Optional, List
+from typing import Optional, List, Bot
 from telegram.ext import run_async,CallbackContext
 from telegram import (
     Chat,
