@@ -254,16 +254,14 @@ def chinesememes(update: Update, context: CallbackContext) -> str:
 
 MEME_HANDLER = DisableAbleCommandHandler("meme", meme)
 DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
-CHINESEMEMES_HANDLER = CommandHandler(
-    "dllm", chinesememes, pass_args=True, run_async=True
-)
+CHINESEMEMES_HANDLER = CommandHandler("dllm", chinesememes, pass_args=True)
 MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, admin_ok=True)
 KIM_HANDLER = DisableAbleCommandHandler("kim", kimtext, admin_ok=True)
 HITLER_HANDLER = DisableAbleCommandHandler("hitler", hitlertext, admin_ok=True)
 REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes)
 
 dispatcher.add_handler(MEME_HANDLER)
-dispatcher.add_handler(DEEPFRY_HANDLER
+dispatcher.add_handler(DEEPFRY_HANDLER)
 dispatcher.add_handler(MOCK_HANDLER)
 dispatcher.add_handler(KIM_HANDLER)
 dispatcher.add_handler(HITLER_HANDLER)
