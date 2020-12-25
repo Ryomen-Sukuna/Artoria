@@ -22,8 +22,7 @@ from tg_bot import (OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, DEV_US
 from tg_bot.__main__ import STATS, GDPR
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.filters import CustomFilters
-from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
-
+from tg_bot.modules.helper_funcs.alternate import typing_action , send_action
 
 
 @run_async
