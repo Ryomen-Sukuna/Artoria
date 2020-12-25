@@ -16,6 +16,7 @@ from telegram import (Chat, ParseMode, ChatAction, TelegramError, Update,
 from telegram.ext import CallbackContext ,CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
+from telegram.ext.dispatcher import run_async
 
 from tg_bot import (OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, DEV_USERS,
                            dispatcher)
@@ -272,7 +273,7 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
     dispatcher.bot.first_name
 )
 
-@run_async
+
 @typing_action
 def fpaste(update, context):
     msg = update.effective_message
@@ -636,7 +637,7 @@ REPO_HANDLER = DisableAbleCommandHandler("repo",
                                          pass_args=True,
                                          admin_ok=True)
 FPASTE_HANDLER = DisableAbleCommandHandler("fpaste", fpaste, pass_args=True)
-PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
+PASTE_HANDLER = CommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste",
                                               get_paste_content,
                                               pass_args=True)
