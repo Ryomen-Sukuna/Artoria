@@ -39,6 +39,36 @@ def gifid(update: Update, context: CallbackContext):
 
 
 @run_async
+def paste(update: Update, context: CallbackContext):
+    args = context.args
+    message = update.effective_message
+
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+
+    elif len(args) >= 1:
+        data = message.text.split(None, 1)[1]
+
+    else:
+        message.reply_text("What am I supposed to do with this?")
+        return
+
+    key = (
+        requests.post("https://nekobin.com/api/documents", json={"content": data})
+        .json()
+        .get("result")
+        .get("key")
+    )
+
+    url = f"https://nekobin.com/{key}"
+
+    reply_text = f"Nekofied to *Nekobin* : {url}"
+
+    message.reply_text(
+        reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
+
+@run_async
 @typing_action
 def lyrics(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
@@ -134,7 +164,7 @@ def repo(update, context):
 
 @run_async
 @typing_action
-def paste(update, context):
+def mpaste(update, context):
     args = context.args 
     BURL = 'https://del.dog'
     message = update.effective_message
@@ -272,48 +302,6 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 """.format(
     dispatcher.bot.first_name
 )
-
-
-@typing_action
-def fpaste(update, context):
-    msg = update.effective_message
-
-    if msg.reply_to_message and msg.reply_to_message.document:
-        file = context.bot.get_file(msg.reply_to_message.document)
-        file.download("file.txt")
-        text = codecs.open("file.txt", "r+", encoding="utf-8")
-        paste_text = text.read()
-        link = (
-            post(
-                "https://nekobin.com/api/documents",
-                json={"content": paste_text},
-            )
-            .json()
-            .get("result")
-            .get("key")
-        )
-        text = "**Pasted to Nekobin!!!**"
-        buttons = [
-            [
-                InlineKeyboardButton(
-                    text="View Link", url=f"https://nekobin.com/{link}"
-                ),
-                InlineKeyboardButton(
-                    text="View Raw",
-                    url=f"https://nekobin.com/raw/{link}",
-                ),
-            ]
-        ]
-        msg.reply_text(
-            text,
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-        )
-        os.remove("file.txt")
-    else:
-        msg.reply_text("Give me a text file to paste on nekobin")
-        return
 
 
 
@@ -593,8 +581,7 @@ __help__ = """
  - /covid :To get Global data	
  - /covid <country>:To get data of a country
 *More:*
- - /fpaste: Create a paste or a shortened url using nekobin
- - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
+ - /paste: Create a paste or a shortened url using nekobin
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /wiki : Search wikipedia articles.
  - /ud <query> : Search stuffs in urban dictionary.
@@ -636,14 +623,14 @@ REPO_HANDLER = DisableAbleCommandHandler("repo",
                                          repo,
                                          pass_args=True,
                                          admin_ok=True)
-FPASTE_HANDLER = DisableAbleCommandHandler("fpaste", fpaste, pass_args=True)
-PASTE_HANDLER = CommandHandler("paste", paste, pass_args=True)
+
+PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste",
                                               get_paste_content,
                                               pass_args=True)
 
 
-dispatcher.add_handler(FPASTE_HANDLER)
+
 dispatcher.add_handler(APP_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
