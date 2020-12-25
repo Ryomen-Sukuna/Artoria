@@ -273,7 +273,7 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 )
 
 @run_async
-typing_action
+@typing_action
 def fpaste(update, context):
     msg = update.effective_message
 
