@@ -273,6 +273,49 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
     dispatcher.bot.first_name
 )
 
+@run_async
+typing_action
+def fpaste(update, context):
+    msg = update.effective_message
+
+    if msg.reply_to_message and msg.reply_to_message.document:
+        file = context.bot.get_file(msg.reply_to_message.document)
+        file.download("file.txt")
+        text = codecs.open("file.txt", "r+", encoding="utf-8")
+        paste_text = text.read()
+        link = (
+            post(
+                "https://nekobin.com/api/documents",
+                json={"content": paste_text},
+            )
+            .json()
+            .get("result")
+            .get("key")
+        )
+        text = "**Pasted to Nekobin!!!**"
+        buttons = [
+            [
+                InlineKeyboardButton(
+                    text="View Link", url=f"https://nekobin.com/{link}"
+                ),
+                InlineKeyboardButton(
+                    text="View Raw",
+                    url=f"https://nekobin.com/raw/{link}",
+                ),
+            ]
+        ]
+        msg.reply_text(
+            text,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+        )
+        os.remove("file.txt")
+    else:
+        msg.reply_text("Give me a text file to paste on nekobin")
+        return
+
+
 
 @run_async
 @typing_action
@@ -550,6 +593,7 @@ __help__ = """
  - /covid :To get Global data	
  - /covid <country>:To get data of a country
 *More:*
+ - /fpaste: Create a paste or a shortened url using nekobin
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /wiki : Search wikipedia articles.
@@ -592,13 +636,14 @@ REPO_HANDLER = DisableAbleCommandHandler("repo",
                                          repo,
                                          pass_args=True,
                                          admin_ok=True)
+FPASTE_HANDLER = DisableAbleCommandHandler("fpaste", fpaste, pass_args=True)
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste",
                                               get_paste_content,
                                               pass_args=True)
 
 
-
+dispatcher.add_handler(FPASTE_HANDLER)
 dispatcher.add_handler(APP_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
