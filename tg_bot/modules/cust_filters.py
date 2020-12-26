@@ -2,33 +2,36 @@ import re
 from html import escape
 
 import telegram
-from telegram import InlineKeyboardMarkup, ParseMode
+from telegram import ParseMode, InlineKeyboardMarkup, Message
 from telegram.error import BadRequest
 from telegram.ext import (
     CommandHandler,
-    DispatcherHandlerStop,
-    Filters,
     MessageHandler,
+    DispatcherHandlerStop,
     run_async,
+    Filters,
 )
-from telegram.utils.helpers import escape_markdown, mention_html
+from telegram.utils.helpers import mention_html, escape_markdown
 
-from tg_bot import LOGGER, dispatcher
-from tg_bot.modules.connection import connected
+from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
+from tg_bot.modules.helper_funcs.handlers import MessageHandlerChecker
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.extraction import extract_text
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.misc import build_keyboard_parser
 from tg_bot.modules.helper_funcs.msg_types import get_filter_type
 from tg_bot.modules.helper_funcs.string_handling import (
+    split_quotes,
     button_markdown_parser,
     escape_invalid_curly_brackets,
     markdown_to_html,
-    split_quotes,
 )
 from tg_bot.modules.sql import cust_filters_sql as sql
+
+from tg_bot.modules.connection import connected
+
+from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 
 HANDLER_GROUP = 15
 
@@ -41,7 +44,7 @@ ENUM_FUNC_MAP = {
     sql.Types.AUDIO.value: dispatcher.bot.send_audio,
     sql.Types.VOICE.value: dispatcher.bot.send_voice,
     sql.Types.VIDEO.value: dispatcher.bot.send_video,
-    #  sql.Types.VIDEO_NOTE.value: dispatcher.bot.send_video_note,
+    # sql.Types.VIDEO_NOTE.value: dispatcher.bot.send_video_note
 }
 
 
@@ -68,12 +71,13 @@ def list_handlers(update, context):
     all_handlers = sql.get_chat_triggers(chat_id)
 
     if not all_handlers:
-        send_message(update.effective_message,
-                     "No filters saved in {}!".format(chat_name))
+        send_message(
+            update.effective_message, "No filters saved in {}!".format(chat_name)
+        )
         return
 
     for keyword in all_handlers:
-        entry = " × `{}`\n".format(escape_markdown(keyword))
+        entry = " - `{}`\n".format(escape_markdown(keyword))
         if len(entry) + len(filter_list) > telegram.MAX_MESSAGE_LENGTH:
             send_message(
                 update.effective_message,
@@ -133,8 +137,7 @@ def filters(update, context):
         extracted = split_quotes(args[1])
         if len(extracted) < 1:
             return
-        # set trigger -> lower, so as to avoid adding duplicate filters with
-        # different cases
+        # set trigger -> lower, so as to avoid adding duplicate filters with different cases
         keyword = extracted[0].lower()
 
     # Add the filter
@@ -206,18 +209,11 @@ def filters(update, context):
         send_message(update.effective_message, "Invalid filter!")
         return
 
-    add = addnew_filter(
-        update,
-        chat_id,
-        keyword,
-        text,
-        file_type,
-        file_id,
-        buttons)
+    add = addnew_filter(update, chat_id, keyword, text, file_type, file_id, buttons)
     # This is an old method
     # sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video, buttons)
 
-    if add:
+    if add == True:
         send_message(
             update.effective_message,
             "Saved filter '{}' in *{}*!".format(keyword, chat_name),
@@ -273,8 +269,8 @@ def stop_filter(update, context):
 
 @run_async
 def reply_filter(update, context):
-    chat = update.effective_chat
-    message = update.effective_message
+    chat = update.effective_chat  # type: Optional[Chat]
+    message = update.effective_message  # type: Optional[Message]
 
     to_match = extract_text(message)
     if not to_match:
@@ -284,6 +280,10 @@ def reply_filter(update, context):
     for keyword in chat_filters:
         pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
         if re.search(pattern, to_match, flags=re.IGNORECASE):
+
+            if MessageHandlerChecker.check_user(update.effective_user.id):
+                return
+
             filt = sql.get_filter(chat.id, keyword)
             if filt.reply == "there is should be a new reply":
                 buttons = sql.get_buttons(chat.id, filt.keyword)
@@ -358,8 +358,7 @@ def reply_filter(update, context):
                                     reply_markup=keyboard,
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Error in filters: " + excp.message)
+                                LOGGER.exception("Error in filters: " + excp.message)
                                 send_message(
                                     update.effective_message,
                                     get_exception(excp, filt, chat),
@@ -374,6 +373,7 @@ def reply_filter(update, context):
                                 LOGGER.exception(
                                     "Failed to send message: " + excp.message
                                 )
+                                pass
                 else:
                     ENUM_FUNC_MAP[filt.file_type](
                         chat.id,
@@ -421,8 +421,8 @@ def reply_filter(update, context):
                                     "again...",
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Error in filters: " + excp.message)
+                                LOGGER.exception("Error in filters: " + excp.message)
+                                pass
                         elif excp.message == "Reply message not found":
                             try:
                                 context.bot.send_message(
@@ -433,8 +433,8 @@ def reply_filter(update, context):
                                     reply_markup=keyboard,
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Error in filters: " + excp.message)
+                                LOGGER.exception("Error in filters: " + excp.message)
+                                pass
                         else:
                             try:
                                 send_message(
@@ -442,11 +442,11 @@ def reply_filter(update, context):
                                     "This message couldn't be sent as it's incorrectly formatted.",
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Error in filters: " + excp.message)
+                                LOGGER.exception("Error in filters: " + excp.message)
+                                pass
                             LOGGER.warning(
-                                "Message %s could not be parsed", str(
-                                    filt.reply))
+                                "Message %s could not be parsed", str(filt.reply)
+                            )
                             LOGGER.exception(
                                 "Could not parse filter %s in chat %s",
                                 str(filt.keyword),
@@ -454,12 +454,12 @@ def reply_filter(update, context):
                             )
 
                 else:
-                    # LEGACY - all new filters will have has_markdown set to
-                    # True.
+                    # LEGACY - all new filters will have has_markdown set to True.
                     try:
                         send_message(update.effective_message, filt.reply)
                     except BadRequest as excp:
                         LOGGER.exception("Error in filters: " + excp.message)
+                        pass
                 break
 
 
@@ -503,9 +503,8 @@ def get_exception(excp, filt, chat):
     else:
         LOGGER.warning("Message %s could not be parsed", str(filt.reply))
         LOGGER.exception(
-            "Could not parse filter %s in chat %s", str(
-                filt.keyword), str(
-                chat.id))
+            "Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id)
+        )
         return "This data could not be sent because it is incorrectly formatted."
 
 
@@ -524,8 +523,7 @@ def addnew_filter(update, chat_id, keyword, text, file_type, file_id, buttons):
 
 
 def __stats__():
-    return "× {} filters, across {} chats.".format(
-        sql.num_filters(), sql.num_chats())
+    return "┣⊸ Filters - {} ( {} ) ".format(sql.num_filters(), sql.num_chats())
 
 
 def __import_data__(chat_id, data):
@@ -545,7 +543,6 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- 
  - /filters: List all active filters saved in the chat.
 
 *Admin only:*
@@ -563,15 +560,14 @@ Check `/markdownhelp` to know more!
 
 """
 
-__mod_name__ = "FILTERS"
+__mod_name__ = "Filters"
 
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
-RMALLFILTER_HANDLER = CommandHandler(
-    "Stopall", rmall_filters, filters=Filters.group
+STOPALL_HANDLER = CommandHandler(
+    "stopall", rmall_filters, filters=Filters.group
 )
-LIST_HANDLER = DisableAbleCommandHandler(
-    "filters", list_handlers, admin_ok=True)
+LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
 CUST_FILTER_HANDLER = MessageHandler(
     CustomFilters.has_text & ~Filters.update.edited_message, reply_filter
 )
@@ -580,4 +576,4 @@ dispatcher.add_handler(FILTER_HANDLER)
 dispatcher.add_handler(STOP_HANDLER)
 dispatcher.add_handler(LIST_HANDLER)
 dispatcher.add_handler(CUST_FILTER_HANDLER, HANDLER_GROUP)
-dispatcher.add_handler(RMALLFILTER_HANDLER)
+dispatcher.add_handler(STOPALL_HANDLER)
