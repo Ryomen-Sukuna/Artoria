@@ -39,6 +39,10 @@ HELP_STRINGS = """
 *Helpful Commands :* [.](https://telegra.ph/file/1a79c86d28aae591687c6.jpg)
 ✧ /start: Starts me! You've probably already used this.
 ✧ /help: Sends this message; I'll tell you more about myself!
+✧ /settings: 
+   ∘ in PM: will send you your settings for all supported modules.
+   ∘ in a Group: will redirect you to pm, with all that chat's settings.
+
 """
 
 
