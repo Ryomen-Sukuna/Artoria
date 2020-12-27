@@ -612,6 +612,7 @@ done easily using the bot.
  - /setsticker: As a reply to some sticker to set it as group sticker set!
  - /setdescription or /setdes <description>: Sets new chat description in group.
  - /zombies: list all the zombies in a chat.
+ - /kickthefools : kick all inactive members from group ( broken )
  - /admincache : force refresh the admins list
 
 *Note*: To set group sticker set chat must needs to have min 100 members.
