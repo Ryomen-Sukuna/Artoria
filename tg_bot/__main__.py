@@ -279,46 +279,56 @@ def help_button(update, context):
         else:
             query.message.edit_text(excp.message)
             LOGGER.exception("Exception in help buttons. %s", str(query.data))
+
+
 @run_async
-def get_help(update: Update, context: CallbackContext):
+@typing_action
+def get_help(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
 
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
-        if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
-            module = args[1].lower()
-            update.effective_message.reply_text(
-                f"Contact me in PM to get help of {module.capitalize()}",
-                reply_markup=InlineKeyboardMarkup([[
-                    InlineKeyboardButton(
-                        text="Help",
-                        url="t.me/{}?start=ghelp_{}".format(
-                            context.bot.username, module))
-                ]]))
-            return
+
         update.effective_message.reply_text(
-            "Contact me in PM to get the list of possible commands.",
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton(
-                    text="Help",
-                    url="t.me/{}?start=help".format(context.bot.username))
-            ]]))
+            "Click the button below to get help manu in your pm.",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Open In Private Chat",
+                            callback_data="gethelp_pr",
+                        )
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Support Chat",
+                            url="https://t.me/{}".format(SUPPORT_CHAT),
+                        )
+                    ]
+                ]
+            ),
+        )
         return
 
-    if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
+    elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
-                   + HELPABLE[module].__help__
+        text = (
+            "Here is the available help for the *{}* module:\n".format(
+                HELPABLE[module].__mod_name__
+            )
+            + HELPABLE[module].__help__
+        )
         send_help(
-            chat.id, text,
+            chat.id,
+            text,
             InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back",
-                                       callback_data="help_back")]]))
+                [[InlineKeyboardButton(text="Back", callback_data="help_back")]]
+            ),
+        )
 
     else:
         send_help(chat.id, HELP_STRINGS)
-
 
 
 def gethelp(update, context):
