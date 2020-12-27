@@ -1,15 +1,14 @@
-from telegram.ext import CallbackContext
 import io
 import os
+# Common imports for eval
 import textwrap
 import traceback
 from contextlib import redirect_stdout
 
-from telegram import ParseMode, Update
-from telegram.ext import CommandHandler, run_async
-
-from tg_bot import dispatcher, LOGGER
+from tg_bot import LOGGER, dispatcher
 from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from telegram import ParseMode, Update
+from telegram.ext import CallbackContext, CommandHandler, run_async
 
 namespaces = {}
 
@@ -31,12 +30,22 @@ def namespace_of(chat, update, bot):
 def log_input(update):
     user = update.effective_user.id
     chat = update.effective_chat.id
-    LOGGER.info(f"IN: {update.effective_message.text} (user={user}, chat={chat})")
+    LOGGER.info(
+        f"IN: {update.effective_message.text} (user={user}, chat={chat})")
 
 
 def send(msg, bot, update):
-    LOGGER.info(f"OUT: '{msg}'")
-    bot.send_message(chat_id=update.effective_chat.id, text=f"`{msg}`", parse_mode=ParseMode.MARKDOWN)
+    if len(str(msg)) > 2000:
+        with io.BytesIO(str.encode(msg)) as out_file:
+            out_file.name = "output.txt"
+            bot.send_document(
+                chat_id=update.effective_chat.id, document=out_file)
+    else:
+        LOGGER.info(f"OUT: '{msg}'")
+        bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=f"`{msg}`",
+            parse_mode=ParseMode.MARKDOWN)
 
 
 @dev_plus
@@ -66,7 +75,10 @@ def do(func, bot, update):
     env = namespace_of(update.message.chat_id, update, bot)
 
     os.chdir(os.getcwd())
-    with open('%s/lucifer/modules/helper_funcs/temp.txt' % os.getcwd(), 'w') as temp:
+    with open(
+            os.path.join(os.getcwd(),
+                         'SaitamaRobot/modules/helper_funcs/temp.txt'),
+            'w') as temp:
         temp.write(body)
 
     stdout = io.StringIO()
@@ -100,8 +112,6 @@ def do(func, bot, update):
         else:
             result = f'{value}{func_return}'
         if result:
-            if len(str(result)) > 2000:
-                result = 'Output is too long'
             return result
 
 
@@ -123,3 +133,5 @@ CLEAR_HANDLER = CommandHandler('clearlocals', clear)
 dispatcher.add_handler(EVAL_HANDLER)
 dispatcher.add_handler(EXEC_HANDLER)
 dispatcher.add_handler(CLEAR_HANDLER)
+
+__mod_name__ = "Eval Module"
