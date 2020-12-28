@@ -1,6 +1,6 @@
 import requests
 from tg_bot.events import register
-mport os
+import os
 import shutil
 import glob
 from re import findall
