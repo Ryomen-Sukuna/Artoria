@@ -512,18 +512,16 @@ Some dank memes for fun or whatever!
 
  - /truth or /dare: Send random truth or dare.
 
-
-*Regex based memes:*
-
-`/decide` can be also used with regex like: `saber? <question>: randomly answer "Yes, No" etc.`
-
-Some other regex filters are:
-`goodmorning`, `good morning` or `goodnight`, `good night`.
-
-Saber will reply random strings accordingly when these words are used!
-All regex filters can be disabled incase u don't want... like: `/disable goodnight`.
-
-"""
+*Animation"
+ - /love
+ - /hack
+ - /moon
+ - /block
+ - /earth
+ - /clock
+ - /bombs 
+ - /kill
+""" 
 
 __mod_name__ = "Memes"
 
