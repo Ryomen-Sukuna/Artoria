@@ -351,37 +351,14 @@ def kill(update: Update, context: CallbackContext):
     msg.edit_text('⚰')
 
 
-
-
-__help__ = """
-
-- /love ❣️
-
-- /hack 👨‍💻
-
-- /bombs 💣
-
-- /moonanimation 🌚
-
-- /clockanimation 🕛
-
-- /earthanimation 🌍
-
-- /blockanimation 🟥
-
-- /kill ⚰
-
-"""
-
-
 KILL_HANDLER = DisableAbleCommandHandler("kill",kill)
 LOVE_HANDLER = DisableAbleCommandHandler("love", love)
 HACK_HANDLER = DisableAbleCommandHandler("hack", hack)
 BOMBS_HANDLER = DisableAbleCommandHandler("bombs",bombs)
-MOONANIMATION_HANDLER =DisableAbleCommandHandler("moonanimation",moonanimation)
-CLOCKANIMATION_HANDLER =DisableAbleCommandHandler("clockanimation",clockanimation)
-BLOCKANIMATION_HANDLER =DisableAbleCommandHandler("blockanimation",blockanimation)
-EARTHANIMATION_HANDLER =DisableAbleCommandHandler("earthanimation",earthanimation)
+MOONANIMATION_HANDLER =DisableAbleCommandHandler("moon",moonanimation)
+CLOCKANIMATION_HANDLER =DisableAbleCommandHandler("clock",clockanimation)
+BLOCKANIMATION_HANDLER =DisableAbleCommandHandler("block",blockanimation)
+EARTHANIMATION_HANDLER =DisableAbleCommandHandler("earth",earthanimation)
 dispatcher.add_handler(KILL_HANDLER)
 dispatcher.add_handler(LOVE_HANDLER)
 dispatcher.add_handler(HACK_HANDLER)
@@ -392,6 +369,5 @@ dispatcher.add_handler(CLOCKANIMATION_HANDLER)
 dispatcher.add_handler(BLOCKANIMATION_HANDLER)
 
 
-__mod_name__ = "EMOJIS"
 __command_list__ = ["love", "hack", "bombs", "moonanimation", "clockanimation", "earthanimation", "blockanimation", "kill"]
 __handlers__ = [LOVE_HANDLER, HACK_HANDLER, BOMBS_HANDLER, MOONANIMATION_HANDLER, CLOCKANIMATION_HANDLER, EARTHANIMATION_HANDLER, BLOCKANIMATION_HANDLER, KILL_HANDLER]
