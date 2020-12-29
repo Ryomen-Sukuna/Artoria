@@ -512,16 +512,6 @@ Some dank memes for fun or whatever!
 
  - /truth or /dare: Send random truth or dare.
 
-*Animation"
- - /love
- - /hack
- - /moon
- - /block
- - /earth
- - /clock
- - /bombs 
- - /kill
-
 """ 
 
 __mod_name__ = "Memes"
