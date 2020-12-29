@@ -225,7 +225,7 @@ def anime(update, context):
         description = json.get('description', 'N/A').replace('<i>', '').replace(
             '</i>', '').replace('<br>', '')
         msg += shorten(description, info)
-        image = json.get('bannerImage', None)
+        image = info.replace('anilist.co/anime/', 'img.anili.st/media/')
         if trailer:
             buttons = [[
                 InlineKeyboardButton("More Info", url=info),
