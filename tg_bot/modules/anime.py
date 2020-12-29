@@ -227,6 +227,7 @@ def anime(update: Update, context: CallbackContext):
             ]]
         else:
             buttons = [[InlineKeyboardButton("More Info", url=info)]]
+        buttons += [[InlineKeyboardButton("Add To Watchlist", callback_data=f"xanime_watchlist={anime_name_w}")]]
         if image:
             try:
                 update.effective_message.reply_photo(
