@@ -3,9 +3,9 @@ import textwrap
 import jikanpy
 import requests
 from telegram.utils.helpers import mention_html
-from tg_bot import OWNER_ID, SUDO_USERS, REDIS, dispatcher, Update
+from tg_bot import OWNER_ID, SUDO_USERS, REDIS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode)
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode,Update)
 from telegram.ext import CallbackQueryHandler, run_async, CallbackContext
 
 info_btn = "More Information"
