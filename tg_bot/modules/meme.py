@@ -23,6 +23,7 @@ from telegram import (
     TelegramError,
 )
 from deeppyer import deepfry
+import asyncio
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
