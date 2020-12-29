@@ -3,6 +3,7 @@ from PIL import Image
 import base64
 from spongemock import spongemock
 import os
+from io import BytesIO
 from pathlib import Path
 import glob
 import requests as r
