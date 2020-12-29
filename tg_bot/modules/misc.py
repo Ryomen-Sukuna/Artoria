@@ -564,15 +564,15 @@ __help__ = """
  - /id: Get the current group id. If used by replying to a message, gets that user's id.
  - /whois :- Get information about user using pyrogram  method
 
-*Animation*
- - /love
- - /hack
- - /moon
- - /block
- - /earth
- - /clock
- - /bombs 
- - /kill
+*Animation:*
+ - /love : - love animation
+ - /hack : - hack animation
+ - /moon : - moon animation
+ - /block : - block animation
+ - /earth : - earth animation
+ - /clock : - clock animation
+ - /bombs : - bombs animation
+ - /kill : - kill animation
 
 *Translator:*
  - /tr or /tl: - To translate to your language, by default language is set to english, use `/tr <lang code>` for some other language!
@@ -580,16 +580,18 @@ __help__ = """
  - /tts: - To some message to convert it into audio format!
  - /stt :- convert audio to text ( only English)
 
-*Use in bot pm* ( admin can use in group)
+*Use in bot pm:* ( admin can use in group)
  - /google <text> :- search google queries
+ - /images  <text> : search images 
 
 *Github:*
  - /git: Returns info about a GitHub user or organization.
  - /repo: Return the GitHub user or organization repository list (Limited at 40) 
 
-*Covid*
+*Covid:*
  - /covid :To get Global data	
  - /covid <country>:To get data of a country
+
 *More:*
  - /paste: Create a paste or a shortened url using nekobin
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
