@@ -1,6 +1,7 @@
 future
 redis
 cachetools
+fontTools
 emoji
 tswift
 pybase64
