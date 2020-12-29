@@ -45,9 +45,10 @@ def t(milliseconds: int) -> str:
 
 
 airing_query = '''
-    query ($id: Int,$search: String) { 
-      Media (id: $id, type: ANIME,search: $search) { 
+    query ($id: Int,$search: String) {
+      Media (id: $id, type: ANIME,search: $search) {
         id
+        siteUrl
         episodes
         title {
           romaji
@@ -58,7 +59,7 @@ airing_query = '''
            airingAt
            timeUntilAiring
            episode
-        } 
+        }
       }
     }
     '''
