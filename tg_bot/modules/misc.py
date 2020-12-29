@@ -573,6 +573,9 @@ __help__ = """
  - /clock : - clock animation
  - /bombs : - bombs animation
  - /kill : - kill animation
+ - /dice : - dice animation
+ - /basket : - basketball animation 
+ - /dice : - dice animation
 
 *Translator:*
  - /tr or /tl: - To translate to your language, by default language is set to english, use `/tr <lang code>` for some other language!
