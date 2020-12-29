@@ -564,6 +564,16 @@ __help__ = """
  - /id: Get the current group id. If used by replying to a message, gets that user's id.
  - /whois :- Get information about user using pyrogram  method
 
+*Animation*
+ - /love
+ - /hack
+ - /moon
+ - /block
+ - /earth
+ - /clock
+ - /bombs 
+ - /kill
+
 *Translator:*
  - /tr or /tl: - To translate to your language, by default language is set to english, use `/tr <lang code>` for some other language!
  - /splcheck: - As a reply to get grammar corrected text of gibberish message.
