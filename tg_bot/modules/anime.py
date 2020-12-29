@@ -164,7 +164,7 @@ def airing(update, context):
     search_str = message.text.split(' ', 1)
     if len(search_str) == 1:
         update.effective_message.reply_text(
-            '/airing <anime name>)')
+            'Fromat : /airing <anime name>)')
         return
     variables = {'search': search_str[1]}
     response = requests.post(
