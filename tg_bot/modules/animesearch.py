@@ -1,13 +1,19 @@
-
+import json
 import html
-
 import bs4
 import requests
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode,
+from telegram.error import BadRequest
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, replymarkup,
                       Update)
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import (
+    CallbackContext,
+    CommandHandler,
+    Filters,
+    run_async,
+    CallbackQueryHandler,
+)
 
 info_btn = "More Information"
 kaizoku_btn = "Kaizoku ☠️"
@@ -107,16 +113,59 @@ def kayo(update: Update, context: CallbackContext):
 def ganime(update: Update, context: CallbackContext):
     site_search(update, context, "ganime")
  
+def anime_quote():
+    url = "https://animechanapi.xyz/api/quotes/random"
+    response = requests.get(url)
+    # since text attribute returns dictionary like string
+    dic = json.loads(response.text)
+    quote = dic["data"][0]["quote"]
+    character = dic["data"][0]["character"]
+    anime = dic["data"][0]["anime"]
+    return quote, character, anime
+
+
+@run_async
+def quotes(update: Update, context: CallbackContext):
+    message = update.effective_message
+    quote, character, anime = anime_quote()
+    msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="Change", callback_data="change_quote")]]
+    )
+    message.reply_text(
+        msg,
+        reply_markup=keyboard,
+        parse_mode=ParseMode.HTML,
+    )
+
+
+@run_async
+def change_quote(update: Update, context: CallbackContext):
+    query = update.callback_query
+    chat = update.effective_chat
+    message = update.effective_message
+    quote, character, anime = anime_quote()
+    msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="Change", callback_data="quote_change")]]
+    )
+    message.edit_text(msg, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
 
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
 GANIME_SEARCH_HANDLER = DisableAbleCommandHandler("ganime", ganime)
+QUOTE = DisableAbleCommandHandler("quote", quotes)
+CHANGE_QUOTE = CallbackQueryHandler(change_quote, pattern=r"change_.*")
+QUOTE_CHANGE = CallbackQueryHandler(change_quote, pattern=r"quote_.*")
 
 
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)
 dispatcher.add_handler(GANIME_SEARCH_HANDLER)
+dispatcher.add_handler(QUOTE)
+dispatcher.add_handler(CHANGE_QUOTE)
+dispatcher.add_handler(QUOTE_CHANGE)
 
 __handlers__ = [ KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,  GANIME_SEARCH_HANDLER]
