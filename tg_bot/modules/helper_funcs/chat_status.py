@@ -198,12 +198,17 @@ def dev_plus(func):
             return func(update, context, *args, **kwargs)
         if not user:
             pass
-        elif DEL_CMDS and " " not in update.effective_message.text:
-            update.effective_message.delete()
-        
+        elif DEL_CMDS and " " not in update.effective_message.text
+            try:
+                update.effective_message.delete()
+            except:
+                pass
+        else:
+            update.effective_message.reply_text(
+                "This is a developer restricted command."
+                " You do not have permissions to run this.")
 
     return is_dev_plus_func
-
 
 def sudo_plus(func):
 
