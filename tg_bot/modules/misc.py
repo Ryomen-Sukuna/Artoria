@@ -596,6 +596,7 @@ __help__ = """
  - /covid <country>:To get data of a country
 
 *More:*
+ - /q : make quote of massage
  - /paste: Create a paste or a shortened url using nekobin
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /wiki : Search wikipedia articles.
