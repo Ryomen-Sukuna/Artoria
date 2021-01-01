@@ -14,15 +14,6 @@ from telethon import *
 from telethon.tl import functions
 from telethon.tl import types
 from telethon.tl.types import *
-
-from tg_bot import oko
-from tg_bot.events import register
-
-from re import findall
-from telethon import *
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
 import html2text
 import os
 from asyncio import sleep
