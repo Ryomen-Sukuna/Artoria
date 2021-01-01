@@ -594,7 +594,12 @@ __help__ = """
  - /covid :To get Global data	
  - /covid <country>:To get data of a country
 
+*Qrcode*
+ - /getqr: get the qr code content from the replied qr code
+ - /makeqr <content>: make a qr code from the given message (text, link, etc...)
+
 *More:*
+ - /deepfry : reply to img deepfry it
  - /q : make quote of massage
  - /paste: Create a paste or a shortened url using nekobin
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
