@@ -534,7 +534,7 @@ Some dank memes for fun or whatever!
 __mod_name__ = "Memes"
 
 
-PAT_HANDLER = DisableAbleCommandHandler("game", game)
+GAME_HANDLER = DisableAbleCommandHandler("game", game)
 PAT_HANDLER = DisableAbleCommandHandler("pat", pat)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout)
 DARE_HANDLER = DisableAbleCommandHandler("dare", dare)
