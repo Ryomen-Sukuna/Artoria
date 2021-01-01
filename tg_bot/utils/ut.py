@@ -1,5 +1,3 @@
-from pyrogram import Client, filters
-from pyrogram.types import Message
 
 
 def get_arg(message):
