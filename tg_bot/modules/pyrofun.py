@@ -34,7 +34,6 @@ def yt_search(song):
 async def song(client, message):
     chat_id = message.chat.id
     user_id = message.from_user["id"]
-
     args = get_arg(message) + " " + "song"
     if args.startswith(" "):
         await message.reply("Enter a song name. Check /help")
@@ -53,8 +52,8 @@ async def song(client, message):
         LOGGER.error(ex)
         return ""
     rename = os.rename(download, f"{str(user_id)}.mp3")
-    await app.send_chat_action(message.chat.id, "upload_audio")
-    await app.send_audio(
+    await pbot.send_chat_action(message.chat.id, "upload_audio")
+    await pbot.send_audio(
         chat_id=message.chat.id,
         audio=f"{str(user_id)}.mp3",
         duration=int(yt.length),
