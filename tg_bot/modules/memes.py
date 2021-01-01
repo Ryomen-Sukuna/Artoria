@@ -496,7 +496,7 @@ Some dank memes for fun or whatever!
  - /mock: Does the same as /hitler but spongemock instead.
  - /kim: Does the same as /hitler but with Kim Jong Un.
  - /trump: trump memes.
- - /sanitize: Sanitize Your Self
+ - /sanitize: Sanitize Your Self.
  - /rmeme: Sends random meme scraped from reddit.
  - /meme: get some anime random meme
  - /shrug or /cri: Get shrug or ToT.
