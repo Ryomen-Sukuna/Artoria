@@ -184,8 +184,6 @@ def is_sudo_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     return user_id in SUDO_USERS or user_id in DEV_USERS
 
 
-
-
 def dev_plus(func):
 
     @wraps(func)
@@ -196,9 +194,9 @@ def dev_plus(func):
 
         if user.id in DEV_USERS:
             return func(update, context, *args, **kwargs)
-        if not user:
+        elif not user:
             pass
-        elif DEL_CMDS and " " not in update.effective_message.text
+        elif DEL_CMDS and " " not in update.effective_message.text:
             try:
                 update.effective_message.delete()
             except:
