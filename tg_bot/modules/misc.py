@@ -16,7 +16,6 @@ from telegram import (Chat, ParseMode, ChatAction, TelegramError, Update,
 from telegram.ext import CallbackContext ,CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
-from telegram.ext.dispatcher import run_async
 
 from tg_bot import (OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, DEV_USERS,
                            dispatcher)
