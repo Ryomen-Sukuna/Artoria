@@ -9,7 +9,7 @@ from pytube import YouTube
 from pyrogram.types import InlineKeyboardMarkup
 from pyrogram.types import InlineKeyboardButton
 from youtubesearchpython import VideosSearch
-from tg_bot.utils import get_arg
+from tg_bot.utils.ut import get_arg
 from tg_bot import pbot, LOGGER
 from pyrogram import Client, filters
 from pyrogram.types import Message
