@@ -492,8 +492,13 @@ def goodmorning(update, context):
 
 __help__ = """
 Some dank memes for fun or whatever!
+ - /hitler: Quote a message and type this command to make a caption of hitler.
+ - /mock: Does the same as /hitler but spongemock instead.
+ - /kim: Does the same as /hitler but with Kim Jong Un.
+ - /trump: Gandhi memes.
  - /sanitize: Sanitize Your Self
  - /rmeme: Sends random meme scraped from reddit.
+ - /meme: get some anime random meme
  - /shrug or /cri: Get shrug or ToT.
  - /decide: Randomly answer yes no etc.
  - /abuse: Abuses the retard!
