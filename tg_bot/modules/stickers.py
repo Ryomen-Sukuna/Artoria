@@ -604,7 +604,7 @@ def add_fvrtsticker(update, context):
         sticker_url = f"https://t.me/addstickers/{get_s_name}"
         sticker_m = "<a href='{}'>{}</a>".format(sticker_url, get_s_name_title)
         check_pack = REDIS.hexists(f'fvrt_stickers2_{user.id}', get_s_name_title)
-        if check_pack == False:
+        if check_pack is False:
             REDIS.hset(f'fvrt_stickers2_{user.id}', get_s_name_title, sticker_m)
             message.reply_text(
                 f"<code>{sticker_m}</code> has been succesfully added into your favorite sticker packs list!",
@@ -651,7 +651,7 @@ def remove_fvrtsticker(update, context):
         message.reply_text("Please give a your favorite sticker pack name to remove from your list.")
         return
     del_check = REDIS.hexists(f'fvrt_stickers2_{user.id}', del_stick)
-    if not del_check == False:
+    if not del_check is False:
         REDIS.hdel(f'fvrt_stickers2_{user.id}',del_stick)
         message.reply_text(
             f"<code>{del_stick}</code> has been succesfully deleted from your list.",
