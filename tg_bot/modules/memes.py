@@ -503,7 +503,7 @@ def goodmorning(update, context):
 
 
 __help__ = """
-Some dank memes for fun or whatever!
+*Some dank memes for fun or whatever!*
  - /hitler: Quote a message and type this command to make a caption of hitler.
  - /mock: Does the same as /hitler but spongemock instead.
  - /kim: Does the same as /hitler but with Kim Jong Un.
