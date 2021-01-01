@@ -1,13 +1,7 @@
-from telethon import events
-from telethon.tl.types import UserStatusEmpty, UserStatusLastMonth, UserStatusLastWeek, UserStatusOffline, UserStatusOnline, UserStatusRecently, ChannelParticipantsKicked, ChatBannedRights
-from telethon.tl import functions, types
-from time import sleep
-import asyncio
+from telethon.tl.types import UserStatusLastMonth, UserStatusLastWeek, ChatBannedRights
 from tg_bot.events import register
 from telethon import *
-from telethon.tl.functions.channels import (EditAdminRequest,
-                                            EditBannedRequest,
-                                            EditPhotoRequest)
+from telethon.tl.functions.channels import (EditBannedRequest)
                                             
 @register(pattern="^/kickthefools")
 async def _(event):

@@ -12,23 +12,19 @@ import urllib.request
 from typing import Optional, List
 from telegram.ext import run_async,CallbackContext
 from telegram import (
-    Chat,
     ChatAction,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
     Update,
     Bot,
-    MessageEntity,
-    ParseMode,
-    TelegramError,
-)
+    ParseMode)
 from deeppyer import deepfry
 import asyncio
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
+from tg_bot.modules.helper_funcs.alternate import send_action
 
 import nltk  # shitty lib, but it does work
 

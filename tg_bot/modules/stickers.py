@@ -1,6 +1,5 @@
 
 import os
-import re
 import math
 import requests
 import urllib.request as urllib
@@ -11,7 +10,7 @@ from bs4 import BeautifulSoup as bs
 
 from telegram import Update, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import TelegramError
-from telegram.ext import run_async, CallbackContext, CallbackQueryHandler
+from telegram.ext import run_async, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, REDIS
