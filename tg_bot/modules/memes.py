@@ -38,8 +38,7 @@ def runs(update, context):
 @typing_action
 def game(update, context):
     update.effective_message.reply_text(
-   * the list of hit games you can play!*
-
+    """ the list of hit games you can play! 
     `LumberJack` - lumber jack via `@gamebot`,
     `Math Battle` - math battle via `@gamebot`,
     `Corsairs` - corsairs via `@gamebot` , 
