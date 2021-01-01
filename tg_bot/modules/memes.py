@@ -495,7 +495,7 @@ Some dank memes for fun or whatever!
  - /hitler: Quote a message and type this command to make a caption of hitler.
  - /mock: Does the same as /hitler but spongemock instead.
  - /kim: Does the same as /hitler but with Kim Jong Un.
- - /trump: Gandhi memes.
+ - /trump: trump memes.
  - /sanitize: Sanitize Your Self
  - /rmeme: Sends random meme scraped from reddit.
  - /meme: get some anime random meme
