@@ -34,15 +34,6 @@ def dare(update, context):
 def runs(update, context):
     update.effective_message.reply_text(random.choice(fun.RUN_STRINGS))
 
-@run_async
-@typing_action
-def game(update, context):
-    update.effective_message.reply_text(
-    """ the list of hit games you can play! 
-    `LumberJack` - lumber jack via `@gamebot`,
-    `Math Battle` - math battle via `@gamebot`,
-    `Corsairs` - corsairs via `@gamebot` , 
-     parse_mode=ParseMode.MARKDOWN)
 
 
 
@@ -525,15 +516,12 @@ __help__ = """
  - /hug: Hug a user warmly, or get hugged if not a reply.
  - /pat: pats a user, or get patted
  - /shout: write anything you want to give loud shout
- - /game : list of game u can play on telegram
  - /truth or /dare: Send random truth or dare.
 
 """ 
 
 __mod_name__ = "Memes"
 
-
-GAME_HANDLER = DisableAbleCommandHandler("game", game)
 PAT_HANDLER = DisableAbleCommandHandler("pat", pat)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout)
 DARE_HANDLER = DisableAbleCommandHandler("dare", dare)
@@ -591,5 +579,5 @@ dispatcher.add_handler(STRECH_HANDLER)
 dispatcher.add_handler(DICE_HANDLER)
 dispatcher.add_handler(YESNOWTF_HANDLER)
 dispatcher.add_handler(GDMORNING_HANDLER)
-dispatcher.add_handler(GAME_HANDLER)
+
 
