@@ -38,11 +38,11 @@ def runs(update, context):
 @typing_action
 def game(update, context):
     update.effective_message.reply_text(
-    Here is the list of hit games you can Play! 
+     Here is the list of hit games you can Play!, 
 
-    `LumberJack` - Lumber Jack from `@gamebot`
-    `Math Battle` - Math Battle from `@gamebot`
-    `Corsairs` - Corsairs from `@gamebot`  
+    `LumberJack` - Lumber Jack from `@gamebot`,
+    `Math Battle` - Math Battle from `@gamebot`,
+    `Corsairs` - Corsairs from `@gamebot` , 
      parse_mode=ParseMode.MARKDOWN)
 
 
