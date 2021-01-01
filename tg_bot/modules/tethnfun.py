@@ -15,7 +15,6 @@ from telethon.tl import functions
 from telethon.tl import types
 from telethon.tl.types import *
 import html2text
-import os
 from asyncio import sleep
 from requests import get, post
 

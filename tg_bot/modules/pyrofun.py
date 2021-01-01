@@ -14,7 +14,7 @@ from tg_bot import pbot, LOGGER
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from tg_bot import TOKEN, OWNER_ID ,SUDO_USERS, pbot
+from tg_bot import TOKEN, OWNER_ID ,SUDO_USERS
 
 DART_E_MOJI = "🎯"
 FOOTBALL_E_MOJI="⚽"
