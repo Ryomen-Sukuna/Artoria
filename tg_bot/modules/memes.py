@@ -38,9 +38,11 @@ def runs(update, context):
 @typing_action
 def game(update, context):
     update.effective_message.reply_text(
-    `LumberJack` - lumber jack from `@gamebot`,
-    `Math Battle` - math battle from `@gamebot`,
-    `Corsairs` - corsairs from `@gamebot` , 
+   * here is the list of hit games you can Play!*
+
+    `LumberJack` - lumber jack via `@gamebot`,
+    `Math Battle` - math battle via `@gamebot`,
+    `Corsairs` - corsairs via `@gamebot` , 
      parse_mode=ParseMode.MARKDOWN)
 
 
