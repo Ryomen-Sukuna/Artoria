@@ -332,7 +332,7 @@ def shout(update, context):
 
     msg = "```"
     result = []
-    result.append(' '.join([s for s in data]))
+    result.append(' '.join(list(data)))
     for pos, symbol in enumerate(data[1:]):
         result.append(symbol + ' ' + '  ' * pos + symbol)
     result = list("\n".join(result))
