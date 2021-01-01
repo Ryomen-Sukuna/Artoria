@@ -46,4 +46,5 @@ instantmusic
 validators
 pickledb
 hachoir
-bs4
+pytube
+youtube-search-python
