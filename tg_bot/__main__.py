@@ -166,7 +166,7 @@ def start(update, context):
                     [
                         InlineKeyboardButton(
                             text="help",
-                            callback_data="help_menu")
+                            url="https://t.me/saber_herobot?start=help")
                     ]]))
        
 #@run_async
