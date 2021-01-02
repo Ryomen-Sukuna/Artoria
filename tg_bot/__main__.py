@@ -166,7 +166,7 @@ def start(update, context):
                     [
                         InlineKeyboardButton(
                             text="help",
-                            data="help_menu")
+                            callback_data="help_menu")
                     ]]))
        
 #@run_async
