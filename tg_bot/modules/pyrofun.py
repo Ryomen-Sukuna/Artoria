@@ -11,7 +11,7 @@ from youtubesearchpython import VideosSearch
 from tg_bot.utils.ut import get_arg
 from tg_bot import pbot, LOGGER
 from pyrogram import Client, filters
-rom pyrogram.errors import PeerIdInvalid
+from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import Message
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from tg_bot import OWNER_ID, pbot
