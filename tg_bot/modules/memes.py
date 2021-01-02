@@ -35,6 +35,20 @@ def runs(update, context):
 
 
 
+@run_async
+@typing_action
+def judge(update: Update, context: CallbackContext):
+    judger = ["<b>is lying!</b>", "<b>is telling the truth!</b>"]
+    rep = update.effective_message
+    msg = ""
+    msg = update.effective_message.reply_to_message
+    if not msg:
+        rep.reply_text("Reply to someone's message to judge them!")
+    else:
+        user = msg.from_user.first_name
+    res = random.choice(judger)
+    reply = msg.reply_text(f"{user} {res}", parse_mode=ParseMode.HTML)
+
 
 @run_async
 @typing_action
@@ -77,6 +91,16 @@ def pat(update: Update, context: CallbackContext):
         reply = temp.format(user1=user1, user2=user2)
         reply_to.reply_text(reply, parse_mode=ParseMode.HTML)
 
+
+@run_async
+def react(update: Update, context: CallbackContext):
+    # reply to correct message
+    reply_text = (
+        update.effective_message.reply_to_message.reply_text
+        if update.effective_message.reply_to_message
+        else update.effective_message.reply_text
+    )
+    reply_text = reply_text(random.choice(REACTS))
 
 
 
@@ -340,7 +364,106 @@ def shout(update, context):
     msg = "```\n" + result + "```"
     return update.effective_message.reply_text(msg, parse_mode="MARKDOWN")
 
-
+REACTS = (
+    "ʘ‿ʘ",
+    "ヾ(-_- )ゞ",
+    "(っ˘ڡ˘ς)",
+    "(´ж｀ς)",
+    "( ಠ ʖ̯ ಠ)",
+    "(° ͜ʖ͡°)╭∩╮",
+    "(ᵟຶ︵ ᵟຶ)",
+    "(งツ)ว",
+    "ʚ(•｀",
+    "(っ▀¯▀)つ",
+    "(◠﹏◠)",
+    "( ͡ಠ ʖ̯ ͡ಠ)",
+    "( ఠ ͟ʖ ఠ)",
+    "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ",
+    "(⊃｡•́‿•̀｡)⊃",
+    "(._.)",
+    "{•̃_•̃}",
+    "(ᵔᴥᵔ)",
+    "♨_♨",
+    "⥀.⥀",
+    "ح˚௰˚づ ",
+    "(҂◡_◡)",
+    "ƪ(ړײ)‎ƪ​​",
+    "(っ•́｡•́)♪♬",
+    "◖ᵔᴥᵔ◗ ♪ ♫ ",
+    "(☞ﾟヮﾟ)☞",
+    "[¬º-°]¬",
+    "(Ծ‸ Ծ)",
+    "(•̀ᴗ•́)و ̑̑",
+    "ヾ(´〇`)ﾉ♪♪♪",
+    "(ง'̀-'́)ง",
+    "ლ(•́•́ლ)",
+    "ʕ •́؈•̀ ₎",
+    "♪♪ ヽ(ˇ∀ˇ )ゞ",
+    "щ（ﾟДﾟщ）",
+    "( ˇ෴ˇ )",
+    "눈_눈",
+    "(๑•́ ₃ •̀๑) ",
+    "( ˘ ³˘)♥ ",
+    "ԅ(≖‿≖ԅ)",
+    "♥‿♥",
+    "◔_◔",
+    "⁽⁽ଘ( ˊᵕˋ )ଓ⁾⁾",
+    "乁( ◔ ౪◔)「      ┑(￣Д ￣)┍",
+    "( ఠൠఠ )ﾉ",
+    "٩(๏_๏)۶",
+    "┌(ㆆ㉨ㆆ)ʃ",
+    "ఠ_ఠ",
+    "(づ｡◕‿‿◕｡)づ",
+    "(ノಠ ∩ಠ)ノ彡( \\o°o)\\",
+    "“ヽ(´▽｀)ノ”",
+    "༼ ༎ຶ ෴ ༎ຶ༽",
+    "｡ﾟ( ﾟஇ‸இﾟ)ﾟ｡",
+    "(づ￣ ³￣)づ",
+    "(⊙.☉)7",
+    "ᕕ( ᐛ )ᕗ",
+    "t(-_-t)",
+    "(ಥ⌣ಥ)",
+    "ヽ༼ ಠ益ಠ ༽ﾉ",
+    "༼∵༽ ༼⍨༽ ༼⍢༽ ༼⍤༽",
+    "ミ●﹏☉ミ",
+    "(⊙_◎)",
+    "¿ⓧ_ⓧﮌ",
+    "ಠ_ಠ",
+    "(´･_･`)",
+    "ᕦ(ò_óˇ)ᕤ",
+    "⊙﹏⊙",
+    "(╯°□°）╯︵ ┻━┻",
+    r"¯\_(⊙︿⊙)_/¯",
+    "٩◔̯◔۶",
+    "°‿‿°",
+    "ᕙ(⇀‸↼‶)ᕗ",
+    "⊂(◉‿◉)つ",
+    "V•ᴥ•V",
+    "q(❂‿❂)p",
+    "ಥ_ಥ",
+    "ฅ^•ﻌ•^ฅ",
+    "ಥ﹏ಥ",
+    "（ ^_^）o自自o（^_^ ）",
+    "ಠ‿ಠ",
+    "ヽ(´▽`)/",
+    "ᵒᴥᵒ#",
+    "( ͡° ͜ʖ ͡°)",
+    "┬─┬﻿ ノ( ゜-゜ノ)",
+    "ヽ(´ー｀)ノ",
+    "☜(⌒▽⌒)☞",
+    "ε=ε=ε=┌(;*´Д`)ﾉ",
+    "(╬ ಠ益ಠ)",
+    "┬─┬⃰͡ (ᵔᵕᵔ͜ )",
+    "┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻",
+    "ʕᵔᴥᵔʔ",
+    "(`･ω･´)",
+    "ʕ•ᴥ•ʔ",
+    "ლ(｀ー´ლ)",
+    "ʕʘ̅͜ʘ̅ʔ",
+    "（　ﾟДﾟ）",
+    r"¯\(°_o)/¯",
+    "(｡◕‿◕｡)",
+)
 
 @run_async
 @typing_action
@@ -496,7 +619,7 @@ __help__ = """
  - /hitler: Quote a message and type this command to make a caption of hitler.
  - /mock: Does the same as /hitler but spongemock instead.
  - /kim: Does the same as /hitler but with Kim Jong Un.
- - /trump: trump memes.
+ - /trump: Does the same as /hitler but with  trump.
  - /sanitize: Sanitize Your Self.
  - /rmeme: Sends random meme scraped from reddit.
  - /meme: get some anime random meme
@@ -516,6 +639,14 @@ __help__ = """
  - /pat: pats a user, or get patted
  - /shout: write anything you want to give loud shout
  - /truth or /dare: Send random truth or dare.
+ - /judge : judge the people if they are saying truth.
+ - /decide : can be also used with regex like: saber? <question>: randomly answer "Yes, No" etc.
+
+Some other regex filters are:
+goodmorning, good morning or goodnight, good night.
+
+Saber will reply random strings accordingly when these words are used!
+All regex filters can be disabled incase u don't want... like: /disable goodnight.
 
 """ 
 
@@ -525,6 +656,8 @@ PAT_HANDLER = DisableAbleCommandHandler("pat", pat)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout)
 DARE_HANDLER = DisableAbleCommandHandler("dare", dare)
 TRUTH_HANDLER = DisableAbleCommandHandler("truth", truth)
+JUDGE_HANDLER = DisableAbleCommandHandler("judge", judge)
+REACT_HANDLER = DisableAbleCommandHandler("react", react)
 SANITIZE_HANDLER = DisableAbleCommandHandler("sanitize", sanitize)
 SHRUG_HANDLER = DisableAbleCommandHandler("shrug", shrug)
 DECIDE_HANDLER = DisableAbleMessageHandler(
@@ -553,8 +686,8 @@ GDNIGHT_HANDLER = DisableAbleMessageHandler(
 )
 
 
-
-
+dispatcher.add_handler(REACT_HANDLER)
+dispatcher.add_handler(JUDGE_HANDLER)
 dispatcher.add_handler(PAT_HANDLER)
 dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(DARE_HANDLER)
@@ -578,5 +711,8 @@ dispatcher.add_handler(STRECH_HANDLER)
 dispatcher.add_handler(DICE_HANDLER)
 dispatcher.add_handler(YESNOWTF_HANDLER)
 dispatcher.add_handler(GDMORNING_HANDLER)
+dispatcher.add_handler(GDNIGHT_HANDLER)
+
+
 
 
