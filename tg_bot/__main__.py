@@ -298,7 +298,7 @@ def get_help(update, context):
                     [
                         InlineKeyboardButton(
                             text="Open In Private Chat",
-                            callback_data="gethelp_pr",
+                            url="t.me/{}?start=help".format(context.bot.username)
                         )
                     ],
                     [
