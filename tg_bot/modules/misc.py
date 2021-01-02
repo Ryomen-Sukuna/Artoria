@@ -561,7 +561,9 @@ __help__ = """
 *Info:*
  - /info: Get information about a user.
  - /id: Get the current group id. If used by replying to a message, gets that user's id.
- - /whois :- Get information about user using pyrogram  method
+ - /whois : Get information about user using pyrogram  method
+ - /dinfo: Get info about user with more data 
+ - /spbinfo: get information about in spam protection bot 
 
 *Animation:*
  - /love : - love animation
