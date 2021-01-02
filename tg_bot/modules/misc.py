@@ -596,7 +596,7 @@ __help__ = """
  - /covid :To get Global data	
  - /covid <country>:To get data of a country
 
-*Qrcode*
+*Qrcode:*
  - /getqr: get the qr code content from the replied qr code
  - /makeqr <content>: make a qr code from the given message (text, link, etc...)
 
@@ -646,6 +646,8 @@ REPO_HANDLER = DisableAbleCommandHandler("repo",
                                          pass_args=True,
                                          admin_ok=True)
 
+
+MPASTE_HANDLER = DisableAbleCommandHandler("mpaste", mpaste, pass_args=True)
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste",
                                               get_paste_content,
@@ -658,6 +660,7 @@ dispatcher.add_handler(LYRICS_HANDLER)
 dispatcher.add_handler(GITHUB_HANDLER)
 dispatcher.add_handler(REPO_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
+dispatcher.add_handler(MPASTE_HANDLER)
 dispatcher.add_handler(GET_PASTE_HANDLER)
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(ECHO_HANDLER)
