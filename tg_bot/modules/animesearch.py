@@ -4,16 +4,11 @@ import bs4
 import requests
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from telegram.error import BadRequest
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, replymarkup,
-                      Update)
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update)
 from telegram.ext import (
     CallbackContext,
-    CommandHandler,
-    Filters,
     run_async,
-    CallbackQueryHandler,
-)
+    CallbackQueryHandler)
 
 info_btn = "More Information"
 kaizoku_btn = "Kaizoku ☠️"
