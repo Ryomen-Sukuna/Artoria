@@ -19,8 +19,7 @@ from tg_bot.modules.sql.users_sql import get_user_num_chats
 from tg_bot.modules.helper_funcs.extraction import extract_user, get_user
 import tg_bot.modules.sql.userinfo_sql as sql
 import tg_bot.modules.helper_funcs.cas_api as cas
-
-
+from telegram.utils.helpers import escape_markdown, mention_html
 
 OFFICERS = [OWNER_ID] + DEV_USERS + SUDO_USERS 
 
