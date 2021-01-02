@@ -58,10 +58,7 @@ def info(update: Update, context: CallbackContext):
         text += f"\n∘ Last Name: {html.escape(user.last_name)}"
 
     if user.username:
-        text += f"\n∘ Username: @{html.escape(user.username)}"
-    
-    
-    text += f"\nPermanent user link: {mention_html(user.id, 'link')}"
+        text += f"\n∘ Username: @{html.escape(user.username)}
 
 
     isafk = is_user_afk(user.id)
