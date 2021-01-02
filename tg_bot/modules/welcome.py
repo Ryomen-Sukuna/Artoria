@@ -23,7 +23,7 @@ import tg_bot.modules.sql.welcome_sql as sql
 from tg_bot.modules.sql.global_bans_sql import is_user_gbanned
 from tg_bot import dispatcher, OWNER_ID, LOGGER, MESSAGE_DUMP, spamwtc
 from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
-from tg_botmodules.helper_funcs.misc import build_keyboard, revert_buttons
+from tg_bot.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from tg_bot.modules.helper_funcs.msg_types import get_welcome_type
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.string_handling import (
