@@ -14,7 +14,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import Message
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from tg_bot import OWNER_ID, pbot
+from tg_bot import OWNER_ID
 
 
 DART_E_MOJI = "🎯"
