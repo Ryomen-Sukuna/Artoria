@@ -16,6 +16,7 @@ from pyrogram.types import Message
 
 DART_E_MOJI = "🎯"
 FOOTBALL_E_MOJI="⚽"
+E_MOJI="🎰"
 
 def yt_search(song):
     videosSearch = VideosSearch(song, limit=1)
@@ -109,6 +110,18 @@ async def throw_dart(client, message):
         disable_notification=True,
         reply_to_message_id=rep_mesg_id
     )
+@pbot.on_message(
+    filters.command("casino")
+)
+async def throw_casino(client, message):
+    rep_mesg_id = message.message_id
+    if message.reply_to_message:
+        rep_mesg_id = message.reply_to_message.message_id
+    await client.send_dice(
+        chat_id=message.chat.id,
+        emoji=E_MOJI,
+        disable_notification=True,
+        reply_to_message_id=rep_mesg_id
 
 @pbot.on_message(
     filters.command("football")
