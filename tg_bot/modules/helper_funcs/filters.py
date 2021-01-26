@@ -28,7 +28,7 @@ class CustomFilters():
     dev_filter = _Developers()
 
 
-    class _MimeType(BaseFilter):
+    class _MimeType(MessageFilter):
         def __init__(self, mimetype):
             self.mime_type = mimetype
             self.name = "CustomFilters.mime_type({})".format(self.mime_type)
@@ -40,7 +40,7 @@ class CustomFilters():
 
     mime_type = _MimeType
 
-    class _HasText(BaseFilter):
+    class _HasText(MessageFilter):
         @staticmethod
         def filter(message: Message):
             return bool(
