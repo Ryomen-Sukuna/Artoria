@@ -136,9 +136,9 @@ def tagg_all_button(update, context):
         )
 
     elif (
-            query_match == "tagall_accept"
-            or query_match == "tagall_dicline"
-            and query.from_user.id != int(user_id)
+        query_match == "tagall_accept"
+        or query_match == "tagall_dicline"
+        and query.from_user.id != int(user_id)
     ):
         context.bot.answer_callback_query(
             query.id, text="You're not the user being added in tag list!"

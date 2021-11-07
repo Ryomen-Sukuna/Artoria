@@ -54,12 +54,12 @@ def addsticker(update, context):
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = (
-                        "a"
-                        + str(packnum)
-                        + "_"
-                        + str(user.id)
-                        + "_by_"
-                        + context.bot.username
+                    "a"
+                    + str(packnum)
+                    + "_"
+                    + str(user.id)
+                    + "_by_"
+                    + context.bot.username
                 )
             else:
                 packname_found = 1
@@ -223,12 +223,12 @@ def addsticker(update, context):
                     if len(stickerset.stickers) >= max_stickers:
                         packnum += 1
                         packname = (
-                                "animated"
-                                + str(packnum)
-                                + "_"
-                                + str(user.id)
-                                + "_by_"
-                                + context.bot.username
+                            "animated"
+                            + str(packnum)
+                            + "_"
+                            + str(user.id)
+                            + "_by_"
+                            + context.bot.username
                         )
                     else:
                         packname_found = 1
@@ -417,15 +417,15 @@ def addsticker(update, context):
 
 
 def makepack_internal(
-        update,
-        context,
-        msg,
-        user,
-        emoji,
-        packname,
-        packnum,
-        png_sticker=None,
-        tgs_sticker=None,
+    update,
+    context,
+    msg,
+    user,
+    emoji,
+    packname,
+    packnum,
+    png_sticker=None,
+    tgs_sticker=None,
 ):
     name = user.first_name
     name = name[:50]
@@ -436,7 +436,7 @@ def makepack_internal(
         extra_version = " " + str(packnum) if packnum > 0 else ""
         if png_sticker:
             sticker_pack_name = (
-                    f"{name}'s stic-pack (@{context.bot.username})" + extra_version
+                f"{name}'s stic-pack (@{context.bot.username})" + extra_version
             )
             success = context.bot.create_new_sticker_set(
                 user.id,
@@ -447,7 +447,7 @@ def makepack_internal(
             )
         if tgs_sticker:
             sticker_pack_name = (
-                    f"{name}'s ani-pack (@{context.bot.username})" + extra_version
+                f"{name}'s ani-pack (@{context.bot.username})" + extra_version
             )
             success = context.bot.create_new_sticker_set(
                 user.id,
@@ -504,7 +504,7 @@ def getsticker(update, context):
             "Hello"
             + f"{mention_html(msg.from_user.id, msg.from_user.first_name)}"
             + ", Please check the file you requested below."
-              "\nPlease use this feature wisely!",
+            "\nPlease use this feature wisely!",
             parse_mode=ParseMode.HTML,
         )
         context.bot.sendChatAction(chat_id, "upload_document")

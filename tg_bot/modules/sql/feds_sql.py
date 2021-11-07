@@ -501,12 +501,12 @@ def fban_user(fed_id, user_id, first_name, last_name, user_name, reason, time):
 
 
 def multi_fban_user(
-        multi_fed_id,
-        multi_user_id,
-        multi_first_name,
-        multi_last_name,
-        multi_user_name,
-        multi_reason,
+    multi_fed_id,
+    multi_user_id,
+    multi_first_name,
+    multi_last_name,
+    multi_user_name,
+    multi_reason,
 ):
     counter = 0
     time = 0

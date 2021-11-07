@@ -28,10 +28,10 @@ def time_formatter(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-            ((str(days) + " day(s), ") if days else "")
-            + ((str(hours) + " hour(s), ") if hours else "")
-            + ((str(minutes) + " minute(s), ") if minutes else "")
-            + ((str(seconds) + " second(s), ") if seconds else "")
+        ((str(days) + " day(s), ") if days else "")
+        + ((str(hours) + " hour(s), ") if hours else "")
+        + ((str(minutes) + " minute(s), ") if minutes else "")
+        + ((str(seconds) + " second(s), ") if seconds else "")
     )
     return tmp[:-2]
 

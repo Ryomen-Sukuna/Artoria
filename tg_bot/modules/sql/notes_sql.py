@@ -61,10 +61,10 @@ def add_note_to_db(chat_id, note_name, note_data, msgtype, buttons=None, file=No
             with BUTTONS_INSERTION_LOCK:
                 prev_buttons = (
                     SESSION.query(Buttons)
-                        .filter(
+                    .filter(
                         Buttons.chat_id == str(chat_id), Buttons.note_name == note_name
                     )
-                        .all()
+                    .all()
                 )
                 for btn in prev_buttons:
                     SESSION.delete(btn)
@@ -83,8 +83,8 @@ def get_note(chat_id, note_name):
     try:
         return (
             SESSION.query(Notes)
-                .filter(func.lower(Notes.name) == note_name, Notes.chat_id == str(chat_id))
-                .first()
+            .filter(func.lower(Notes.name) == note_name, Notes.chat_id == str(chat_id))
+            .first()
         )
     finally:
         SESSION.close()
@@ -94,17 +94,17 @@ def rm_note(chat_id, note_name):
     with NOTES_INSERTION_LOCK:
         note = (
             SESSION.query(Notes)
-                .filter(func.lower(Notes.name) == note_name, Notes.chat_id == str(chat_id))
-                .first()
+            .filter(func.lower(Notes.name) == note_name, Notes.chat_id == str(chat_id))
+            .first()
         )
         if note:
             with BUTTONS_INSERTION_LOCK:
                 buttons = (
                     SESSION.query(Buttons)
-                        .filter(
+                    .filter(
                         Buttons.chat_id == str(chat_id), Buttons.note_name == note_name
                     )
-                        .all()
+                    .all()
                 )
                 for btn in buttons:
                     SESSION.delete(btn)
@@ -120,9 +120,9 @@ def get_all_chat_notes(chat_id):
     try:
         return (
             SESSION.query(Notes)
-                .filter(Notes.chat_id == str(chat_id))
-                .order_by(Notes.name.asc())
-                .all()
+            .filter(Notes.chat_id == str(chat_id))
+            .order_by(Notes.name.asc())
+            .all()
         )
     finally:
         SESSION.close()
@@ -139,9 +139,9 @@ def get_buttons(chat_id, note_name):
     try:
         return (
             SESSION.query(Buttons)
-                .filter(Buttons.chat_id == str(chat_id), Buttons.note_name == note_name)
-                .order_by(Buttons.id)
-                .all()
+            .filter(Buttons.chat_id == str(chat_id), Buttons.note_name == note_name)
+            .order_by(Buttons.id)
+            .all()
         )
     finally:
         SESSION.close()

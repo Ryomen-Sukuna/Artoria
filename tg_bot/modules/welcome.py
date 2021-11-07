@@ -83,8 +83,8 @@ def send(update, message, keyboard, backup_message):
         msg = update.effective_message.reply_text(
             markdown_parser(
                 backup_message + "\nNote: the current message was "
-                                 "invalid due to markdown issues. Could be "
-                                 "due to the user's name."
+                "invalid due to markdown issues. Could be "
+                "due to the user's name."
             ),
             parse_mode=ParseMode.MARKDOWN,
             reply_to_message_id=reply,
@@ -93,8 +93,8 @@ def send(update, message, keyboard, backup_message):
         msg = update.effective_message.reply_text(
             markdown_parser(
                 backup_message + "\nNote: the current message is "
-                                 "invalid due to an issue with some misplaced "
-                                 "curly brackets. Please update"
+                "invalid due to an issue with some misplaced "
+                "curly brackets. Please update"
             ),
             parse_mode=ParseMode.MARKDOWN,
             reply_to_message_id=reply,
@@ -104,7 +104,7 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: the current message has an invalid url "
-                                     "in one of its buttons. Please update."
+                    "in one of its buttons. Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -113,8 +113,8 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: the current message has buttons which "
-                                     "use url protocols that are unsupported by "
-                                     "telegram. Please update."
+                    "use url protocols that are unsupported by "
+                    "telegram. Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -123,7 +123,7 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: the current message has some bad urls. "
-                                     "Please update."
+                    "Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -135,7 +135,7 @@ def send(update, message, keyboard, backup_message):
             msg = update.effective_message.reply_text(
                 markdown_parser(
                     backup_message + "\nNote: An error occured when sending the "
-                                     "custom message. Please update."
+                    "custom message. Please update."
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
@@ -305,12 +305,12 @@ def new_member(update, context):
                     )
 
                     if (
-                            is_user_ban_protected(
-                                chat,
-                                new_mem.id,
-                                chat.get_member(new_mem.id) or new_mem.is_bot,
-                            )
-                            or human_checks
+                        is_user_ban_protected(
+                            chat,
+                            new_mem.id,
+                            chat.get_member(new_mem.id) or new_mem.is_bot,
+                        )
+                        or human_checks
                     ):
                         continue
                     # Join welcome: soft mute
@@ -427,7 +427,7 @@ def left_member(update, context):
                 return
 
             first_name = (
-                    left_mem.first_name or "PersonWithNoName"
+                left_mem.first_name or "PersonWithNoName"
             )  # edge case of empty name - occurs for some bugs.
             if cust_goodbye:
                 if left_mem.last_name:

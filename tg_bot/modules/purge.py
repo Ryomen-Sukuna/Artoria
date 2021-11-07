@@ -12,7 +12,7 @@ from tg_bot import client, SUDO_USERS
 async def is_administrator(user_id: int, message):
     admin = False
     async for user in client.iter_participants(
-            message.chat_id, filter=ChannelParticipantsAdmins
+        message.chat_id, filter=ChannelParticipantsAdmins
     ):
         if user_id == user.id or user_id in SUDO_USERS:
             admin = True
@@ -27,7 +27,7 @@ async def purge(event):
     msgs = []
 
     if not await is_administrator(
-            user_id=event.sender_id, message=event
+        user_id=event.sender_id, message=event
     ) and event.from_id not in [1087968824]:
         await event.reply("You're Not An Admin!")
         return
@@ -70,7 +70,7 @@ async def purge(event):
 @client.on(events.NewMessage(pattern="^[!/]del$"))
 async def delete_msg(event):
     if not await is_administrator(
-            user_id=event.sender_id, message=event
+        user_id=event.sender_id, message=event
     ) and event.from_id not in [1087968824]:
         await event.reply("You're not an admin!")
         return

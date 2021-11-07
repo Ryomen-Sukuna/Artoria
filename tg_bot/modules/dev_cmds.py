@@ -130,8 +130,8 @@ def gitpull(update, context):
     subprocess.Popen("git pull", stdout=subprocess.PIPE, shell=True)
 
     sent_msg_text = (
-            sent_msg.text
-            + "\n\nChanges pulled... I guess..\nContinue to restart with /reboot "
+        sent_msg.text
+        + "\n\nChanges pulled... I guess..\nContinue to restart with /reboot "
     )
     sent_msg.edit_text(sent_msg_text)
 
