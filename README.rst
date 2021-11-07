@@ -18,15 +18,15 @@ Saber
    :target: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone/?ref=repository-badge
    :alt: Code quality: DeepSource
 
-.. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&logo=github&color=F10070
+.. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&logo=github
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master/
    :alt: Commit
 
-.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&logo=github&color=F10070
+.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&logo=github
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers/
    :alt: Star
 
-.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&logo=github&color=F10070
+.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&logo=github
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
    :alt: Fork
 
@@ -41,7 +41,7 @@ Saber
 .. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Saber-Clone
    :target: https://gitlicense.com/license/Ryomen-Sukuna/Saber-Clone
 
-.. image:: https://img.shields.io/badge/Support%20Chat-IronBlood-red
+.. image:: https://img.shields.io/badge/Support%20Chat-IronBlood-blue
    :target: https://t.me/ironbloodnations
    :alt: Join Support
 
