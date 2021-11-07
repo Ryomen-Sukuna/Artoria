@@ -25,9 +25,12 @@ A modular telegram Python bot running on *python3* with an *sqlalchemy* database
    :target: https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors
    :alt: GitHub contributors
 
-.. image:: https://github.com/Ryomen-Sukuna/Saber-Clone/workflows/GitHub%20Actions/badge.svg
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/
-   :alt: Github Actions workflow
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+
+.. image:: https://github.com/Ryomen-Sukuna/Saber-Clone/actions/workflows/black.yml/badge.svg
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/actions/workflows/black.yml
+   :alt: Black
 
 .. image:: https://img.shields.io/pypi/l/python-telegram-bot.svg
    :target: https://www.gnu.org/licenses/lgpl-3.0.html
