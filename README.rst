@@ -3,28 +3,6 @@
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone
    :alt: Saber-Clone
 
-A modular telegram Python bot running on *python3* with an *sqlalchemy* database.
-
-.. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master/
-   :alt: Commit
-
-.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&style=flat-square&logo=github&color=F10070
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers/
-   :alt: Star
-
-.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&style=flat-square&logo=github&color=F10070
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
-   :alt: Fork
-
-.. image:: https://api.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
-   :target: https://www.codacy.com/app/Ryomen-Sukuna/Saber-Clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
-   :alt: Codacy Badge
-
-.. image:: https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg
-   :target: https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors
-   :alt: GitHub contributors
-
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 
@@ -32,13 +10,39 @@ A modular telegram Python bot running on *python3* with an *sqlalchemy* database
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/actions/workflows/black.yml
    :alt: Black
 
-.. image:: https://img.shields.io/pypi/l/python-telegram-bot.svg
+.. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&logo=github&color=F10070
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master/
+   :alt: Commit
+
+.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&logo=github&color=F10070
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers/
+   :alt: Star
+
+.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&logo=github&color=F10070
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
+   :alt: Fork
+
+.. image:: https://api.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
+   :target: https://www.codacy.com/app/Ryomen-Sukuna/Saber-Clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
+   :alt: Codacy Badge
+
+.. image:: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone.svg/?label=active+issues
+   :target: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone/?ref=repository-badge
+   :alt: Code quality: DeepSource
+
+.. image:: https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg
+   :target: https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors
+   :alt: GitHub contributors
+
+.. image:: https://img.shields.io/pypi/l/Saber-Clone.svg
    :target: https://www.gnu.org/licenses/lgpl-3.0.html
    :alt: LGPLv3 License
 
 .. image:: https://img.shields.io/badge/Support%20Chat-FateUnion-blue
    :target: https://t.me/ironbloodnations
    :alt: Join Support
+
+A modular telegram Python bot running on *python3* with an *sqlalchemy* database.
 
 Originally a marie fork - Saber has evolved further and was built to be more useful for Anime Chats.
 
