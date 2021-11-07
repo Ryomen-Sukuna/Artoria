@@ -10,6 +10,10 @@
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/actions/workflows/black.yml
    :alt: Black
 
+.. image:: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone.svg/?label=active+issues
+   :target: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone/?ref=repository-badge
+   :alt: Code quality: DeepSource
+
 .. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&logo=github&color=F10070
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master/
    :alt: Commit
@@ -26,19 +30,14 @@
    :target: https://www.codacy.com/app/Ryomen-Sukuna/Saber-Clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
    :alt: Codacy Badge
 
-.. image:: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone.svg/?label=active+issues
-   :target: https://deepsource.io/gh/Ryomen-Sukuna/Saber-Clone/?ref=repository-badge
-   :alt: Code quality: DeepSource
-
 .. image:: https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg
    :target: https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors
    :alt: GitHub contributors
 
-.. image:: https://img.shields.io/pypi/l/Saber-Clone.svg
-   :target: https://www.gnu.org/licenses/lgpl-3.0.html
-   :alt: LGPLv3 License
+.. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Saber-Clone
+   :target: https://gitlicense.com/license/Ryomen-Sukuna/Saber-Clone
 
-.. image:: https://img.shields.io/badge/Support%20Chat-FateUnion-blue
+.. image:: https://img.shields.io/badge/Support%20Chat-IronBlood-red
    :target: https://t.me/ironbloodnations
    :alt: Join Support
 
