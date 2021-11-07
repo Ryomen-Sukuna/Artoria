@@ -50,7 +50,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-            await is_register_admin(event.input_chat, event.message.sender_id)
+        await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(
             " Hai.. You are not admin..  You can't use this command.. But you can use in my pm"
@@ -80,7 +80,7 @@ async def img_sampler(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-            await is_register_admin(event.input_chat, event.message.sender_id)
+        await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(".. You are not admin.. use in bot  pm")
         return

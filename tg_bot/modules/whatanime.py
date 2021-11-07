@@ -72,7 +72,7 @@ async def whatanime(c: Client, m: Message):
         await reply.edit_text("Uploading...")
         with open(new_path, "rb") as file:
             async with session.post(
-                    "https://trace.moe/api/search", data={"image": file}
+                "https://trace.moe/api/search", data={"image": file}
             ) as resp:
                 json = await resp.json()
     if isinstance(json, str):
@@ -95,13 +95,13 @@ async def whatanime(c: Client, m: Message):
             similarity = match["similarity"]
             from_time = (
                 str(datetime.timedelta(seconds=match["from"]))
-                    .split(".", 1)[0]
-                    .rjust(8, "0")
+                .split(".", 1)[0]
+                .rjust(8, "0")
             )
             to_time = (
                 str(datetime.timedelta(seconds=match["to"]))
-                    .split(".", 1)[0]
-                    .rjust(8, "0")
+                .split(".", 1)[0]
+                .rjust(8, "0")
             )
             at_time = match["at"]
             text = f'<a href="https://anilist.co/anime/{anilist_id}">{title_romaji}</a>'
