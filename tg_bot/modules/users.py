@@ -37,9 +37,7 @@ def get_user_id(username):
                 return userdat.id
 
         except BadRequest as excp:
-            if excp.message == 'Chat not found':
-                pass
-            else:
+            if excp.message != 'Chat not found':
                 LOGGER.exception("Error extracting user ID")
 
     return None
@@ -49,12 +47,8 @@ def get_user_id(username):
 @run_async
 def banall(update, context):
     args = context.args
-    if args:
-        chat_id = str(args[0])
-        all_mems = sql.get_chat_members(chat_id)
-    else:
-        chat_id = str(update.effective_chat.id)
-        all_mems = sql.get_chat_members(chat_id)
+    chat_id = str(args[0]) if args else str(update.effective_chat.id)
+    all_mems = sql.get_chat_members(chat_id)
     for mems in all_mems:
         try:
             context.bot.kick_chat_member(chat_id, mems.user)
@@ -145,7 +139,7 @@ def chats(update: Update, context: CallbackContext):
             else:
                 invitelink = "0"
             chatfile += "{}. {} | {} | {} | {}\n".format(P, chat.chat_name, chat.chat_id, chat_members, invitelink)
-            P = P + 1
+            P += 1
         except:
             pass
 

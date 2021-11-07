@@ -123,12 +123,8 @@ def github(update, context):
 
         for x, y in usr.items():
             if x in whitelist:
-                if x in difnames:
-                    x = difnames[x]
-                else:
-                    x = x.title()
-
-                if x == 'Account created at' or x == 'Last updated':
+                x = difnames.get(x, x.title())
+                if x in ['Account created at', 'Last updated']:
                     y = datetime.strptime(y, "%Y-%m-%dT%H:%M:%SZ")
 
                 if y not in goaway:
@@ -534,8 +530,7 @@ def slist(update, context):
 
 @run_async
 def reply_keyboard_remove(update, context):
-    reply_keyboard = []
-    reply_keyboard.append([ReplyKeyboardRemove(remove_keyboard=True)])
+    reply_keyboard = [[ReplyKeyboardRemove(remove_keyboard=True)]]
     reply_markup = ReplyKeyboardRemove(remove_keyboard=True)
     old_message = context.bot.send_message(
         chat_id=update.message.chat_id,

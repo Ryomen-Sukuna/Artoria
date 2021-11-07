@@ -187,9 +187,7 @@ def gban(update: Update, context: CallbackContext):
             gbanned_chats += 1
 
         except BadRequest as excp:
-            if excp.message in GBAN_ERRORS:
-                pass
-            else:
+            if excp.message not in GBAN_ERRORS:
                 message.reply_text(f"Could not gban due to: {excp.message}")
                 if EVENT_LOGS:
                     bot.send_message(
@@ -221,10 +219,7 @@ def gban(update: Update, context: CallbackContext):
 
     if gban_time > 60:
         gban_time = round((gban_time / 60), 2)
-        message.reply_text("Done! Gbanned.", parse_mode=ParseMode.HTML)
-    else:
-        message.reply_text("Done! Gbanned.", parse_mode=ParseMode.HTML)
-
+    message.reply_text("Done! Gbanned.", parse_mode=ParseMode.HTML)
     try:
         bot.send_message(
             user_id,
@@ -311,9 +306,7 @@ def ungban(update: Update, context: CallbackContext):
                 ungbanned_chats += 1
 
         except BadRequest as excp:
-            if excp.message in UNGBAN_ERRORS:
-                pass
-            else:
+            if excp.message not in UNGBAN_ERRORS:
                 message.reply_text(f"Could not un-gban due to: {excp.message}")
                 if EVENT_LOGS:
                     bot.send_message(

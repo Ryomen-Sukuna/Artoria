@@ -593,10 +593,10 @@ def animestuffs(update, context):
     user = update.effective_user
     splitter = query.data.split('=')
     query_match = splitter[0]
-    callback_anime_data = splitter[1] 
+    callback_anime_data = splitter[1]
     if query_match == "xanime_watchlist":
         watchlist = list(REDIS.sunion(f'anime_watch_list{user.id}'))
-        if not callback_anime_data in watchlist:
+        if callback_anime_data not in watchlist:
             REDIS.sadd(f'anime_watch_list{user.id}', callback_anime_data)
             context.bot.answer_callback_query(query.id,
                                                 text=f"{callback_anime_data} is successfully added to your watch list.",
@@ -605,10 +605,10 @@ def animestuffs(update, context):
             context.bot.answer_callback_query(query.id,
                                                 text=f"{callback_anime_data} is already exists in your watch list!",
                                                 show_alert=True)
-            
+
     elif query_match == "xanime_fvrtchar":   
         fvrt_char = list(REDIS.sunion(f'anime_fvrtchar{user.id}'))
-        if not callback_anime_data in fvrt_char:
+        if callback_anime_data not in fvrt_char:
             REDIS.sadd(f'anime_fvrtchar{user.id}', callback_anime_data)
             context.bot.answer_callback_query(query.id,
                                                 text=f"{callback_anime_data} is successfully added to your favorite character.",
@@ -619,7 +619,7 @@ def animestuffs(update, context):
                                                 show_alert=True)
     elif query_match == "xanime_manga":   
         fvrt_char = list(REDIS.sunion(f'anime_mangaread{user.id}'))
-        if not callback_anime_data in fvrt_char:
+        if callback_anime_data not in fvrt_char:
             REDIS.sadd(f'anime_mangaread{user.id}', callback_anime_data)
             context.bot.answer_callback_query(query.id,
                                                 text=f"{callback_anime_data} is successfully added to your favorite character.",

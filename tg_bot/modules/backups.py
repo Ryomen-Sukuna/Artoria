@@ -71,7 +71,7 @@ def import_data(update, context):
 
         # Check if backup is this chat
         try:
-            if data.get(str(chat.id)) == None:
+            if data.get(str(chat.id)) is None:
                 if conn:
                     text = "Backup comes from another chat, I can't return another chat to chat *{}*".format(
                         chat_name
@@ -147,27 +147,21 @@ def export_data(update, context):
     jam = time.time()
     new_jam = jam + 10800
     checkchat = get_chat(chat_id, chat_data)
-    if checkchat.get("status"):
-        if jam <= int(checkchat.get("value")):
-            timeformatt = time.strftime(
-                "%H:%M:%S %d/%m/%Y", time.localtime(checkchat.get("value"))
-            )
-            update.effective_message.reply_text(
-                "You can only backup once a day!\nYou can backup again in about `{}`".format(
-                    timeformatt
-                ),
-                parse_mode=ParseMode.MARKDOWN,
-            )
-            return
-        if user.id != OWNER_ID:
-            put_chat(chat_id, new_jam, chat_data)
-    else:
-        if user.id != OWNER_ID:
-            put_chat(chat_id, new_jam, chat_data)
-
+    if checkchat.get("status") and jam <= int(checkchat.get("value")):
+        timeformatt = time.strftime(
+            "%H:%M:%S %d/%m/%Y", time.localtime(checkchat.get("value"))
+        )
+        update.effective_message.reply_text(
+            "You can only backup once a day!\nYou can backup again in about `{}`".format(
+                timeformatt
+            ),
+            parse_mode=ParseMode.MARKDOWN,
+        )
+        return
+    if user.id != OWNER_ID:
+        put_chat(chat_id, new_jam, chat_data)
     note_list = sql.get_all_chat_notes(chat_id)
     backup = {}
-    notes = {}
     # button = ""
     buttonlist = []
     namacat = ""
@@ -225,10 +219,9 @@ def export_data(update, context):
             )
         else:
             isicat += "{}<###splitter###>".format(note.value)
-    for x in range(count):
-        notes["#{}".format(namacat.split("<###splitter###>")[x])] = "{}".format(
+    notes = {"#{}".format(namacat.split("<###splitter###>")[x]): "{}".format(
             isicat.split("<###splitter###>")[x]
-        )
+        ) for x in range(count)}
     # Rules
     rules = rulessql.get_rules(chat_id)
     # Blacklist
@@ -327,9 +320,8 @@ def export_data(update, context):
         },
     }
     baccinfo = json.dumps(backup, indent=4)
-    f = open("{}.backup".format(chat_id), "w")
-    f.write(str(baccinfo))
-    f.close()
+    with open("{}.backup".format(chat_id), "w") as f:
+        f.write(str(baccinfo))
     context.bot.sendChatAction(current_chat_id, "upload_document")
     tgl = time.strftime("%H:%M:%S - %d/%m/%Y", time.localtime(time.time()))
     try:

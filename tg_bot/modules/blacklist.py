@@ -221,14 +221,10 @@ def blacklist_mode(update, context):
         chat_name = update.effective_message.chat.title
 
     if args:
-        if (
-            args[0].lower() == "off"
-            or args[0].lower() == "nothing"
-            or args[0].lower() == "no"
-        ):
+        if args[0].lower() in ["off", "nothing", "no"]:
             settypeblacklist = "do nothing"
             sql.set_blacklist_strength(chat_id, 0, "0")
-        elif args[0].lower() == "del" or args[0].lower() == "delete":
+        elif args[0].lower() in ["del", "delete"]:
             settypeblacklist = "will delete blacklisted message"
             sql.set_blacklist_strength(chat_id, 1, "0")
         elif args[0].lower() == "warn":
@@ -286,7 +282,7 @@ def blacklist_mode(update, context):
         else:
             text = "Changed blacklist mode: `{}`!".format(settypeblacklist)
         send_message(update.effective_message, text, parse_mode="markdown")
-        log_message = (
+        return (
             "<b>{}:</b>\n"
             "<b>Admin:</b> {}\n"
             "Changed the blacklist mode. will {}.".format(
@@ -295,7 +291,6 @@ def blacklist_mode(update, context):
                 settypeblacklist,
             )
         )
-        return log_message
     getmode, getvalue = sql.get_blacklist_setting(chat.id)
     if getmode == 0:
         settypeblacklist = "do nothing"
@@ -341,7 +336,7 @@ def del_blacklist(update, context):
     if not to_match:
         return
 
-    chat_id = str(chat.id)[1:] 
+    chat_id = str(chat.id)[1:]
     approve_list = list(REDIS.sunion(f'approve_list_{chat_id}'))
     target_user = mention_html(user.id, user.first_name)
     if target_user in approve_list:
@@ -422,9 +417,7 @@ def del_blacklist(update, context):
                     )
                     return
             except BadRequest as excp:
-                if excp.message == "Message to delete not found":
-                    pass
-                else:
+                if excp.message != "Message to delete not found":
                     bot.send_message(ERROR_DUMP, f"#BLACKLIST_ERROR \nChat : {chat.title} ({chat.id}) \n\nError while deleting blacklist message.")
             break
 

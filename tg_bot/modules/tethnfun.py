@@ -42,14 +42,15 @@ async def is_register_admin(chat, user):
         return None
 
 
-@register(pattern="^/google (.*)") 
+@register(pattern="^/google (.*)")
 async def _(event):
     if event.fwd_from:
         return
-    if event.is_group:
-     if not (await is_register_admin(event.input_chat, event.message.sender_id)):
-       await event.reply(" Hai.. You are not admin..  You can't use this command.. But you can use in my pm")
-       return
+    if event.is_group and not (
+        await is_register_admin(event.input_chat, event.message.sender_id)
+    ):
+        await event.reply(" Hai.. You are not admin..  You can't use this command.. But you can use in my pm")
+        return
     # SHOW_DESCRIPTION = False
     input_str = event.pattern_match.group(1) # + " -inurl:(htm|html|php|pls|txt) intitle:index.of \"last modified\" (mkv|mp4|avi|epub|pdf|mp3)"
     input_url = "https://bots.shrimadhavuk.me/search/?q={}".format(input_str)
@@ -61,28 +62,29 @@ async def _(event):
         url = result.get("url")
         description = result.get("description")
         last = html2text.html2text(description)
-        output_str += "[{}]({})\n{}\n".format(text, url, last)       
+        output_str += "[{}]({})\n{}\n".format(text, url, last)
     await event.reply("{}".format(output_str), link_preview=False, parse_mode='Markdown')
 
 @register(pattern="^/img (.*)")
 async def img_sampler(event):
-     if event.fwd_from:
+    if event.fwd_from:
+       return
+    if event.is_group and not (
+        await is_register_admin(event.input_chat, event.message.sender_id)
+    ):
+        await event.reply(".. You are not admin.. use in bot  pm")
         return
-     if event.is_group:
-       if not (await is_register_admin(event.input_chat, event.message.sender_id)):
-          await event.reply(".. You are not admin.. use in bot  pm")
-          return
-     query = event.pattern_match.group(1)
-     jit = f'"{query}"'
-     downloader.download(jit, limit=5, output_dir='store', adult_filter_off=False, force_replace=False, timeout=60)
-     os.chdir(f'./store/"{query}"')
-     types = ('*.png', '*.jpeg', '*.jpg') # the tuple of file types
-     files_grabbed = []
-     for files in types:
-         files_grabbed.extend(glob.glob(files))
-     await event.client.send_file(event.chat_id, files_grabbed, reply_to=event.id)
-     os.remove(files_grabbed)
-     os.chdir('./')
+    query = event.pattern_match.group(1)
+    jit = f'"{query}"'
+    downloader.download(jit, limit=5, output_dir='store', adult_filter_off=False, force_replace=False, timeout=60)
+    os.chdir(f'./store/"{query}"')
+    types = ('*.png', '*.jpeg', '*.jpg') # the tuple of file types
+    files_grabbed = []
+    for files in types:
+        files_grabbed.extend(glob.glob(files))
+    await event.client.send_file(event.chat_id, files_grabbed, reply_to=event.id)
+    os.remove(files_grabbed)
+    os.chdir('./')
 
 @register(pattern=r"^/getqr$")
 async def parseqr(qr_e):
@@ -93,11 +95,10 @@ async def parseqr(qr_e):
     downloaded_file_name = await qr_e.client.download_media(
         await qr_e.get_reply_message(), progress_callback=progress)
     url = "https://api.qrserver.com/v1/read-qr-code/?outputformat=json"
-    file = open(downloaded_file_name, "rb")
-    files = {"file": file}
-    resp = post(url, files=files).json()
-    qr_contents = resp[0]["symbol"][0]["data"]
-    file.close()
+    with open(downloaded_file_name, "rb") as file:
+        files = {"file": file}
+        resp = post(url, files=files).json()
+        qr_contents = resp[0]["symbol"][0]["data"]
     os.remove(downloaded_file_name)
     end = datetime.now()
     duration = (end - start).seconds
@@ -125,9 +126,7 @@ async def make_qr(qrcode):
             m_list = None
             with open(downloaded_file_name, "rb") as file:
                 m_list = file.readlines()
-            message = ""
-            for media in m_list:
-                message += media.decode("UTF-8") + "\r\n"
+            message = "".join(media.decode("UTF-8") + "\r\n" for media in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message

@@ -68,7 +68,7 @@ def new_fed(update, context):
                      "Please write the name of the federation!")
         return
     fednam = message.text.split(None, 1)[1]
-    if not fednam == '':
+    if fednam != '':
         fed_id = str(uuid.uuid4())
         fed_name = fednam
         LOGGER.info(fed_id)
@@ -209,18 +209,13 @@ def join_fed(update, context):
     administrators = chat.get_administrators()
     fed_id = sql.get_fed_id(chat.id)
 
-    if user.id in SUDO_USERS:
-        pass
-    else:
+    if user.id not in SUDO_USERS:
         for admin in administrators:
             status = admin.status
-            if status == "creator":
-                if str(admin.user.id) == str(user.id):
-                    pass
-                else:
-                    update.effective_message.reply_text(
-                        "Only group creators can use this command!")
-                    return
+            if status == "creator" and str(admin.user.id) != str(user.id):
+                update.effective_message.reply_text(
+                    "Only group creators can use this command!")
+                return
     if fed_id:
         message.reply_text("You cannot join two federations from one chat")
         return
@@ -239,13 +234,12 @@ def join_fed(update, context):
             return
 
         get_fedlog = sql.get_fed_log(args[0])
-        if get_fedlog:
-            if eval(get_fedlog):
-                bot.send_message(
-                    get_fedlog,
-                    "Chat *{}* has joined the federation *{}*".format(
-                        chat.title, getfed['fname']),
-                    parse_mode="markdown")
+        if get_fedlog and eval(get_fedlog):
+            bot.send_message(
+                get_fedlog,
+                "Chat *{}* has joined the federation *{}*".format(
+                    chat.title, getfed['fname']),
+                parse_mode="markdown")
 
         message.reply_text("This group has joined the federation: {}!".format(
             getfed['fname']))
@@ -270,13 +264,12 @@ def leave_fed(update, context):
     if getuser in 'creator' or user.id in SUDO_USERS:
         if sql.chat_leave_fed(chat.id) is True:
             get_fedlog = sql.get_fed_log(fed_id)
-            if get_fedlog:
-                if eval(get_fedlog):
-                    bot.send_message(
-                        get_fedlog,
-                        "Chat *{}* has left the federation *{}*".format(
-                            chat.title, fed_info['fname']),
-                        parse_mode="markdown")
+            if get_fedlog and eval(get_fedlog):
+                bot.send_message(
+                    get_fedlog,
+                    "Chat *{}* has left the federation *{}*".format(
+                        chat.title, fed_info['fname']),
+                    parse_mode="markdown")
             send_message(
                 update.effective_message,
                 "This group has left the federation {}!".format(
@@ -460,15 +453,13 @@ def fed_info(update, context):
     user = update.effective_user
     if args:
         fed_id = args[0]
-        info = sql.get_fed_info(fed_id)
     else:
         fed_id = sql.get_fed_id(chat.id)
         if not fed_id:
             send_message(update.effective_message,
                          "This group is not in any federation!")
             return
-        info = sql.get_fed_info(fed_id)
-
+    info = sql.get_fed_info(fed_id)
     if is_user_fed_admin(fed_id, user.id) is False:
         update.effective_message.reply_text(
             "Only a federation admin can do this!")
@@ -580,7 +571,7 @@ def fed_ban(update, context):
 
     fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user_id)
 
-    
+
     if not user_id:
         message.reply_text("You don't seem to be referring to a user")
         return
@@ -648,7 +639,7 @@ def fed_ban(update, context):
 
     if fban:
         fed_name = info['fname']
-        
+
         temp = sql.un_fban_user(fed_id, fban_user_id)
         if not temp:
             message.reply_text("Failed to update the reason for fedban!")
@@ -679,14 +670,13 @@ def fed_ban(update, context):
                  "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
         # If fedlog is set, then send message, except fedlog is current chat
         get_fedlog = sql.get_fed_log(fed_id)
-        if get_fedlog:
-            if int(get_fedlog) != int(chat.id):
-                bot.send_message(get_fedlog, "<b>FedBan reason updated</b>" \
-                    "\n<b>Federation:</b> {}" \
-                    "\n<b>Federation Admin:</b> {}" \
-                    "\n<b>User:</b> {}" \
-                    "\n<b>User ID:</b> <code>{}</code>" \
-                    "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
+        if get_fedlog and int(get_fedlog) != int(chat.id):
+            bot.send_message(get_fedlog, "<b>FedBan reason updated</b>" \
+                "\n<b>Federation:</b> {}" \
+                "\n<b>Federation Admin:</b> {}" \
+                "\n<b>User:</b> {}" \
+                "\n<b>User ID:</b> <code>{}</code>" \
+                "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
         for fedschat in fed_chats:
             try:
                 # Do not spam all fed chats
@@ -793,14 +783,13 @@ def fed_ban(update, context):
              "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
     # If fedlog is set, then send message, except fedlog is current chat
     get_fedlog = sql.get_fed_log(fed_id)
-    if get_fedlog:
-        if int(get_fedlog) != int(chat.id):
-            bot.send_message(get_fedlog, "<b>FedBan reason updated</b>" \
-                "\n<b>Federation:</b> {}" \
-                "\n<b>Federation Admin:</b> {}" \
-                "\n<b>User:</b> {}" \
-                "\n<b>User ID:</b> <code>{}</code>" \
-                "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
+    if get_fedlog and int(get_fedlog) != int(chat.id):
+        bot.send_message(get_fedlog, "<b>FedBan reason updated</b>" \
+            "\n<b>Federation:</b> {}" \
+            "\n<b>Federation Admin:</b> {}" \
+            "\n<b>User:</b> {}" \
+            "\n<b>User ID:</b> <code>{}</code>" \
+            "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
     chats_in_fed = 0
     for fedschat in fed_chats:
         chats_in_fed += 1
@@ -825,7 +814,6 @@ def fed_ban(update, context):
                     chat, excp.message))
         except TelegramError:
             pass
-
     # Also do not spamming all fed admins
         """
 		send_to_list(bot, FEDADMIN,
@@ -959,13 +947,12 @@ def unfban(update, context):
              "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
     # If fedlog is set, then send message, except fedlog is current chat
     get_fedlog = sql.get_fed_log(fed_id)
-    if get_fedlog:
-        if int(get_fedlog) != int(chat.id):
-            bot.send_message(get_fedlog, "<b>Un-FedBan</b>" \
-                "\n<b>Federation:</b> {}" \
-                "\n<b>Federation Admin:</b> {}" \
-                "\n<b>User:</b> {}" \
-                "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
+    if get_fedlog and int(get_fedlog) != int(chat.id):
+        bot.send_message(get_fedlog, "<b>Un-FedBan</b>" \
+            "\n<b>Federation:</b> {}" \
+            "\n<b>Federation Admin:</b> {}" \
+            "\n<b>User:</b> {}" \
+            "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
     unfbanned_in_chats = 0
     for fedchats in chat_list:
         unfbanned_in_chats += 1

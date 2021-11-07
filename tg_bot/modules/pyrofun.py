@@ -23,10 +23,8 @@ def yt_search(song):
     result = videosSearch.result()
     if not result:
         return False
-    else:
-        video_id = result["result"][0]["id"]
-        url = f"https://youtu.be/{video_id}"
-        return url
+    video_id = result["result"][0]["id"]
+    return f"https://youtu.be/{video_id}"
 
 
 def convert(speed):
@@ -67,7 +65,7 @@ async def song(client, message):
     yt = YouTube(video_link)
     audio = yt.streams.filter(only_audio=True).first()
     try:
-        download = audio.download(filename=f"{str(user_id)}")
+        download = audio.download(filename=f'{user_id}')
     except Exception as ex:
         await status.edit("Failed to download song")
         LOGGER.error(ex)
@@ -76,14 +74,15 @@ async def song(client, message):
     await pbot.send_chat_action(message.chat.id, "upload_audio")
     await pbot.send_audio(
         chat_id=message.chat.id,
-        audio=f"{str(user_id)}.mp3",
+        audio=f'{user_id}.mp3',
         duration=int(yt.length),
         title=str(yt.title),
         performer=str(yt.author),
         reply_to_message_id=message.message_id,
     )
+
     await status.delete()
-    os.remove(f"{str(user_id)}.mp3")
+    os.remove(f'{user_id}.mp3')
 
 
 
@@ -180,11 +179,9 @@ async def sed(c: Client, m: Message):
     replace_with = exp[2].replace(r'\/', '/')
     flags = exp[3] if len(exp) > 3 else ''
 
-    count = 1
     rflags = 0
 
-    if 'g' in flags:
-        count = 0
+    count = 0 if 'g' in flags else 1
     if 'i' in flags and 's' in flags:
         rflags = regex.I | regex.S
     elif 'i' in flags:
@@ -262,27 +259,27 @@ async def lookup(client, message):
     response = a["success"]
     if response == True:
         date = a["results"]["last_updated"]
-        stats = f"**◢ Intellivoid• SpamProtection Info**:\n"
+        stats = '**◢ Intellivoid• SpamProtection Info**:\n'
         stats += f' • **Updated on**: `{datetime.fromtimestamp(date).strftime("%Y-%m-%d %I:%M:%S %p")}`\n'
         stats += (
             f" • **Chat Info**: [Link](t.me/SpamProtectionBot/?start=00_{user.id})\n"
         )
 
         if a["results"]["attributes"]["is_potential_spammer"] == True:
-            stats += f" • **User**: `USERxSPAM`\n"
+            stats += ' • **User**: `USERxSPAM`\n'
         elif a["results"]["attributes"]["is_operator"] == True:
-            stats += f" • **User**: `USERxOPERATOR`\n"
+            stats += ' • **User**: `USERxOPERATOR`\n'
         elif a["results"]["attributes"]["is_agent"] == True:
-            stats += f" • **User**: `USERxAGENT`\n"
+            stats += ' • **User**: `USERxAGENT`\n'
         elif a["results"]["attributes"]["is_whitelisted"] == True:
-            stats += f" • **User**: `USERxWHITELISTED`\n"
+            stats += ' • **User**: `USERxWHITELISTED`\n'
 
         stats += f' • **Type**: `{a["results"]["entity_type"]}`\n'
         stats += (
             f' • **Language**: `{a["results"]["language_prediction"]["language"]}`\n'
         )
         stats += f' • **Language Probability**: `{a["results"]["language_prediction"]["probability"]}`\n'
-        stats += f"**Spam Prediction**:\n"
+        stats += '**Spam Prediction**:\n'
         stats += f' • **Ham Prediction**: `{a["results"]["spam_prediction"]["ham_prediction"]}`\n'
         stats += f' • **Spam Prediction**: `{a["results"]["spam_prediction"]["spam_prediction"]}`\n'
         stats += f'**Blacklisted**: `{a["results"]["attributes"]["is_blacklisted"]}`\n'

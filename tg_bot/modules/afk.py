@@ -84,31 +84,30 @@ def reply_afk(update: Update, context: CallbackContext):
                     return
                 chk_users.append(user_id)
 
-            if ent.type == MessageEntity.MENTION:
-                user_id = get_user_id(
-                    message.text[ent.offset : ent.offset + ent.length]
-                )
-                if not user_id:
-                    # Should never happen, since for a user to become AFK they must have spoken. Maybe changed username?
-                    return
-
-                if user_id in chk_users:
-                    return
-                chk_users.append(user_id)
-
-                try:
-                    chat = bot.get_chat(user_id)
-                except BadRequest:
-                    print(
-                        "Error: Could not fetch userid {} for AFK module".format(
-                            user_id
-                        )
-                    )
-                    return
-                fst_name = chat.first_name
-
-            else:
+            if ent.type != MessageEntity.MENTION:
                 return
+
+            user_id = get_user_id(
+                message.text[ent.offset : ent.offset + ent.length]
+            )
+            if not user_id:
+                # Should never happen, since for a user to become AFK they must have spoken. Maybe changed username?
+                return
+
+            if user_id in chk_users:
+                return
+            chk_users.append(user_id)
+
+            try:
+                chat = bot.get_chat(user_id)
+            except BadRequest:
+                print(
+                    "Error: Could not fetch userid {} for AFK module".format(
+                        user_id
+                    )
+                )
+                return
+            fst_name = chat.first_name
 
             check_afk(update, context, user_id, fst_name, userc_id)
 
@@ -123,18 +122,16 @@ def check_afk(update, context, user_id, fst_name, userc_id):
         user = sql.check_afk_status(user_id)
         afk_time = sql.get_afk_time(user_id)
         afk_since = get_readable_time((time.time() - afk_time))
+        if int(userc_id) == int(user_id):
+            return
         if not user.reason:
-            if int(userc_id) == int(user_id):
-                return
             res = "{} is afk since {}".format(fst_name, afk_since)
-            update.effective_message.reply_text(res)
         else:
-            if int(userc_id) == int(user_id):
-                return
             res = "{} is afk since {}\nReason: {}".format(
                 fst_name, afk_since, user.reason
             )
-            update.effective_message.reply_text(res)
+
+        update.effective_message.reply_text(res)
 
 
 def get_readable_time(seconds: int) -> str:
@@ -145,10 +142,7 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
