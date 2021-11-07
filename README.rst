@@ -17,31 +17,33 @@ A modular telegram Python bot running on *python3* with an *sqlalchemy* database
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
    :alt: Fork
 
-.. image:: https://app.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
-   :target: https://www.codacy.com/gh/Ryomen-Sukuna/Saber-Clone/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
+.. image:: https://api.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
+   :target: https://www.codacy.com/app/Ryomen-Sukuna/Saber-Clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
    :alt: Codacy Badge
 
 .. image:: https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg
    :target: https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors
    :alt: GitHub contributors
 
-.. image:: https://badges.frapsoft.com/os/v3/open-source.svg?v=102
-   :target: https://github.com/ellerbrock/open-source-badge/
-   :alt: Open Source Love
+.. image:: https://github.com/Ryomen-Sukuna/Saber-Clone/workflows/GitHub%20Actions/badge.svg
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/
+   :alt: Github Actions workflow
 
-..image:: https://img.shields.io/badge/License-GPLv3-blue.svg
-  :target: https://www.gnu.org/licenses/gpl-3.0
-  :alt: License: GPL v3
+.. image:: https://img.shields.io/pypi/l/python-telegram-bot.svg
+   :target: https://www.gnu.org/licenses/lgpl-3.0.html
+   :alt: LGPLv3 License
 
-..image:: https://img.shields.io/badge/Support%20Chat-FateUnion-blue
-  :target: https://t.me/ironbloodnations
-  :alt: Join Support
+.. image:: https://img.shields.io/badge/Support%20Chat-FateUnion-blue
+   :target: https://t.me/ironbloodnations
+   :alt: Join Support
 
 Originally a marie fork - Saber has evolved further and was built to be more useful for Anime Chats.
 
 Can be found on telegram as `Saber <https://t.me/saber_herobot>`_.
 
-# Fork at your own risks
+======================
+Fork at your own risks
+======================
 
 * Saber is originally forked from `Shoko <https://github.com/gizmostuffin/Shoko>`_.
 * The repo is still under development and its unstable.
