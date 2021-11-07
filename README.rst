@@ -1,4 +1,6 @@
+======
 Saber
+======
 
 .. image:: https://telegra.ph/file/b6fbf04a9018eac3a0308.jpg
    :align: center
@@ -53,12 +55,9 @@ Can be found on telegram as `Saber <https://t.me/saber_herobot>`_.
 Fork at your own risks
 ======================
 
-* Saber is originally forked from `Shoko <https://github.com/gizmostuffin/Shoko>`_.
+* Saber is originally forked from `Saber <https://github.com/Godzilla-0/saber-3>` and `Shoko <https://github.com/gizmostuffin/Shoko>`_.
 * The repo is still under development and its unstable.
 * Fork it at ur own risks.
 
-The Support group can be reached out to at `fate union <https://t.me/fateunion>`_, where you can ask for help setting up
+The Support group can be reached out to at `Iron Blood <https://t.me/ironbloodnations>`_, where you can ask for help setting up
 your bot, discover/request new features, report bugs, and stay in the loop whenever a new update is available. 
-
- 
-
