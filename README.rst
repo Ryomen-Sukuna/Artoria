@@ -55,7 +55,7 @@ Can be found on telegram as `Saber <https://t.me/saber_herobot>`_.
 Fork at your own risks
 ======================
 
-* Saber is originally forked from `Saber <https://github.com/Godzilla-0/saber-3>` and `Shoko <https://github.com/gizmostuffin/Shoko>`_.
+* Saber is originally forked from `Saber <https://github.com/Godzilla-0/saber-3>`_ and `Shoko <https://github.com/gizmostuffin/Shoko>`_.
 * The repo is still under development and its unstable.
 * Fork it at ur own risks.
 
