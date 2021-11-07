@@ -9,7 +9,8 @@
 # Saber bot - telegram
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cfb691a93a064d9ea753ef2b5fccf797)](https://www.codacy.com/manual/Ryomen-Sukuna/Saber-Clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hyper-ub/saber&amp;utm_campaign=Badge_Grade)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6)](https://www.codacy.com/gh/Ryomen-Sukuna/Saber-Clone/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade)
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors/)
 
 [![Open Source Love](https://badges.frapsoft.com/os/v3/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/) 
