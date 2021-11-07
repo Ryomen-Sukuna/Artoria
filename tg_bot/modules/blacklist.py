@@ -51,7 +51,6 @@ def blacklist(update, context):
         for trigger in all_blacklisted:
             filter_list += " - <code>{}</code>\n".format(html.escape(trigger))
 
-
     split_text = split_message(filter_list)
     for text in split_text:
         if filter_list == "Current blacklisted words in <b>{}</b>:\n".format(chat_name):
@@ -337,11 +336,10 @@ def del_blacklist(update, context):
         return
 
     chat_id = str(chat.id)[1:]
-    approve_list = list(REDIS.sunion(f'approve_list_{chat_id}'))
+    approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
     target_user = mention_html(user.id, user.first_name)
     if target_user in approve_list:
         return
-
 
     getmode, value = sql.get_blacklist_setting(chat.id)
 
@@ -418,7 +416,10 @@ def del_blacklist(update, context):
                     return
             except BadRequest as excp:
                 if excp.message != "Message to delete not found":
-                    bot.send_message(ERROR_DUMP, f"#BLACKLIST_ERROR \nChat : {chat.title} ({chat.id}) \n\nError while deleting blacklist message.")
+                    bot.send_message(
+                        ERROR_DUMP,
+                        f"#BLACKLIST_ERROR \nChat : {chat.title} ({chat.id}) \n\nError while deleting blacklist message.",
+                    )
             break
 
 

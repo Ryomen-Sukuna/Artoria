@@ -1,4 +1,3 @@
-
 import html
 import random, re
 import requests as r
@@ -21,18 +20,18 @@ import tg_bot.modules.helper_funcs.fun_strings as fun
 def truth(update, context):
     update.effective_message.reply_text(random.choice(fun.TRUTH))
 
+
 @run_async
 @typing_action
 def dare(update, context):
     update.effective_message.reply_text(random.choice(fun.DARE))
 
 
-#run
+# run
 @run_async
 @typing_action
 def runs(update, context):
     update.effective_message.reply_text(random.choice(fun.RUN_STRINGS))
-
 
 
 @run_async
@@ -103,7 +102,6 @@ def react(update: Update, context: CallbackContext):
     reply_text = reply_text(random.choice(REACTS))
 
 
-
 @run_async
 @typing_action
 def slap(update, context):
@@ -120,8 +118,8 @@ def slap(update, context):
         curr_user = "@" + escape_markdown(msg.from_user.username)
     else:
         curr_user = "[{}](tg://user?id={})".format(
-            msg.from_user.first_name, msg.from_user.id)
-        
+            msg.from_user.first_name, msg.from_user.id
+        )
 
     user_id = extract_user(update.effective_message, args)
     if user_id:
@@ -149,15 +147,22 @@ def slap(update, context):
     reply_text(repl, parse_mode=ParseMode.MARKDOWN)
 
 
-#sanitize a user - by @saitamarobot
+# sanitize a user - by @saitamarobot
 @run_async
 @typing_action
 def sanitize(update: Update, context: CallbackContext):
     message = update.effective_message
-    name = message.reply_to_message.from_user.first_name if message.reply_to_message else message.from_user.first_name
-    reply_animation = message.reply_to_message.reply_animation if message.reply_to_message else message.reply_animation
-    reply_animation(
-        random.choice(fun.GIFS), caption=f'*Sanitizes {name}*')
+    name = (
+        message.reply_to_message.from_user.first_name
+        if message.reply_to_message
+        else message.from_user.first_name
+    )
+    reply_animation = (
+        message.reply_to_message.reply_animation
+        if message.reply_to_message
+        else message.reply_animation
+    )
+    reply_animation(random.choice(fun.GIFS), caption=f"*Sanitizes {name}*")
 
 
 @run_async
@@ -203,7 +208,6 @@ def hug(update, context):
     repl = temp.format(user1=user1, user2=user2, hug=hug)
 
     reply_text(repl, parse_mode=ParseMode.MARKDOWN)
-
 
 
 @run_async
@@ -329,7 +333,6 @@ def gbam(update, context):
         user1 = curr_user
         user2 = bot.first_name
 
-
     if update.effective_message.chat.type == "private":
         return
     if int(user.id) in SUDO_USERS or int(user.id) in SUPPORT_USERS:
@@ -337,7 +340,6 @@ def gbam(update, context):
         reason = random.choice(fun.GBAM_REASON)
         gbam = gbamm.format(user1=user1, user2=user2, chatid=chat.id, reason=reason)
         context.bot.sendMessage(chat.id, gbam, parse_mode=ParseMode.HTML)
-
 
 
 @run_async
@@ -351,17 +353,18 @@ def shout(update, context):
     elif args:
         data = " ".join(args)
     else:
-        data = ("I need a message to meme")
+        data = "I need a message to meme"
 
     msg = "```"
-    result = [' '.join(list(data))]
+    result = [" ".join(list(data))]
     for pos, symbol in enumerate(data[1:]):
-        result.append(symbol + ' ' + '  ' * pos + symbol)
+        result.append(symbol + " " + "  " * pos + symbol)
     result = list("\n".join(result))
     result[0] = data[0]
     result = "".join(result)
     msg = "```\n" + result + "```"
     return update.effective_message.reply_text(msg, parse_mode="MARKDOWN")
+
 
 REACTS = (
     "ʘ‿ʘ",
@@ -463,6 +466,7 @@ REACTS = (
     r"¯\(°_o)/¯",
     "(｡◕‿◕｡)",
 )
+
 
 @run_async
 @typing_action
@@ -597,7 +601,7 @@ def stretch(update, context):
 def goodnight(update, context):
     message = update.effective_message
     first_name = update.effective_user.first_name
-    reply = f"Good Night! {escape_markdown(first_name)}" 
+    reply = f"Good Night! {escape_markdown(first_name)}"
     message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
 
@@ -644,7 +648,7 @@ goodmorning, good morning or goodnight, good night.
 Saber will reply random strings accordingly when these words are used!
 All regex filters can be disabled incase u don't want... like: /disable goodnight.
 
-""" 
+"""
 
 __mod_name__ = "Memes"
 
@@ -659,8 +663,8 @@ SHRUG_HANDLER = DisableAbleCommandHandler("shrug", shrug)
 DECIDE_HANDLER = DisableAbleMessageHandler(
     Filters.regex(r"(?i)^saber\?"), decide, friendly="decide"
 )
-ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse,pass_args=True)
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs ,pass_args=True)
+ABUSE_HANDLER = DisableAbleCommandHandler("abuse", abuse, pass_args=True)
+RUNS_HANDLER = DisableAbleCommandHandler("runs", runs, pass_args=True)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap)
 HUG_HANDLER = DisableAbleCommandHandler("hug", hug)
 GBUN_HANDLER = CommandHandler("gbun", gbun)
@@ -675,7 +679,9 @@ RECITE_HANDLER = DisableAbleCommandHandler("recite", recite)
 DICE_HANDLER = DisableAbleCommandHandler("roll", dice)
 YESNOWTF_HANDLER = DisableAbleCommandHandler("decide", yesnowtf)
 GDMORNING_HANDLER = DisableAbleMessageHandler(
-    Filters.regex(r"(?i)(goodmorning|good morning)"), goodmorning, friendly="goodmorning"
+    Filters.regex(r"(?i)(goodmorning|good morning)"),
+    goodmorning,
+    friendly="goodmorning",
 )
 GDNIGHT_HANDLER = DisableAbleMessageHandler(
     Filters.regex(r"(?i)(goodnight|good night)"), goodnight, friendly="goodnight"
@@ -708,7 +714,3 @@ dispatcher.add_handler(DICE_HANDLER)
 dispatcher.add_handler(YESNOWTF_HANDLER)
 dispatcher.add_handler(GDMORNING_HANDLER)
 dispatcher.add_handler(GDNIGHT_HANDLER)
-
-
-
-

@@ -61,14 +61,16 @@ def ban(update, context):
         return ""
 
     if user_id in [777000, 1087968824]:
-        message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot ban it!")
-        return ""            
+        message.reply_text(
+            str(user_id) + " is an account reserved for telegram, I cannot ban it!"
+        )
+        return ""
 
     log = (
         "<b>{}:</b>"
         "\n#BANNED"
         "\n<b>Admin:</b> {}"
-        "\n<b>User:</b> {} (<code>{}</code>)".format(   
+        "\n<b>User:</b> {} (<code>{}</code>)".format(
             html.escape(chat.title),
             mention_html(user.id, user.first_name),
             mention_html(member.user.id, member.user.first_name),
@@ -85,7 +87,7 @@ def ban(update, context):
             "Admin {} has successfully banned {} in <b>{}</b>!.".format(
                 mention_html(user.id, user.first_name),
                 mention_html(member.user.id, member.user.first_name),
-                html.escape(chat.title)
+                html.escape(chat.title),
             ),
             parse_mode=ParseMode.HTML,
         )
@@ -148,8 +150,10 @@ def temp_ban(update, context):
         return ""
 
     if user_id in [777000, 1087968824]:
-        message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot ban it!")
-        return ""  
+        message.reply_text(
+            str(user_id) + " is an account reserved for telegram, I cannot ban it!"
+        )
+        return ""
 
     if not reason:
         message.reply_text("You haven't specified a time to ban this user for!")
@@ -183,12 +187,16 @@ def temp_ban(update, context):
     try:
         chat.kick_member(user_id, until_date=bantime)
 
-        message.reply_text("Admin {} has successfully banned {} in <b>{}</b> for {}!".format(
+        message.reply_text(
+            "Admin {} has successfully banned {} in <b>{}</b> for {}!".format(
                 mention_html(user.id, user.first_name),
                 mention_html(member.user.id, member.user.first_name),
-                html.escape(chat.title), time_val),
-                               quote=False,
-                               parse_mode=ParseMode.HTML)
+                html.escape(chat.title),
+                time_val,
+            ),
+            quote=False,
+            parse_mode=ParseMode.HTML,
+        )
         return log
 
     except BadRequest as excp:
@@ -250,8 +258,10 @@ def kick(update, context):
         return ""
 
     if user_id in [777000, 1087968824]:
-        message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot kick it!")
-        return ""  
+        message.reply_text(
+            str(user_id) + " is an account reserved for telegram, I cannot kick it!"
+        )
+        return ""
 
     res = chat.unban_member(user_id)  # unban on current user = kick
     if res:
@@ -259,9 +269,10 @@ def kick(update, context):
         context.bot.sendMessage(
             chat.id,
             "Admin {} has successfully kicked {} in <b>{}</b>!".format(
-            mention_html(user.id, user.first_name),
-            mention_html(member.user.id, member.user.first_name),
-            html.escape(chat.title)),
+                mention_html(user.id, user.first_name),
+                mention_html(member.user.id, member.user.first_name),
+                html.escape(chat.title),
+            ),
             parse_mode=ParseMode.HTML,
         )
         log = (

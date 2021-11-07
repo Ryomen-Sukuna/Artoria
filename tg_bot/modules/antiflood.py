@@ -18,16 +18,15 @@ from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 FLOOD_GROUP = 3
 
 
-
 @run_async
 @loggable
 def check_flood(update, context) -> str:
     user = update.effective_user  # type: Optional[User]
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
-    
-    chat_id = str(chat.id)[1:] 
-    approve_list = list(REDIS.sunion(f'approve_list_{chat_id}'))
+
+    chat_id = str(chat.id)[1:]
+    approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
     target_user = mention_html(user.id, user.first_name)
     if target_user in approve_list:
         return
@@ -39,7 +38,7 @@ def check_flood(update, context) -> str:
     if is_user_admin(chat, user.id):
         sql.update_flood(chat.id, None)
         return ""
-    
+
     should_ban = sql.update_flood(chat.id, user.id)
     if not should_ban:
         return ""

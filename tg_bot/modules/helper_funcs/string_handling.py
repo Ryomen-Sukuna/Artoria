@@ -103,9 +103,7 @@ def markdown_parser(
             ):
                 continue
             # TODO: investigate possible offset bug when lots of emoji are present
-            res += _selective_escape(txt[prev:start] or "") + escape_markdown(
-                ent_text
-            )
+            res += _selective_escape(txt[prev:start] or "") + escape_markdown(ent_text)
 
         # code handling
         elif ent.type == "code":
@@ -150,7 +148,7 @@ def button_markdown_parser(
         else:
             note_data += markdown_note[prev:to_check]
             prev = match.start(1) - 1
-        
+
     note_data += markdown_note[prev:]
 
     return note_data, buttons
@@ -262,9 +260,7 @@ def extract_time(message, time_val):
             return ""
         return bantime
     message.reply_text(
-        "Invalid time type specified. Expected m,h, or d, got: {}".format(
-            time_val[-1]
-        )
+        "Invalid time type specified. Expected m,h, or d, got: {}".format(time_val[-1])
     )
     return ""
 

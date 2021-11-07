@@ -11,6 +11,7 @@ from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
 
+
 @run_async
 @send_action(ChatAction.RECORD_AUDIO)
 def gtts(update, context):
@@ -68,6 +69,7 @@ def spellcheck(update, context):
         update.effective_message.reply_text(
             "Reply to some message to get grammar corrected text!"
         )
+
 
 dispatcher.add_handler(DisableAbleCommandHandler("tts", gtts, pass_args=True))
 dispatcher.add_handler(DisableAbleCommandHandler("splcheck", spellcheck))

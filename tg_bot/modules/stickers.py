@@ -1,4 +1,3 @@
-
 import os
 import math
 import requests
@@ -14,31 +13,31 @@ from telegram.ext import run_async, CallbackContext
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, REDIS
-from tg_bot.modules.disable import DisableAbleCommandHandler 
+from tg_bot.modules.disable import DisableAbleCommandHandler
 
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
 
+
 @run_async
 def cb_sticker(update: Update, context: CallbackContext):
     msg = update.effective_message
-    split = msg.text.split(' ', 1)
+    split = msg.text.split(" ", 1)
     if len(split) == 1:
-        msg.reply_text('Provide Some Name To Search For Packs.')
+        msg.reply_text("Provide Some Name To Search For Packs.")
         return
     text = requests.get(combot_stickers_url + split[1]).text
-    soup = bs(text, 'lxml')
-    results = soup.find_all("a", {'class': "sticker-pack__btn"})
+    soup = bs(text, "lxml")
+    results = soup.find_all("a", {"class": "sticker-pack__btn"})
     titles = soup.find_all("div", "sticker-pack__title")
     if not results:
-        msg.reply_text('No Results Found! :(')
+        msg.reply_text("No Results Found! :(")
         return
     reply = f"Stickers for *{split[1]}*:"
     for result, title in zip(results, titles):
-        link = result['href']
+        link = result["href"]
         reply += f"\n• [{title.get_text()}]({link})"
     msg.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
-
 
 
 @run_async
@@ -50,7 +49,6 @@ def addsticker(update, context):
     packname = "a" + str(user.id) + "_by_" + context.bot.username
     packname_found = 0
     max_stickers = 120
-
 
     while packname_found == 0:
         try:
@@ -101,9 +99,9 @@ def addsticker(update, context):
             sticker_emoji = "🙂"
 
         adding_process = msg.reply_text(
-                    "<b>Your sticker will be added in few seconds, please wait...</b>",
-                    parse_mode=ParseMode.HTML
-                    )
+            "<b>Your sticker will be added in few seconds, please wait...</b>",
+            parse_mode=ParseMode.HTML,
+        )
 
         if not is_animated:
             try:
@@ -142,13 +140,13 @@ def addsticker(update, context):
                             )
                         ]
                     ]
-                    )
+                )
                 adding_process.edit_text(
                     f"<b>Your sticker has been added!</b>"
                     f"\nEmoji Is : {sticker_emoji}",
                     reply_markup=edited_keyboard,
-                    parse_mode=ParseMode.HTML
-                    )
+                    parse_mode=ParseMode.HTML,
+                )
 
             except OSError as e:
 
@@ -156,33 +154,30 @@ def addsticker(update, context):
                 return
 
             except TelegramError as e:
-                if (
-                    e.message
-                    == "Internal Server Error: sticker set not found (500)"
-                ):
+                if e.message == "Internal Server Error: sticker set not found (500)":
                     edited_keyboard = InlineKeyboardMarkup(
-                    [
                         [
-                            InlineKeyboardButton(
-                                text="View Pack", url=f"t.me/addstickers/{packname}"
+                            [
+                                InlineKeyboardButton(
+                                    text="View Pack", url=f"t.me/addstickers/{packname}"
                                 )
+                            ]
                         ]
-                    ]
                     )
                     msg.reply_text(
                         f"<b>Your sticker has been added!</b>"
                         f"\nEmoji Is : {sticker_emoji}",
                         reply_markup=edited_keyboard,
-                        parse_mode=ParseMode.HTML
-                        )
+                        parse_mode=ParseMode.HTML,
+                    )
                 elif e.message == "Invalid sticker emojis":
                     msg.reply_text("Invalid emoji(s).")
                 elif e.message == "Sticker_png_dimensions":
                     im.save(kangsticker, "PNG")
                     adding_process = msg.reply_text(
                         "<b>Your sticker will be added in few seconds, please wait...</b>",
-                        parse_mode=ParseMode.HTML
-                        )
+                        parse_mode=ParseMode.HTML,
+                    )
                     context.bot.add_sticker_to_set(
                         user_id=user.id,
                         name=packname,
@@ -190,20 +185,20 @@ def addsticker(update, context):
                         emojis=sticker_emoji,
                     )
                     edited_keyboard = InlineKeyboardMarkup(
-                    [
                         [
-                            InlineKeyboardButton(
-                                text="View Pack", url=f"t.me/addstickers/{packname}"
+                            [
+                                InlineKeyboardButton(
+                                    text="View Pack", url=f"t.me/addstickers/{packname}"
                                 )
+                            ]
                         ]
-                    ]
                     )
                     adding_process.edit_text(
                         f"<b>Your sticker has been added!</b>"
                         f"\nEmoji Is : {sticker_emoji}",
                         reply_markup=edited_keyboard,
-                        parse_mode=ParseMode.HTML
-                        )
+                        parse_mode=ParseMode.HTML,
+                    )
                 elif e.message == "Stickers_too_much":
                     msg.reply_text("Max packsize reached. Press F to pay respecc.")
                 elif e.message == "Stickerset_invalid":
@@ -254,36 +249,33 @@ def addsticker(update, context):
                         [
                             InlineKeyboardButton(
                                 text="View Pack", url=f"t.me/addstickers/{packname}"
-                                )
+                            )
                         ]
                     ]
-                    )
+                )
                 adding_process.edit_text(
+                    f"<b>Your sticker has been added!</b>"
+                    f"\nEmoji Is : {sticker_emoji}",
+                    reply_markup=edited_keyboard,
+                    parse_mode=ParseMode.HTML,
+                )
+            except TelegramError as e:
+                if e.message == "Internal Server Error: sticker set not found (500)":
+                    edited_keyboard = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    text="View Pack", url=f"t.me/addstickers/{packname}"
+                                )
+                            ]
+                        ]
+                    )
+                    adding_process.edit_text(
                         f"<b>Your sticker has been added!</b>"
                         f"\nEmoji Is : {sticker_emoji}",
                         reply_markup=edited_keyboard,
-                        parse_mode=ParseMode.HTML
-                        )
-            except TelegramError as e:
-                if (
-                    e.message
-                    == "Internal Server Error: sticker set not found (500)"
-                ):
-                    edited_keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                text="View Pack", url=f"t.me/addstickers/{packname}"
-                                )
-                        ]
-                    ]
+                        parse_mode=ParseMode.HTML,
                     )
-                    adding_process.edit_text(
-                            f"<b>Your sticker has been added!</b>"
-                            f"\nEmoji Is : {sticker_emoji}",
-                            reply_markup=edited_keyboard,
-                            parse_mode=ParseMode.HTML
-                            )
                 elif e.message == "Invalid sticker emojis":
                     msg.reply_text("Invalid emoji(s).")
                 elif e.message == "Stickerset_invalid":
@@ -337,35 +329,31 @@ def addsticker(update, context):
                 emojis=sticker_emoji,
             )
             edited_keyboard = InlineKeyboardMarkup(
+                [
                     [
-                        [
-                            InlineKeyboardButton(
-                                text="View Pack", url=f"t.me/addstickers/{packname}"
-                                )
-                        ]
-                    ]
-                    )
-            adding_process.edit_text(
-                        f"<b>Your sticker has been added!</b>"
-                        f"\nEmoji Is : {sticker_emoji}",
-                        reply_markup=edited_keyboard,
-                        parse_mode=ParseMode.HTML
+                        InlineKeyboardButton(
+                            text="View Pack", url=f"t.me/addstickers/{packname}"
                         )
+                    ]
+                ]
+            )
+            adding_process.edit_text(
+                f"<b>Your sticker has been added!</b>" f"\nEmoji Is : {sticker_emoji}",
+                reply_markup=edited_keyboard,
+                parse_mode=ParseMode.HTML,
+            )
         except OSError as e:
             msg.reply_text("I can only kang images m8.")
             print(e)
             return
         except TelegramError as e:
-            if (
-                e.message
-                == "Internal Server Error: sticker set not found (500)"
-            ):
+            if e.message == "Internal Server Error: sticker set not found (500)":
                 msg.reply_text(
                     f"<b>Your sticker has been added!</b>"
                     f"\nEmoji Is : {sticker_emoji}",
                     reply_markup=edited_keyboard,
-                    parse_mode=ParseMode.HTML
-                    )
+                    parse_mode=ParseMode.HTML,
+                )
             elif e.message == "Invalid sticker emojis":
                 msg.reply_text("Invalid emoji(s).")
             elif e.message == "Sticker_png_dimensions":
@@ -381,23 +369,23 @@ def addsticker(update, context):
                         [
                             InlineKeyboardButton(
                                 text="View Pack", url=f"t.me/addstickers/{packname}"
-                                )
+                            )
                         ]
                     ]
-                    )
+                )
                 adding_process.edit_text(
-                            f"<b>Your sticker has been added!</b>"
-                            f"\nEmoji Is : {sticker_emoji}",
-                            reply_markup=edited_keyboard,
-                            parse_mode=ParseMode.HTML
-                            )
+                    f"<b>Your sticker has been added!</b>"
+                    f"\nEmoji Is : {sticker_emoji}",
+                    reply_markup=edited_keyboard,
+                    parse_mode=ParseMode.HTML,
+                )
             elif e.message == "Stickers_too_much":
                 msg.reply_text("Max packsize reached. Press F to pay respecc.")
             elif e.message == "Stickerset_invalid":
                 makepack_internal(
                     update,
                     context,
-                    msg, 
+                    msg,
                     user,
                     sticker_emoji,
                     packname,
@@ -419,18 +407,11 @@ def addsticker(update, context):
             packs = f"t.me/addstickers/{packname}"
 
         edited_keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                text="View Pack", url=f"{packs}"
-                                )
-                        ]
-                    ]
-                    )
-        msg.reply_text(packs_text   ,
-                       reply_markup=edited_keyboard,
-                       parse_mode=ParseMode.MARKDOWN
-                       )
+            [[InlineKeyboardButton(text="View Pack", url=f"{packs}")]]
+        )
+        msg.reply_text(
+            packs_text, reply_markup=edited_keyboard, parse_mode=ParseMode.MARKDOWN
+        )
     if os.path.isfile("kangsticker.png"):
         os.remove("kangsticker.png")
     elif os.path.isfile("kangsticker.tgs"):
@@ -451,18 +432,14 @@ def makepack_internal(
     name = user.first_name
     name = name[:50]
     keyboard = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                                text="View Pack", url=f"{packname}"
-                                )
-                ]
-            ]
-            )
+        [[InlineKeyboardButton(text="View Pack", url=f"{packname}")]]
+    )
     try:
         extra_version = " " + str(packnum) if packnum > 0 else ""
         if png_sticker:
-            sticker_pack_name = f"{name}'s stic-pack (@{context.bot.username})" + extra_version
+            sticker_pack_name = (
+                f"{name}'s stic-pack (@{context.bot.username})" + extra_version
+            )
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
@@ -471,7 +448,9 @@ def makepack_internal(
                 emojis=emoji,
             )
         if tgs_sticker:
-            sticker_pack_name = f"{name}'s ani-pack (@{context.bot.username})" + extra_version
+            sticker_pack_name = (
+                f"{name}'s ani-pack (@{context.bot.username})" + extra_version
+            )
             success = context.bot.create_new_sticker_set(
                 user.id,
                 packname,
@@ -488,11 +467,11 @@ def makepack_internal(
                 "\n\nYou can now reply to images, stickers and animated sticker with /addsticker to add them to your pack"
                 "\n\n<b>Send /findpacks to find any sticker pack.</b>",
                 reply_markup=keyboard,
-                parse_mode=ParseMode.HTML 
+                parse_mode=ParseMode.HTML,
             )
         else:
             msg.reply_text(
-                f"{context.bot.first_name} was blocked by you.", 
+                f"{context.bot.first_name} was blocked by you.",
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
@@ -507,14 +486,15 @@ def makepack_internal(
 
     if success:
         msg.reply_text(
-                "<b>Your Sticker Pack has been created!</b>"
-                "\n\nYou can now reply to images, stickers and animated sticker with /addsticker to add them to your pack"
-                "\n\n<b>Send /findpacks to find sticker pack.</b>",
-                reply_markup=keyboard,
-                parse_mode=ParseMode.HTML
-            )
+            "<b>Your Sticker Pack has been created!</b>"
+            "\n\nYou can now reply to images, stickers and animated sticker with /addsticker to add them to your pack"
+            "\n\n<b>Send /findpacks to find sticker pack.</b>",
+            reply_markup=keyboard,
+            parse_mode=ParseMode.HTML,
+        )
     else:
         msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
+
 
 @run_async
 def getsticker(update, context):
@@ -567,20 +547,20 @@ def stickerid(update, context):
             parse_mode=ParseMode.HTML,
         )
 
+
 @run_async
 def delsticker(update, context):
     msg = update.effective_message
     if msg.reply_to_message and msg.reply_to_message.sticker:
         file_id = msg.reply_to_message.sticker.file_id
         context.bot.delete_sticker_from_set(file_id)
-        msg.reply_text(
-            "Deleted!"
-        )
+        msg.reply_text("Deleted!")
     else:
         update.effective_message.reply_text(
             "Please reply to sticker message to del sticker"
         )
-    
+
+
 @run_async
 def add_fvrtsticker(update, context):
     bot = context.bot
@@ -593,71 +573,71 @@ def add_fvrtsticker(update, context):
         get_s_name = message.reply_to_message.sticker.set_name
         get_s_name_title = get_s_name if not query else query
         if get_s_name is None:
-            message.reply_text(
-                "Sticker is invalid!"
-            )
+            message.reply_text("Sticker is invalid!")
         sticker_url = f"https://t.me/addstickers/{get_s_name}"
         sticker_m = "<a href='{}'>{}</a>".format(sticker_url, get_s_name_title)
-        check_pack = REDIS.hexists(f'fvrt_stickers2_{user.id}', get_s_name_title)
+        check_pack = REDIS.hexists(f"fvrt_stickers2_{user.id}", get_s_name_title)
         if check_pack is False:
-            REDIS.hset(f'fvrt_stickers2_{user.id}', get_s_name_title, sticker_m)
+            REDIS.hset(f"fvrt_stickers2_{user.id}", get_s_name_title, sticker_m)
             message.reply_text(
                 f"<code>{sticker_m}</code> has been succesfully added into your favorite sticker packs list!",
-                parse_mode=ParseMode.HTML
+                parse_mode=ParseMode.HTML,
             )
         else:
             message.reply_text(
                 f"<code>{sticker_m}</code> is already exist in your favorite sticker packs list!",
-                parse_mode=ParseMode.HTML
+                parse_mode=ParseMode.HTML,
             )
 
     else:
-        message.reply_text(
-            'Reply to any sticker!'
-        )  
+        message.reply_text("Reply to any sticker!")
+
 
 @run_async
-def list_fvrtsticker(update, context): 
-    message = update.effective_message  
-    chat = update.effective_chat 
-    user = update.effective_user 
-    fvrt_stickers_list = REDIS.hvals(f'fvrt_stickers2_{user.id}')
+def list_fvrtsticker(update, context):
+    message = update.effective_message
+    chat = update.effective_chat
+    user = update.effective_user
+    fvrt_stickers_list = REDIS.hvals(f"fvrt_stickers2_{user.id}")
     fvrt_stickers_list.sort()
     fvrt_stickers_list = "\n• ".join(fvrt_stickers_list)
-    if fvrt_stickers_list: 
+    if fvrt_stickers_list:
         message.reply_text(
-            "{}'s favorite sticker packs:\n• {}".format(user.first_name,
-                                                  fvrt_stickers_list),
-            parse_mode=ParseMode.HTML
-        ) 
-    else:
-        message.reply_text(
-            "You haven't added any sticker yet."
+            "{}'s favorite sticker packs:\n• {}".format(
+                user.first_name, fvrt_stickers_list
+            ),
+            parse_mode=ParseMode.HTML,
         )
+    else:
+        message.reply_text("You haven't added any sticker yet.")
+
 
 @run_async
-def remove_fvrtsticker(update, context): 
+def remove_fvrtsticker(update, context):
     message = update.effective_message
     chat = update.effective_chat
     user = update.effective_user
     args = context.args
     del_stick = " ".join(args)
     if not del_stick:
-        message.reply_text("Please give a your favorite sticker pack name to remove from your list.")
+        message.reply_text(
+            "Please give a your favorite sticker pack name to remove from your list."
+        )
         return
-    del_check = REDIS.hexists(f'fvrt_stickers2_{user.id}', del_stick)
+    del_check = REDIS.hexists(f"fvrt_stickers2_{user.id}", del_stick)
     if del_check is not False:
-        REDIS.hdel(f'fvrt_stickers2_{user.id}',del_stick)
+        REDIS.hdel(f"fvrt_stickers2_{user.id}", del_stick)
         message.reply_text(
             f"<code>{del_stick}</code> has been succesfully deleted from your list.",
-            parse_mode=ParseMode.HTML
+            parse_mode=ParseMode.HTML,
         )
     else:
         message.reply_text(
             f"<code>{del_stick}</code> doesn't exist in your favorite sticker pack list.",
-            parse_mode=ParseMode.HTML
+            parse_mode=ParseMode.HTML,
         )
-        
+
+
 __help__ = """
 Stickers made easy with stickers module!
 
@@ -675,12 +655,18 @@ Stickers made easy with stickers module!
 """
 
 __mod_name__ = "Stickers"
-KANG_HANDLER = DisableAbleCommandHandler("steal" , addsticker, pass_args=True)
+KANG_HANDLER = DisableAbleCommandHandler("steal", addsticker, pass_args=True)
 DEL_HANDLER = DisableAbleCommandHandler("remove", delsticker)
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
-ADD_FSTICKER_HANDLER = DisableAbleCommandHandler(["addfsticker","afs"], add_fvrtsticker, pass_args=True)
-REMOVE_FSTICKER_HANDLER = DisableAbleCommandHandler(["removefsticker","rfs"], remove_fvrtsticker, pass_args=True)
-MY_FSTICKERS_HANDLER = DisableAbleCommandHandler(["myfsticker","mfs"], list_fvrtsticker)
+ADD_FSTICKER_HANDLER = DisableAbleCommandHandler(
+    ["addfsticker", "afs"], add_fvrtsticker, pass_args=True
+)
+REMOVE_FSTICKER_HANDLER = DisableAbleCommandHandler(
+    ["removefsticker", "rfs"], remove_fvrtsticker, pass_args=True
+)
+MY_FSTICKERS_HANDLER = DisableAbleCommandHandler(
+    ["myfsticker", "mfs"], list_fvrtsticker
+)
 GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
 FIND_STICKERS_HANDLER = DisableAbleCommandHandler("stickers", cb_sticker)
 

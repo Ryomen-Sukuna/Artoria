@@ -5,6 +5,7 @@ from pyrogram.types import User, Message
 from pyrogram.errors import PeerIdInvalid
 from tg_bot import pbot
 
+
 def ReplyCheck(message: Message):
     reply_id = None
 
@@ -16,6 +17,7 @@ def ReplyCheck(message: Message):
 
     return reply_id
 
+
 infotext = (
     "**[{full_name}](tg://user?id={user_id})**\n"
     " * UserID: `{user_id}`\n"
@@ -23,29 +25,34 @@ infotext = (
     " * Last Name: `{last_name}`\n"
     " * Username: `{username}`\n"
     " * Last Online: `{last_online}`\n"
-    " * Bio: {bio}")
+    " * Bio: {bio}"
+)
+
 
 def LastOnline(user: User):
     if user.is_bot:
         return ""
-    if user.status == 'recently':
+    if user.status == "recently":
         return "Recently"
-    if user.status == 'within_week':
+    if user.status == "within_week":
         return "Within the last week"
-    if user.status == 'within_month':
+    if user.status == "within_month":
         return "Within the last month"
-    if user.status == 'long_time_ago':
+    if user.status == "long_time_ago":
         return "A long time ago :("
-    if user.status == 'online':
+    if user.status == "online":
         return "Currently Online"
-    if user.status == 'offline':
-        return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
+    if user.status == "offline":
+        return datetime.fromtimestamp(user.status.date).strftime(
+            "%a, %d %b %Y, %H:%M:%S"
+        )
 
 
 def FullName(user: User):
     return user.first_name + " " + user.last_name if user.last_name else user.first_name
 
-@pbot.on_message(filters.command('whois'))
+
+@pbot.on_message(filters.command("whois"))
 async def whois(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:

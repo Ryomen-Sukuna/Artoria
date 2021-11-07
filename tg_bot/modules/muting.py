@@ -42,9 +42,7 @@ def mute(update, context):
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(
-            "You don't seem to be referring to a user."
-        )
+        message.reply_text("You don't seem to be referring to a user.")
         return ""
 
     if user_id == context.bot.id:
@@ -52,8 +50,10 @@ def mute(update, context):
         return ""
 
     if user_id in [777000, 1087968824]:
-        message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot mute it!")
-        return ""  
+        message.reply_text(
+            str(user_id) + " is an account reserved for telegram, I cannot mute it!"
+        )
+        return ""
 
     member = chat.get_member(int(user_id))
 
@@ -66,20 +66,25 @@ def mute(update, context):
                 chat.id, user_id, permissions=ChatPermissions(can_send_messages=False)
             )
             reply_msg = "*{}* (`{}`) has been muted in *{}*.".format(
-                member.user.first_name,
-                member.user.id, chat.title) 
+                member.user.first_name, member.user.id, chat.title
+            )
 
-            message.reply_text(reply_msg,
-                               reply_markup=InlineKeyboardMarkup(
-                                   [
-                                       [
-                                           InlineKeyboardButton(text="Unmute", callback_data=f"muteb_mute={user_id}"),
-                                           InlineKeyboardButton(text="Delete", callback_data="muteb_del")  
-                                        ]
-                                    ]
-                                   ),
-                               parse_mode=ParseMode.MARKDOWN
-                               )
+            message.reply_text(
+                reply_msg,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="Unmute", callback_data=f"muteb_mute={user_id}"
+                            ),
+                            InlineKeyboardButton(
+                                text="Delete", callback_data="muteb_del"
+                            ),
+                        ]
+                    ]
+                ),
+                parse_mode=ParseMode.MARKDOWN,
+            )
             return (
                 "<b>{}:</b>"
                 "\n#MUTE"
@@ -116,9 +121,7 @@ def unmute(update, context):
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text(
-            "You don't seem to be referring to a user."
-        )
+        message.reply_text("You don't seem to be referring to a user.")
         return ""
 
     member = chat.get_member(int(user_id))
@@ -130,11 +133,11 @@ def unmute(update, context):
         )
 
     elif (
-            member.can_send_messages
-            and member.can_send_media_messages
-            and member.can_send_other_messages
-            and member.can_add_web_page_previews
-        ):
+        member.can_send_messages
+        and member.can_send_media_messages
+        and member.can_send_other_messages
+        and member.can_add_web_page_previews
+    ):
         message.reply_text("This user already has the right to speak.")
     else:
         context.bot.restrict_chat_member(
@@ -151,8 +154,10 @@ def unmute(update, context):
                 can_add_web_page_previews=True,
             ),
         )
-        message.reply_text(f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
-                           parse_mode=ParseMode.MARKDOWN)
+        message.reply_text(
+            f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
+            parse_mode=ParseMode.MARKDOWN,
+        )
         return (
             "<b>{}:</b>"
             "\n#UNMUTE"
@@ -207,8 +212,10 @@ def temp_mute(update, context):
         return ""
 
     if user_id in [777000, 1087968824]:
-        message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot mute it!")
-        return ""  
+        message.reply_text(
+            str(user_id) + " is an account reserved for telegram, I cannot mute it!"
+        )
+        return ""
 
     if not reason:
         message.reply_text("You haven't specified a time to mute this user for!")
@@ -247,16 +254,24 @@ def temp_mute(update, context):
                 permissions=ChatPermissions(can_send_messages=False),
             )
             reply_msg = "*{}* (`{}`) has been muted in *{}* for {}!.".format(
-                member.user.first_name,
-                member.user.id, chat.title,
-                time_val) 
-            message.reply_text(reply_msg,
-                               reply_markup=InlineKeyboardMarkup(
-                                   [[InlineKeyboardButton(text="Unmute", callback_data=f"muteb_mute={user_id}"),
-                                     InlineKeyboardButton(text="Delete", callback_data="muteb_del")]]
-                                   ),
-                               parse_mode=ParseMode.MARKDOWN
-                               )
+                member.user.first_name, member.user.id, chat.title, time_val
+            )
+            message.reply_text(
+                reply_msg,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="Unmute", callback_data=f"muteb_mute={user_id}"
+                            ),
+                            InlineKeyboardButton(
+                                text="Delete", callback_data="muteb_del"
+                            ),
+                        ]
+                    ]
+                ),
+                parse_mode=ParseMode.MARKDOWN,
+            )
             return log
         message.reply_text("This user is already muted.")
 
@@ -277,6 +292,7 @@ def temp_mute(update, context):
 
     return ""
 
+
 @run_async
 @bot_admin
 @loggable
@@ -290,9 +306,11 @@ def muteb_callback(update, context):
         if query_match == "muteb_mute":
             user_id = splitter[1]
             if not is_user_admin(chat, int(user.id)):
-                context.bot.answer_callback_query(query.id,
-                                                text="You don't have enough rights to unmute people",
-                                                show_alert=True)
+                context.bot.answer_callback_query(
+                    query.id,
+                    text="You don't have enough rights to unmute people",
+                    show_alert=True,
+                )
                 return ""
             member = chat.get_member(int(user_id))
 
@@ -319,11 +337,11 @@ def muteb_callback(update, context):
                             can_add_web_page_previews=True,
                         ),
                     )
-                    query.message.edit_text(f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
-                           parse_mode=ParseMode.MARKDOWN)
-                    context.bot.answer_callback_query(query.id,
-                                          text="Unmuted!"
-                                          )
+                    query.message.edit_text(
+                        f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
+                        parse_mode=ParseMode.MARKDOWN,
+                    )
+                    context.bot.answer_callback_query(query.id, text="Unmuted!")
                     return (
                         "<b>{}:</b>"
                         "\n#UNMUTE"
@@ -337,17 +355,16 @@ def muteb_callback(update, context):
 
     else:
         if not is_user_admin(chat, int(user.id)):
-            context.bot.answer_callback_query(query.id,
-                                              text="You don't have enough rights to delete this message.",
-                                              show_alert=True)
+            context.bot.answer_callback_query(
+                query.id,
+                text="You don't have enough rights to delete this message.",
+                show_alert=True,
+            )
             return ""
         query.message.delete()
-        context.bot.answer_callback_query(query.id,
-                                          text="Deleted!"
-                                          )
+        context.bot.answer_callback_query(query.id, text="Deleted!")
         return ""
-        
-        
+
 
 MUTE_HANDLER = CommandHandler("mute", mute, pass_args=True, filters=Filters.group)
 UNMUTE_HANDLER = CommandHandler("unmute", unmute, pass_args=True, filters=Filters.group)

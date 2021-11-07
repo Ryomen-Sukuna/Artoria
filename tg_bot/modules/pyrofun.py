@@ -15,8 +15,9 @@ from pyrogram.types import Message
 
 
 DART_E_MOJI = "🎯"
-FOOTBALL_E_MOJI="⚽"
-E_MOJI="🎰"
+FOOTBALL_E_MOJI = "⚽"
+E_MOJI = "🎰"
+
 
 def yt_search(song):
     videosSearch = VideosSearch(song, limit=1)
@@ -30,11 +31,12 @@ def yt_search(song):
 def convert(speed):
     return round(int(speed) / 1048576, 2)
 
+
 def speed_convert(size):
     """Hi human, you can't read bytes?"""
     power = 2 ** 10
     zero = 0
-    units = {0: '', 1: 'Kb/s', 2: 'Mb/s', 3: 'Gb/s', 4: 'Tb/s'}
+    units = {0: "", 1: "Kb/s", 2: "Mb/s", 3: "Gb/s", 4: "Tb/s"}
     while size > power:
         size /= power
         zero += 1
@@ -65,7 +67,7 @@ async def song(client, message):
     yt = YouTube(video_link)
     audio = yt.streams.filter(only_audio=True).first()
     try:
-        download = audio.download(filename=f'{user_id}')
+        download = audio.download(filename=f"{user_id}")
     except Exception as ex:
         await status.edit("Failed to download song")
         LOGGER.error(ex)
@@ -74,7 +76,7 @@ async def song(client, message):
     await pbot.send_chat_action(message.chat.id, "upload_audio")
     await pbot.send_audio(
         chat_id=message.chat.id,
-        audio=f'{user_id}.mp3',
+        audio=f"{user_id}.mp3",
         duration=int(yt.length),
         title=str(yt.title),
         performer=str(yt.author),
@@ -82,24 +84,25 @@ async def song(client, message):
     )
 
     await status.delete()
-    os.remove(f'{user_id}.mp3')
+    os.remove(f"{user_id}.mp3")
 
 
-
-@pbot.on_message(filters.command('basket'))
+@pbot.on_message(filters.command("basket"))
 async def basket(c: Client, m: Message):
     await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🏀")
 
-@pbot.on_message(filters.command('dice'))
+
+@pbot.on_message(filters.command("dice"))
 async def dice(c: Client, m: Message):
     dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id)
-    await dicen.reply_text(f"The dice stopped at the number {dicen.dice.value}", quote=True)
+    await dicen.reply_text(
+        f"The dice stopped at the number {dicen.dice.value}", quote=True
+    )
 
-@pbot.on_message(
-    filters.command("dart")
-)
+
+@pbot.on_message(filters.command("dart"))
 async def throw_dart(client, message):
-    """ /dart an @AnimatedDart """
+    """/dart an @AnimatedDart"""
     rep_mesg_id = message.message_id
     if message.reply_to_message:
         rep_mesg_id = message.reply_to_message.message_id
@@ -107,15 +110,13 @@ async def throw_dart(client, message):
         chat_id=message.chat.id,
         emoji=DART_E_MOJI,
         disable_notification=True,
-        reply_to_message_id=rep_mesg_id
+        reply_to_message_id=rep_mesg_id,
     )
 
 
-@pbot.on_message(
-    filters.command("football")
-)
+@pbot.on_message(filters.command("football"))
 async def throw_football(client, message):
-    """ /football an @Animatedfootball """
+    """/football an @Animatedfootball"""
     rep_mesg_id = message.message_id
     if message.reply_to_message:
         rep_mesg_id = message.reply_to_message.message_id
@@ -123,70 +124,74 @@ async def throw_football(client, message):
         chat_id=message.chat.id,
         emoji=FOOTBALL_E_MOJI,
         disable_notification=True,
-        reply_to_message_id=rep_mesg_id
+        reply_to_message_id=rep_mesg_id,
     )
 
 
 @pbot.on_message(filters.command("dinfo") & filters.private)
 async def ids_private(c: Client, m: Message):
-    await m.reply_text("<b>Info:</b>\n\n"
-                       "<b>Name:</b> <code>{first_name} {last_name}</code>\n"
-                       "<b>Username:</b> @{username}\n"
-                       "<b>User ID:</b> <code>{user_id}</code>\n"
-                       "<b>Language:</b> {lang}\n"
-                       "<b>Chat type:</b> {chat_type}".format(
-                           first_name=m.from_user.first_name,
-                           last_name=m.from_user.last_name or "",
-                           username=m.from_user.username,
-                           user_id=m.from_user.id,
-                           lang=m.from_user.language_code,
-                           chat_type=m.chat.type
-                       ),
-                       parse_mode="HTML")
+    await m.reply_text(
+        "<b>Info:</b>\n\n"
+        "<b>Name:</b> <code>{first_name} {last_name}</code>\n"
+        "<b>Username:</b> @{username}\n"
+        "<b>User ID:</b> <code>{user_id}</code>\n"
+        "<b>Language:</b> {lang}\n"
+        "<b>Chat type:</b> {chat_type}".format(
+            first_name=m.from_user.first_name,
+            last_name=m.from_user.last_name or "",
+            username=m.from_user.username,
+            user_id=m.from_user.id,
+            lang=m.from_user.language_code,
+            chat_type=m.chat.type,
+        ),
+        parse_mode="HTML",
+    )
 
 
 @pbot.on_message(filters.command("dinfo") & filters.group)
 async def ids(c: Client, m: Message):
     data = m.reply_to_message or m
-    await m.reply_text("<b>Info:</b>\n\n"
-                       "<b>Name:</b> <code>{first_name} {last_name}</code>\n"
-                       "<b>Username:</b> @{username}\n"
-                       "<b>User ID:</b> <code>{user_id}</code>\n"
-                       "<b>Datacenter:</b> {user_dc}\n"
-                       "<b>Language:</b> {lang}\n\n"
-                       "<b>Chat name:</b> <code>{chat_title}</code>\n"
-                       "<b>Chat username:</b> @{chat_username}\n"
-                       "<b>Chat ID:</b> <code>{chat_id}</code>\n"
-                       "<b>Chat type:</b> {chat_type}".format(
-                           first_name=html.escape(data.from_user.first_name),
-                           last_name=html.escape(data.from_user.last_name or ""),
-                           username=data.from_user.username,
-                           user_id=data.from_user.id,
-                           user_dc=data.from_user.dc_id,
-                           lang=data.from_user.language_code or "-",
-                           chat_title=m.chat.title,
-                           chat_username=m.chat.username,
-                           chat_id=m.chat.id,
-                           chat_type=m.chat.type
-                       ),
-                       parse_mode="HTML")
+    await m.reply_text(
+        "<b>Info:</b>\n\n"
+        "<b>Name:</b> <code>{first_name} {last_name}</code>\n"
+        "<b>Username:</b> @{username}\n"
+        "<b>User ID:</b> <code>{user_id}</code>\n"
+        "<b>Datacenter:</b> {user_dc}\n"
+        "<b>Language:</b> {lang}\n\n"
+        "<b>Chat name:</b> <code>{chat_title}</code>\n"
+        "<b>Chat username:</b> @{chat_username}\n"
+        "<b>Chat ID:</b> <code>{chat_id}</code>\n"
+        "<b>Chat type:</b> {chat_type}".format(
+            first_name=html.escape(data.from_user.first_name),
+            last_name=html.escape(data.from_user.last_name or ""),
+            username=data.from_user.username,
+            user_id=data.from_user.id,
+            user_dc=data.from_user.dc_id,
+            lang=data.from_user.language_code or "-",
+            chat_title=m.chat.title,
+            chat_username=m.chat.username,
+            chat_id=m.chat.id,
+            chat_type=m.chat.type,
+        ),
+        parse_mode="HTML",
+    )
 
 
-@pbot.on_message(filters.regex(r'^s/(.+)?/(.+)?(/.+)?') & filters.reply)
+@pbot.on_message(filters.regex(r"^s/(.+)?/(.+)?(/.+)?") & filters.reply)
 async def sed(c: Client, m: Message):
-    exp = regex.split(r'(?<![^\\]\\)/', m.text)
+    exp = regex.split(r"(?<![^\\]\\)/", m.text)
     pattern = exp[1]
-    replace_with = exp[2].replace(r'\/', '/')
-    flags = exp[3] if len(exp) > 3 else ''
+    replace_with = exp[2].replace(r"\/", "/")
+    flags = exp[3] if len(exp) > 3 else ""
 
     rflags = 0
 
-    count = 0 if 'g' in flags else 1
-    if 'i' in flags and 's' in flags:
+    count = 0 if "g" in flags else 1
+    if "i" in flags and "s" in flags:
         rflags = regex.I | regex.S
-    elif 'i' in flags:
+    elif "i" in flags:
         rflags = regex.I
-    elif 's' in flags:
+    elif "s" in flags:
         rflags = regex.S
 
     text = m.reply_to_message.text or m.reply_to_message.caption
@@ -196,20 +201,18 @@ async def sed(c: Client, m: Message):
 
     try:
         res = regex.sub(
-            pattern,
-            replace_with,
-            text,
-            count=count,
-            flags=rflags,
-            timeout=1)
+            pattern, replace_with, text, count=count, flags=rflags, timeout=1
+        )
     except TimeoutError:
         await m.reply_text("Oops, your regex pattern ran for too long.")
     except regex.error as e:
         await m.reply_text(str(e))
     else:
-        await c.send_message(m.chat.id, f'<pre>{html.escape(res)}</pre>',
-                             reply_to_message_id=m.reply_to_message.message_id)
-
+        await c.send_message(
+            m.chat.id,
+            f"<pre>{html.escape(res)}</pre>",
+            reply_to_message_id=m.reply_to_message.message_id,
+        )
 
 
 class AioHttp:
@@ -259,27 +262,27 @@ async def lookup(client, message):
     response = a["success"]
     if response == True:
         date = a["results"]["last_updated"]
-        stats = '**◢ Intellivoid• SpamProtection Info**:\n'
+        stats = "**◢ Intellivoid• SpamProtection Info**:\n"
         stats += f' • **Updated on**: `{datetime.fromtimestamp(date).strftime("%Y-%m-%d %I:%M:%S %p")}`\n'
         stats += (
             f" • **Chat Info**: [Link](t.me/SpamProtectionBot/?start=00_{user.id})\n"
         )
 
         if a["results"]["attributes"]["is_potential_spammer"] == True:
-            stats += ' • **User**: `USERxSPAM`\n'
+            stats += " • **User**: `USERxSPAM`\n"
         elif a["results"]["attributes"]["is_operator"] == True:
-            stats += ' • **User**: `USERxOPERATOR`\n'
+            stats += " • **User**: `USERxOPERATOR`\n"
         elif a["results"]["attributes"]["is_agent"] == True:
-            stats += ' • **User**: `USERxAGENT`\n'
+            stats += " • **User**: `USERxAGENT`\n"
         elif a["results"]["attributes"]["is_whitelisted"] == True:
-            stats += ' • **User**: `USERxWHITELISTED`\n'
+            stats += " • **User**: `USERxWHITELISTED`\n"
 
         stats += f' • **Type**: `{a["results"]["entity_type"]}`\n'
         stats += (
             f' • **Language**: `{a["results"]["language_prediction"]["language"]}`\n'
         )
         stats += f' • **Language Probability**: `{a["results"]["language_prediction"]["probability"]}`\n'
-        stats += '**Spam Prediction**:\n'
+        stats += "**Spam Prediction**:\n"
         stats += f' • **Ham Prediction**: `{a["results"]["spam_prediction"]["ham_prediction"]}`\n'
         stats += f' • **Spam Prediction**: `{a["results"]["spam_prediction"]["spam_prediction"]}`\n'
         stats += f'**Blacklisted**: `{a["results"]["attributes"]["is_blacklisted"]}`\n'
@@ -294,6 +297,7 @@ async def lookup(client, message):
         await message.reply_text("`cannot reach SpamProtection API`")
         await sleep(3)
 
-@pbot.on_message(filters.command('casino'))
+
+@pbot.on_message(filters.command("casino"))
 async def casino(c: Client, m: Message):
     await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎰")

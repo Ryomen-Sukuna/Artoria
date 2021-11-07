@@ -4,6 +4,7 @@ import asyncio
 from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
+
 # Check if user has admin rights
 async def is_administrator(user_id: int, message):
     admin = False
@@ -22,7 +23,9 @@ async def purge(event):
     start = time.perf_counter()
     msgs = []
 
-    if not await is_administrator(user_id=event.sender_id, message=event) and event.from_id not in [1087968824]:                           
+    if not await is_administrator(
+        user_id=event.sender_id, message=event
+    ) and event.from_id not in [1087968824]:
         await event.reply("You're Not An Admin!")
         return
 
@@ -64,7 +67,9 @@ async def purge(event):
 @client.on(events.NewMessage(pattern="^[!/]del$"))
 async def delete_msg(event):
 
-    if not await is_administrator(user_id=event.sender_id, message=event) and event.from_id not in [1087968824]:
+    if not await is_administrator(
+        user_id=event.sender_id, message=event
+    ) and event.from_id not in [1087968824]:
         await event.reply("You're not an admin!")
         return
 

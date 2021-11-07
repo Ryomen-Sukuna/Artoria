@@ -8,6 +8,7 @@ from tg_bot.modules.users import get_user_id
 from telethon.tl.types import MessageEntityMentionName
 from telethon.tl.functions.users import GetFullUserRequest
 
+
 def id_from_reply(message):
     prev_message = message.reply_to_message
     if not prev_message:
@@ -167,20 +168,24 @@ def extract_unt_fedban(
 def extract_user_fban(message: Message, args: List[str]) -> Optional[int]:
     return extract_unt_fedban(message, args)[0]
 
+
 async def get_user(event):
-    """ Get the user from argument or replied message. """
+    """Get the user from argument or replied message."""
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         if previous_message:
             if not previous_message.forward:
                 replied_user = await event.client(
-                    GetFullUserRequest(previous_message.from_id))
+                    GetFullUserRequest(previous_message.from_id)
+                )
             else:
                 try:
                     user_id = previous_message.forward.sender.id
                     replied_user = await event.client(GetFullUserRequest(user_id))
                 except Exception:
-                    replied_user = await event.reply("This user's got his profile private. Ain't no peeping allowed.")
+                    replied_user = await event.reply(
+                        "This user's got his profile private. Ain't no peeping allowed."
+                    )
     else:
         user = event.pattern_match.group(1)
         user = user.split(" ")
@@ -196,19 +201,15 @@ async def get_user(event):
             if event.message.entities is not None:
                 probable_user_mention_entity = event.message.entities[0]
 
-                if isinstance(probable_user_mention_entity,
-                            MessageEntityMentionName):
+                if isinstance(probable_user_mention_entity, MessageEntityMentionName):
                     user_id = probable_user_mention_entity.user_id
                     replied_user = await event.client(GetFullUserRequest(user_id))
                     return replied_user
             try:
                 user_object = await event.client.get_entity(user)
-                replied_user = await event.client(
-                    GetFullUserRequest(user_object.id))
+                replied_user = await event.client(GetFullUserRequest(user_object.id))
             except (TypeError, ValueError) as err:
                 await event.reply(str(err))
                 return None
 
     return replied_user
-
-
