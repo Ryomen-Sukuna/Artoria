@@ -1,9 +1,9 @@
 ![cruel](https://telegra.ph/file/b6fbf04a9018eac3a0308.jpg)
 
 <p align="center">
-    <a href="https://github.com/hyper-ub/saber/commits/master"><img src="https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070" alt="Commit" /></a>
-    <a href="https://github.com/hyper-ub/saber/stargazers"><img src="https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&style=flat-square&logo=github&color=F10070" alt="Stars" /></a>
-    <a href="https://github.com/hyper-ub/saber/network/members"><img src="https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&style=flat-square&logo=github&color=F10070" alt="Fork" /></a>
+    <a href="https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master"><img src="https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070" alt="Commit" /></a>
+    <a href="https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers"><img src="https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&style=flat-square&logo=github&color=F10070" alt="Stars" /></a>
+    <a href="https://github.com/Ryomen-Sukuna/Saber-Clone/network/members"><img src="https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&style=flat-square&logo=github&color=F10070" alt="Fork" /></a>
 </p>
 
 # Saber bot - telegram
