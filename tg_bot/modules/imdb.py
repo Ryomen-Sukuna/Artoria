@@ -1,17 +1,18 @@
+import re
+
 import bs4
 import requests
-import re
-from tg_bot.events import register
-from tg_bot import client
 from telethon import types
 from telethon.tl import functions
+
+from tg_bot import client
+from tg_bot.events import register
 
 langi = "en"
 
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
         return isinstance(
             (
                 await client(functions.channels.GetParticipantRequest(chat, user))
@@ -19,7 +20,6 @@ async def is_register_admin(chat, user):
             (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
         )
     if isinstance(chat, types.InputPeerChat):
-
         ui = await client.get_peer_id(user)
         ps = (
             await client(functions.messages.GetFullChatRequest(chat.chat_id))
@@ -50,7 +50,7 @@ async def imdb(e):
         odds = soup.findAll("tr", "odd")
         mov_title = odds[0].findNext("td").findNext("td").text
         mov_link = (
-            "http://www.imdb.com/" + odds[0].findNext("td").findNext("td").a["href"]
+                "http://www.imdb.com/" + odds[0].findNext("td").findNext("td").a["href"]
         )
         page1 = requests.get(mov_link)
         soup = bs4.BeautifulSoup(page1.content, "lxml")
@@ -100,7 +100,7 @@ async def imdb(e):
             mov_rating = "Not available"
         await e.reply(
             "<a href=" + poster + ">&#8203;</a>"
-            "<b>Title : </b><code>"
+                                  "<b>Title : </b><code>"
             + mov_title
             + "</code>\n<code>"
             + mov_details

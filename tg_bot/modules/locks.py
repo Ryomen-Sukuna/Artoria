@@ -1,13 +1,12 @@
 import html
 
+from alphabet_detector import AlphabetDetector
 from telegram import Message, Chat, ParseMode, MessageEntity
 from telegram import TelegramError, ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
-
-from alphabet_detector import AlphabetDetector
 
 import tg_bot.modules.sql.locks_sql as sql
 from tg_bot import (
@@ -19,7 +18,9 @@ from tg_bot import (
     LOGGER,
     REDIS,
 )
+from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
+from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
     can_delete,
     is_user_admin,
@@ -28,12 +29,8 @@ from tg_bot.modules.helper_funcs.chat_status import (
     user_admin,
 )
 from tg_bot.modules.log_channel import loggable
-from tg_bot.modules.connection import connected
-
-from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 
 ad = AlphabetDetector()
-
 
 OFFICERS = [OWNER_ID] + DEV_USERS + SUDO_USERS + SUPPORT_USERS
 
@@ -45,7 +42,7 @@ LOCK_TYPES = {
     "contact": Filters.contact,
     "photo": Filters.photo,
     "url": Filters.entity(MessageEntity.URL)
-    | Filters.caption_entity(MessageEntity.URL),
+           | Filters.caption_entity(MessageEntity.URL),
     "bots": Filters.status_update.new_chat_members,
     "forward": Filters.forwarded,
     "game": Filters.game,
@@ -55,7 +52,6 @@ LOCK_TYPES = {
     "button": "button",
     "inline": "inline",
 }
-
 
 LOCK_CHAT_RESTRICTION = {
     "all": {
@@ -107,14 +103,14 @@ REST_GROUP = 2
 
 # NOT ASYNC
 def restr_members(
-    bot,
-    update,
-    chat_id,
-    members,
-    messages=False,
-    media=False,
-    other=False,
-    previews=False,
+        bot,
+        update,
+        chat_id,
+        members,
+        messages=False,
+        media=False,
+        other=False,
+        previews=False,
 ):
     for mem in members:
         user = update.effective_user
@@ -135,7 +131,7 @@ def restr_members(
 
 # NOT ASYNC
 def unrestr_members(
-    bot, chat_id, members, messages=True, media=True, other=True, previews=True
+        bot, chat_id, members, messages=True, media=True, other=True, previews=True
 ):
     for mem in members:
         try:
@@ -171,8 +167,8 @@ def lock(update, context) -> str:
     user = update.effective_user
 
     if (
-        can_delete(chat, context.bot.id)
-        or update.effective_message.chat.type == "private"
+            can_delete(chat, context.bot.id)
+            or update.effective_message.chat.type == "private"
     ):
         if len(args) >= 1:
             ltype = args[0].lower()
@@ -397,10 +393,10 @@ def del_lockables(update, context):
             continue
         if lockable == "button":
             if (
-                sql.is_locked(chat.id, lockable)
-                and can_delete(chat, context.bot.id)
-                and message.reply_markup
-                and message.reply_markup.inline_keyboard
+                    sql.is_locked(chat.id, lockable)
+                    and can_delete(chat, context.bot.id)
+                    and message.reply_markup
+                    and message.reply_markup.inline_keyboard
             ):
                 try:
                     message.delete()
@@ -411,10 +407,10 @@ def del_lockables(update, context):
             continue
         if lockable == "inline":
             if (
-                sql.is_locked(chat.id, lockable)
-                and can_delete(chat, context.bot.id)
-                and message
-                and message.via_bot
+                    sql.is_locked(chat.id, lockable)
+                    and can_delete(chat, context.bot.id)
+                    and message
+                    and message.via_bot
             ):
                 try:
                     message.delete()
@@ -424,9 +420,9 @@ def del_lockables(update, context):
                 break
             continue
         if (
-            filter(update)
-            and sql.is_locked(chat.id, lockable)
-            and can_delete(chat, context.bot.id)
+                filter(update)
+                and sql.is_locked(chat.id, lockable)
+                and can_delete(chat, context.bot.id)
         ):
             if lockable == "bots":
                 new_members = update.effective_message.new_chat_members

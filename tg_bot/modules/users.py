@@ -1,10 +1,6 @@
 from io import BytesIO
 from time import sleep
 
-import tg_bot.modules.sql.users_sql as sql
-from tg_bot import DEV_USERS, LOGGER, OWNER_ID, dispatcher
-from tg_bot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
-from tg_bot.modules.sql.users_sql import get_all_users
 from telegram import TelegramError, Update
 from telegram.error import BadRequest
 from telegram.ext import (
@@ -14,6 +10,11 @@ from telegram.ext import (
     MessageHandler,
     run_async,
 )
+
+import tg_bot.modules.sql.users_sql as sql
+from tg_bot import DEV_USERS, LOGGER, OWNER_ID, dispatcher
+from tg_bot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
+from tg_bot.modules.sql.users_sql import get_all_users
 
 USERS_GROUP = 4
 CHAT_GROUP = 5
@@ -177,7 +178,6 @@ def __migrate__(old_chat_id, new_chat_id):
 
 __help__ = ""  # no help string
 
-
 BANALL_HANDLER = CommandHandler(
     "banall", banall, pass_args=True, filters=Filters.user(OWNER_ID)
 )
@@ -187,7 +187,6 @@ BROADCAST_HANDLER = CommandHandler(
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group, chat_checker)
 CHATLIST_HANDLER = CommandHandler("chatlist", chats)
-
 
 dispatcher.add_handler(BANALL_HANDLER)
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)

@@ -1,12 +1,14 @@
 import datetime
 import textwrap
+
 import jikanpy
 import requests
-from telegram.utils.helpers import mention_html
-from tg_bot import OWNER_ID, SUDO_USERS, REDIS, dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
+from telegram.utils.helpers import mention_html
+
+from tg_bot import OWNER_ID, SUDO_USERS, REDIS, dispatcher
+from tg_bot.modules.disable import DisableAbleCommandHandler
 
 info_btn = "More Information"
 prequel_btn = "⬅️"
@@ -33,11 +35,11 @@ def t(milliseconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " Days, ") if days else "")
-        + ((str(hours) + " Hours, ") if hours else "")
-        + ((str(minutes) + " Minutes, ") if minutes else "")
-        + ((str(seconds) + " Seconds, ") if seconds else "")
-        + ((str(milliseconds) + " ms, ") if milliseconds else "")
+            ((str(days) + " Days, ") if days else "")
+            + ((str(hours) + " Hours, ") if hours else "")
+            + ((str(minutes) + " Minutes, ") if minutes else "")
+            + ((str(seconds) + " Seconds, ") if seconds else "")
+            + ((str(milliseconds) + " ms, ") if milliseconds else "")
     )
     return tmp[:-2]
 
@@ -217,9 +219,9 @@ def anime(update, context):
                 trailer = "https://youtu.be/" + trailer_id
         description = (
             json.get("description", "N/A")
-            .replace("<i>", "")
-            .replace("</i>", "")
-            .replace("<br>", "")
+                .replace("<i>", "")
+                .replace("</i>", "")
+                .replace("<br>", "")
         )
         msg += shorten(description, info)
         image = info.replace("anilist.co/anime/", "img.anili.st/media/")

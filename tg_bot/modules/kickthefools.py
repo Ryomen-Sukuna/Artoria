@@ -1,7 +1,7 @@
-from telethon.tl.types import UserStatusLastMonth, UserStatusLastWeek, ChatBannedRights
-from tg_bot.events import register
-from telethon import *
 from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import UserStatusLastMonth, UserStatusLastWeek, ChatBannedRights
+
+from tg_bot.events import register
 
 
 @register(pattern="^/kickthefools")

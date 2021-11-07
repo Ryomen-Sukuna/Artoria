@@ -8,9 +8,9 @@ from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.rules_sql as sql
 from tg_bot import dispatcher
+from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import user_admin
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
-from tg_bot.modules.helper_funcs.alternate import typing_action
 
 
 @run_async

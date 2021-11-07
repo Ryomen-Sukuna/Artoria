@@ -1,6 +1,12 @@
 import html
 from typing import Optional
 
+from telegram import Chat, Message, ParseMode, User, ChatPermissions
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters, MessageHandler
+from telegram.ext.dispatcher import run_async
+from telegram.utils.helpers import mention_html, mention_markdown
+
 import tg_bot.modules.sql.blsticker_sql as sql
 from tg_bot import LOGGER, REDIS, dispatcher
 from tg_bot.modules.connection import connected
@@ -9,14 +15,8 @@ from tg_bot.modules.helper_funcs.alternate import send_message
 from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from tg_bot.modules.helper_funcs.misc import split_message
 from tg_bot.modules.helper_funcs.string_handling import extract_time
-
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.warns import warn
-from telegram import Chat, Message, ParseMode, User, ChatPermissions
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters, MessageHandler
-from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html, mention_markdown
 
 
 @run_async
@@ -51,7 +51,7 @@ def blackliststicker(update, context):
     split_text = split_message(sticker_list)
     for text in split_text:
         if sticker_list == "<b>List blacklisted stickers currently in {}:</b>\n".format(
-            chat_name
+                chat_name
         ).format(chat_name):
             send_message(
                 update.effective_message,

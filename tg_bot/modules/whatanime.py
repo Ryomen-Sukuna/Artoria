@@ -1,15 +1,17 @@
-import os
-import time
-import html
-import aiohttp
 import asyncio
 import datetime
+import html
+import os
 import tempfile
-from urllib.parse import quote as urlencode
-from decimal import Decimal
+import time
 from datetime import timedelta
+from decimal import Decimal
+from urllib.parse import quote as urlencode
+
+import aiohttp
 from pyrogram import Client, filters
 from pyrogram.types import Message
+
 from tg_bot import pbot
 
 session = aiohttp.ClientSession()
@@ -25,7 +27,7 @@ def format_bytes(size):
     while size > power:
         size /= power
         n += 1
-    return f"{size:.2f} {power_labels[n]+'B'}"
+    return f"{size:.2f} {power_labels[n] + 'B'}"
 
 
 def return_progress_string(current, total):
@@ -70,7 +72,7 @@ async def whatanime(c: Client, m: Message):
         await reply.edit_text("Uploading...")
         with open(new_path, "rb") as file:
             async with session.post(
-                "https://trace.moe/api/search", data={"image": file}
+                    "https://trace.moe/api/search", data={"image": file}
             ) as resp:
                 json = await resp.json()
     if isinstance(json, str):
@@ -93,13 +95,13 @@ async def whatanime(c: Client, m: Message):
             similarity = match["similarity"]
             from_time = (
                 str(datetime.timedelta(seconds=match["from"]))
-                .split(".", 1)[0]
-                .rjust(8, "0")
+                    .split(".", 1)[0]
+                    .rjust(8, "0")
             )
             to_time = (
                 str(datetime.timedelta(seconds=match["to"]))
-                .split(".", 1)[0]
-                .rjust(8, "0")
+                    .split(".", 1)[0]
+                    .rjust(8, "0")
             )
             at_time = match["at"]
             text = f'<a href="https://anilist.co/anime/{anilist_id}">{title_romaji}</a>'

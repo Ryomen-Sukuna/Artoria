@@ -1,5 +1,11 @@
 # Module to blacklist users and prevent them from using commands by @TheRealPhoenix
 import html
+
+from telegram import ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext, CommandHandler, run_async
+from telegram.utils.helpers import mention_html
+
 import tg_bot.modules.sql.blacklistusers_sql as sql
 from tg_bot import (
     DEV_USERS,
@@ -12,13 +18,9 @@ from tg_bot import (
 from tg_bot.modules.helper_funcs.chat_status import dev_plus
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.log_channel import gloggable
-from telegram import ParseMode, Update
-from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler, run_async
-from telegram.utils.helpers import mention_html
 
 BLACKLISTWHITELIST = (
-    [OWNER_ID] + DEV_USERS + SUDO_USERS + SUPPORT_USERS + WHITELIST_USERS
+        [OWNER_ID] + DEV_USERS + SUDO_USERS + SUPPORT_USERS + WHITELIST_USERS
 )
 BLABLEUSERS = [OWNER_ID] + DEV_USERS
 
@@ -91,7 +93,6 @@ def unbl_user(update: Update, context: CallbackContext) -> str:
         raise
 
     if sql.is_user_blacklisted(user_id):
-
         sql.unblacklist_user(user_id)
         message.reply_text("*notices user*")
         log_message = (

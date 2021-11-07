@@ -1,7 +1,12 @@
-from PIL import Image, ImageOps, ImageEnhance
-from io import BytesIO
 from enum import Enum
-import aiohttp, asyncio, math, argparse
+from io import BytesIO
+
+import aiohttp
+import argparse
+import asyncio
+import math
+from PIL import Image, ImageOps, ImageEnhance
+
 
 class DeepfryTypes(Enum):
     """
@@ -20,7 +25,8 @@ class Colours:
 
 # TODO: Replace face recognition API with something like OpenCV.
 
-async def deepfry(img: Image, *, token: str=None, url_base: str='westcentralus', session: aiohttp.ClientSession=None, type=DeepfryTypes.RED) -> Image:
+async def deepfry(img: Image, *, token: str = None, url_base: str = 'westcentralus',
+                  session: aiohttp.ClientSession = None, type=DeepfryTypes.RED) -> Image:
     """
     Deepfry an image.
     
@@ -37,7 +43,7 @@ async def deepfry(img: Image, *, token: str=None, url_base: str='westcentralus',
         raise ValueError(f'Unknown deepfry type "{type}", expected a value from deeppyer.DeepfryTypes')
 
     if token:
-        req_url = f'https://{url_base}.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true' # WHY THE FUCK IS THIS SO LONG
+        req_url = f'https://{url_base}.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true'  # WHY THE FUCK IS THIS SO LONG
         headers = {
             'Content-Type': 'application/octet-stream',
             'Ocp-Apim-Subscription-Key': token,
@@ -115,6 +121,7 @@ async def deepfry(img: Image, *, token: str=None, url_base: str='westcentralus',
         img.paste(flare_right, eye_right_corner, flare_right)
 
     return img
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Deepfry an image, optionally adding lens flares for eyes.')

@@ -1,13 +1,13 @@
 from telegram import ParseMode
 from telegram.error import BadRequest
-from telegram.utils.helpers import mention_html
 from telegram.ext import run_async, Filters
+from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, REDIS
 from tg_bot.modules.disable import DisableAbleCommandHandler
+from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
 from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
-from tg_bot.modules.helper_funcs.alternate import typing_action
 
 
 @run_async
@@ -224,7 +224,6 @@ UNAPPROVE_HANDLER = DisableAbleCommandHandler(
 APPROVEL_HANDLER = DisableAbleCommandHandler(
     "approval", approval, pass_args=True, filters=Filters.group
 )
-
 
 dispatcher.add_handler(APPROVED_HANDLER)
 dispatcher.add_handler(UNAPPROVE_ALL_HANDLER)

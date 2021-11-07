@@ -1,7 +1,8 @@
 import threading
 
-from tg_bot.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, Integer, UnicodeText
+
+from tg_bot.modules.sql import BASE, SESSION
 
 
 class AFK(BASE):

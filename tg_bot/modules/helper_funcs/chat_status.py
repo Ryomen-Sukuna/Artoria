@@ -1,8 +1,10 @@
 from functools import wraps
+from threading import RLock
+
+from cachetools import TTLCache
 from telegram import Update, User, Chat, ChatMember
 from telegram.ext import CallbackContext
-from threading import RLock
-from cachetools import TTLCache
+
 from tg_bot import DEL_CMDS, SUDO_USERS, WHITELIST_USERS, SUPPORT_USERS, DEV_USERS
 from tg_bot.mwt import MWT
 
@@ -17,12 +19,12 @@ def can_delete(chat: Chat, bot_id: int) -> bool:
 
 def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if (
-        chat.type == "private"
-        or user_id in SUDO_USERS
-        or user_id in DEV_USERS
-        or user_id in WHITELIST_USERS
-        or user_id in {777000, 1087968824}
-        or chat.all_members_are_administrators
+            chat.type == "private"
+            or user_id in SUDO_USERS
+            or user_id in DEV_USERS
+            or user_id in WHITELIST_USERS
+            or user_id in {777000, 1087968824}
+            or chat.all_members_are_administrators
     ):
         return True
 
@@ -34,11 +36,11 @@ def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -
 @MWT(timeout=60 * 5)  # Cache admin status for 5 mins to avoid extra requests.
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if (
-        chat.type == "private"
-        or user_id in SUDO_USERS
-        or user_id in DEV_USERS
-        or chat.all_members_are_administrators
-        or user_id in {777000, 1087968824}
+            chat.type == "private"
+            or user_id in SUDO_USERS
+            or user_id in DEV_USERS
+            or chat.all_members_are_administrators
+            or user_id in {777000, 1087968824}
     ):  # Count telegram and Group Anonymous as admin
         return True
     if not member:
@@ -245,7 +247,7 @@ def support_plus(func):
 def whitelist_plus(func):
     @wraps(func)
     def is_whitelist_plus_func(
-        update: Update, context: CallbackContext, *args, **kwargs
+            update: Update, context: CallbackContext, *args, **kwargs
     ):
         bot = context.bot
         user = update.effective_user

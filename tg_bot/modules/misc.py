@@ -1,15 +1,13 @@
-import requests
-import random, re
-import wikipedia
-from typing import Optional, List
-from requests import get
-
-
+import random
+import re
 from datetime import datetime
 from io import BytesIO
-from tswift import Song
-from bs4 import BeautifulSoup
+from typing import Optional
 
+import requests
+import wikipedia
+from bs4 import BeautifulSoup
+from requests import get
 from telegram import (
     Chat,
     ParseMode,
@@ -20,10 +18,10 @@ from telegram import (
     InlineKeyboardButton,
     ReplyKeyboardRemove,
 )
-
+from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown
-from telegram.error import BadRequest
+from tswift import Song
 
 from tg_bot import (
     OWNER_ID,
@@ -35,8 +33,8 @@ from tg_bot import (
 )
 from tg_bot.__main__ import STATS, GDPR
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
+from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 
 @run_async
@@ -68,9 +66,9 @@ def paste(update: Update, context: CallbackContext):
 
     key = (
         requests.post("https://nekobin.com/api/documents", json={"content": data})
-        .json()
-        .get("result")
-        .get("key")
+            .json()
+            .get("result")
+            .get("key")
     )
 
     url = f"https://nekobin.com/{key}"
@@ -116,7 +114,7 @@ def lyrics(update: Update, context: CallbackContext):
 @typing_action
 def github(update, context):
     message = update.effective_message
-    text = message.text[len("/git ") :]
+    text = message.text[len("/git "):]
     usr = get(f"https://api.github.com/users/{text}").json()
     if usr.get("login"):
         text = f"*Username:* [{usr['login']}](https://github.com/{usr['login']})"
@@ -175,7 +173,7 @@ def github(update, context):
 def repo(update, context):
     args = context.args
     message = update.effective_message
-    text = message.text[len("/repo ") :]
+    text = message.text[len("/repo "):]
     usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()
     reply_text = "*Repositorys*\n"
     for i in range(len(usr)):
@@ -241,9 +239,9 @@ def get_paste_content(update, context):
     format_view = f"{BURL}/v/"
 
     if key.startswith(format_view):
-        key = key[len(format_view) :]
+        key = key[len(format_view):]
     elif key.startswith(format_normal):
-        key = key[len(format_normal) :]
+        key = key[len(format_normal):]
 
     r = requests.get(f"{BURL}/raw/{key}")
 
@@ -424,7 +422,7 @@ def getlink(update, context):
                 links += str(chat_id) + ":\n" + invitelink + "\n"
             else:
                 links += (
-                    str(chat_id) + ":\nI don't have access to the invite link." + "\n"
+                        str(chat_id) + ":\nI don't have access to the invite link." + "\n"
                 )
         except BadRequest as excp:
             links += str(chat_id) + ":\n" + excp.message + "\n"
@@ -442,7 +440,7 @@ def app(update: Update, _):
         progress_message = update.effective_message.reply_text(
             "Searching In Play-Store.... "
         )
-        app_name = message.text[len("/app ") :]
+        app_name = message.text[len("/app "):]
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
         page = requests.get(
@@ -455,27 +453,27 @@ def app(update: Update, _):
         )
         app_dev = results[0].findNext("div", "Vpfmgd").findNext("div", "KoLSrc").text
         app_dev_link = (
-            "https://play.google.com"
-            + results[0].findNext("div", "Vpfmgd").findNext("a", "mnKHRc")["href"]
+                "https://play.google.com"
+                + results[0].findNext("div", "Vpfmgd").findNext("a", "mnKHRc")["href"]
         )
         app_rating = (
             results[0]
-            .findNext("div", "Vpfmgd")
-            .findNext("div", "pf5lIe")
-            .find("div")["aria-label"]
+                .findNext("div", "Vpfmgd")
+                .findNext("div", "pf5lIe")
+                .find("div")["aria-label"]
         )
         app_link = (
-            "https://play.google.com"
-            + results[0]
-            .findNext("div", "Vpfmgd")
-            .findNext("div", "vU6FJ p63iDd")
-            .a["href"]
+                "https://play.google.com"
+                + results[0]
+                .findNext("div", "Vpfmgd")
+                .findNext("div", "vU6FJ p63iDd")
+                .a["href"]
         )
         app_icon = (
             results[0]
-            .findNext("div", "Vpfmgd")
-            .findNext("div", "uzcko")
-            .img["data-src"]
+                .findNext("div", "Vpfmgd")
+                .findNext("div", "uzcko")
+                .img["data-src"]
         )
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
         app_details += " <b>" + app_name + "</b>"
@@ -489,7 +487,7 @@ def app(update: Update, _):
             "five", "5"
         )
         app_details += (
-            "\n<i>Features :</i> <a href='" + app_link + "'>View in Play Store</a>"
+                "\n<i>Features :</i> <a href='" + app_link + "'>View in Play Store</a>"
         )
         message.reply_text(
             app_details, disable_web_page_preview=False, parse_mode="html"
@@ -586,8 +584,8 @@ def reply_keyboard_remove(update, context):
 @run_async
 def stats(update, context):
     stats = (
-        f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n"
-        + "\n┋\n".join([mod.__stats__() for mod in STATS])
+            f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n"
+            + "\n┋\n".join([mod.__stats__() for mod in STATS])
     )
     result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
@@ -680,13 +678,11 @@ REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes)
 GITHUB_HANDLER = DisableAbleCommandHandler("git", github, admin_ok=True)
 REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=True)
 
-
 MPASTE_HANDLER = DisableAbleCommandHandler("mpaste", mpaste, pass_args=True)
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = DisableAbleCommandHandler(
     "getpaste", get_paste_content, pass_args=True
 )
-
 
 dispatcher.add_handler(APP_HANDLER)
 dispatcher.add_handler(LYRICS_HANDLER)

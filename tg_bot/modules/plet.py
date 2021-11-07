@@ -1,8 +1,10 @@
 import io
-import textwrap
-from PIL import Image, ImageDraw, ImageFont
-from tg_bot.events import register
 import random
+import textwrap
+
+from PIL import Image, ImageDraw, ImageFont
+
+from tg_bot.events import register
 
 
 @register(pattern="^/plet (.*)")

@@ -1,5 +1,5 @@
 import html
-from typing import Optional, List
+from typing import Optional
 
 from telegram import Message, Chat, User, ParseMode, ChatPermissions
 from telegram.error import BadRequest
@@ -7,13 +7,12 @@ from telegram.ext import Filters, MessageHandler, CommandHandler, run_async
 from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, REDIS
+from tg_bot.modules.connection import connected
+from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin
 from tg_bot.modules.helper_funcs.string_handling import extract_time
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import antiflood_sql as sql
-from tg_bot.modules.connection import connected
-
-from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 
 FLOOD_GROUP = 3
 

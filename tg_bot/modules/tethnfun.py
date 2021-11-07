@@ -1,17 +1,16 @@
-import os
-import requests
-from datetime import datetime
-from tg_bot.events import register
-from tg_bot import client
 import glob
+from asyncio import sleep
+
+import html2text
+import requests
 from bing_image_downloader import downloader
-from telethon import *
+from requests import get, post
 from telethon.tl import functions
 from telethon.tl import types
 from telethon.tl.types import *
-import html2text
-from asyncio import sleep
-from requests import get, post
+
+from tg_bot import client
+from tg_bot.events import register
 
 
 def progress(current, total):
@@ -51,7 +50,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(
             " Hai.. You are not admin..  You can't use this command.. But you can use in my pm"
@@ -81,7 +80,7 @@ async def img_sampler(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(".. You are not admin.. use in bot  pm")
         return

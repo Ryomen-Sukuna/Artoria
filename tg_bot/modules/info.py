@@ -1,15 +1,15 @@
 import html
-import requests
 
+import requests
+from telegram import Update, ParseMode
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext
+from telegram.ext.dispatcher import run_async
+from telethon import events
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins
-from telethon import events
 
-from telegram import Update, ParseMode
-from telegram.ext.dispatcher import run_async
-from telegram.ext import CallbackContext
-from telegram.error import BadRequest
-
+import tg_bot.modules.helper_funcs.cas_api as cas
 from tg_bot import (
     DEV_USERS,
     OWNER_ID,
@@ -21,12 +21,9 @@ from tg_bot import (
 )
 from tg_bot.__main__ import USER_INFO, TOKEN
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.sql.afk_sql import is_afk, check_afk_status
-from tg_bot.modules.sql.users_sql import get_user_num_chats
 from tg_bot.modules.helper_funcs.extraction import extract_user, get_user
-import tg_bot.modules.sql.userinfo_sql as sql
-import tg_bot.modules.helper_funcs.cas_api as cas
-from telegram.utils.helpers import escape_markdown, mention_html
+from tg_bot.modules.sql.afk_sql import is_afk
+from tg_bot.modules.sql.users_sql import get_user_num_chats
 
 OFFICERS = [OWNER_ID] + DEV_USERS + SUDO_USERS
 
@@ -45,13 +42,13 @@ def info(update: Update, context: CallbackContext):
         user = message.from_user
 
     elif not message.reply_to_message and (
-        not args
-        or (
-            len(args) >= 1
-            and not args[0].startswith("@")
-            and not args[0].isdigit()
-            and not message.parse_entities([MessageEntity.TEXT_MENTION])
-        )
+            not args
+            or (
+                    len(args) >= 1
+                    and not args[0].startswith("@")
+                    and not args[0].isdigit()
+                    and not message.parse_entities([MessageEntity.TEXT_MENTION])
+            )
     ):
         message.reply_text("I can't extract a user from this.")
         return

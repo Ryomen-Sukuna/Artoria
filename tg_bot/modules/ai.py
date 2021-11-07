@@ -1,17 +1,10 @@
 import html
-
 # AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
 from time import sleep, time
 
-import tg_bot.modules.sql.chatbot_sql as sql
 from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError as CFError
 from coffeehouse.lydia import LydiaAI
-
-from tg_bot import AI_API_KEY, OWNER_ID, dispatcher
-from tg_bot.modules.helper_funcs.chat_status import user_admin
-from tg_bot.modules.helper_funcs.filters import CustomFilters
-
 from telegram import Update
 from telegram.error import BadRequest, RetryAfter, Unauthorized
 from telegram.ext import (
@@ -22,6 +15,11 @@ from telegram.ext import (
     run_async,
 )
 from telegram.utils.helpers import mention_html
+
+import tg_bot.modules.sql.chatbot_sql as sql
+from tg_bot import AI_API_KEY, OWNER_ID, dispatcher
+from tg_bot.modules.helper_funcs.chat_status import user_admin
+from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 CoffeeHouseAPI = API(AI_API_KEY)
 api_client = LydiaAI(CoffeeHouseAPI)
@@ -146,7 +144,6 @@ dispatcher.add_handler(ADD_CHAT_HANDLER)
 dispatcher.add_handler(REMOVE_CHAT_HANDLER)
 dispatcher.add_handler(CHATBOT_HANDLER)
 dispatcher.add_handler(LIST_CB_CHATS_HANDLER)
-
 
 __command_list__ = ["addchat", "rmchat", "listaichats"]
 __handlers__ = [

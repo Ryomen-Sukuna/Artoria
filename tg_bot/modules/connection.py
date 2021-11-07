@@ -1,5 +1,5 @@
-import time
 import re
+import time
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest, Unauthorized
@@ -17,7 +17,6 @@ user_admin = chat_status.user_admin
 @run_async
 @typing_action
 def allow_connections(update, context) -> str:
-
     chat = update.effective_chat
     args = context.args
 
@@ -65,7 +64,6 @@ def allow_connections(update, context) -> str:
 @run_async
 @typing_action
 def connection_chat(update, context):
-
     chat = update.effective_chat
     user = update.effective_user
 
@@ -90,7 +88,6 @@ def connection_chat(update, context):
 @run_async
 @typing_action
 def connect_chat(update, context):
-
     chat = update.effective_chat
     user = update.effective_user
     args = context.args
@@ -247,7 +244,6 @@ def connect_chat(update, context):
 
 
 def disconnect_chat(update, context):
-
     if update.effective_chat.type == "private":
         disconnection_status = sql.disconnect(update.effective_message.from_user.id)
         if disconnection_status:
@@ -277,8 +273,8 @@ def connected(bot, update, chat, user_id, need_admin=True):
             if need_admin is not True:
                 return conn_id
             if (
-                getstatusadmin.status in ("administrator", "creator")
-                or user_id in SUDO_USERS
+                    getstatusadmin.status in ("administrator", "creator")
+                    or user_id in SUDO_USERS
             ):
                 return conn_id
             send_message(
@@ -310,7 +306,6 @@ CONN_HELP = """
 
 @run_async
 def help_connect_chat(update, context):
-
     args = context.args
 
     if update.effective_message.chat.type != "private":
@@ -321,7 +316,6 @@ def help_connect_chat(update, context):
 
 @run_async
 def connect_button(update, context):
-
     query = update.callback_query
     chat = update.effective_chat
     user = update.effective_user
@@ -377,7 +371,6 @@ def connect_button(update, context):
 
 
 __mod_name__ = "Connection"
-
 
 __help__ = """
 Sometimes, you just want to add some notes and filters to a group chat, but you don't want everyone to see; This is where connections come in...

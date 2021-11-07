@@ -1,11 +1,13 @@
-import json
 import html
+import json
+
 import bs4
 import requests
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.ext import CallbackContext, run_async, CallbackQueryHandler
+
+from tg_bot import dispatcher
+from tg_bot.modules.disable import DisableAbleCommandHandler
 
 info_btn = "More Information"
 kaizoku_btn = "Kaizoku ☠️"
@@ -154,7 +156,6 @@ GANIME_SEARCH_HANDLER = DisableAbleCommandHandler("ganime", ganime)
 QUOTE = DisableAbleCommandHandler("quote", quotes)
 CHANGE_QUOTE = CallbackQueryHandler(change_quote, pattern=r"change_.*")
 QUOTE_CHANGE = CallbackQueryHandler(change_quote, pattern=r"quote_.*")
-
 
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)

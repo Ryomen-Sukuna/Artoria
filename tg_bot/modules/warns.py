@@ -16,9 +16,10 @@ from telegram.ext import (
 )
 from telegram.utils.helpers import mention_html
 
+import tg_bot.modules.sql.rules_sql as rules_sql
 from tg_bot import dispatcher, REDIS, SUPPORT_CHAT
 from tg_bot.modules.disable import DisableAbleCommandHandler
-import tg_bot.modules.sql.rules_sql as rules_sql
+from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
     is_user_admin,
     bot_admin,
@@ -33,9 +34,8 @@ from tg_bot.modules.helper_funcs.extraction import (
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.misc import split_message
 from tg_bot.modules.helper_funcs.string_handling import split_quotes
-from tg_bot.modules.helper_funcs.alternate import typing_action
-from tg_bot.modules.rules import send_rules
 from tg_bot.modules.log_channel import loggable
+from tg_bot.modules.rules import send_rules
 from tg_bot.modules.sql import warns_sql as sql
 
 WARN_HANDLER_GROUP = 9
@@ -44,7 +44,7 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
 # Not async
 def warn(
-    user: User, chat: Chat, reason: str, message: Message, warner: User = None
+        user: User, chat: Chat, reason: str, message: Message, warner: User = None
 ) -> str:
     bot = dispatcher.bot
     if is_user_admin(chat, user.id):
@@ -215,8 +215,8 @@ def warn_user(update, context):
 
     if user_id:
         if (
-            message.reply_to_message
-            and message.reply_to_message.from_user.id == user_id
+                message.reply_to_message
+                and message.reply_to_message.from_user.id == user_id
         ):
             return warn(
                 message.reply_to_message.from_user,

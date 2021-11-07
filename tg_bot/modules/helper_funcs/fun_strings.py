@@ -104,7 +104,6 @@ DARE = (
     "Suggest me more dares.",
 )
 
-
 # Taken from Openuserbot.
 GDNIGHT = [
     "`Good night keep your dreams alive`",
@@ -301,7 +300,6 @@ RUN_STRINGS = (
     "As The Doctor would say... RUN!",
 )
 
-
 # pat - by @saitamarobot
 PAT_TEMPLATES = (
     "Pattt Se Headshot!",
@@ -367,7 +365,6 @@ PAT_STICKERS = (
     "CAACAgQAAxkBAAICcV--eJb1nknGXwKgGE5aXDcawgK3AAJ6AQAC1TMzCweeI_mdwBUIHgQ",
     "CAACAgQAAxkBAAICcl--eJk_0PxzYNwy1TZ5IWwsW__sAAKyAQAC1TMzC-yfrpJDR9k7HgQ",
 )
-
 
 # SLAP_TEMPLATES From @SaitamaRobot
 SLAP_TEMPLATES = (
@@ -559,9 +556,7 @@ GBUN = (
     "Nah, He Looks Innocent...",
 )
 
-
 GBAM = "<b>Beginning Of Global Bam For {user2}</b>  \n \nChat Id : <code>{chatid}</code> \nReason : <i>{reason}</i> \nGBammed By {user1}"
-
 
 GBAM_REASON = (
     "noob",
@@ -572,16 +567,13 @@ GBAM_REASON = (
     "Waifu stealer" "Nibha",
 )
 
-
 GIFS = [
     "CgACAgQAAx0ESlgI7AACAqxfu09m1qXPJjRiyRMyJxswdUA5LwACaAgAAlZD0VEtI5O_RO_rSB4E",
     "CgACAgUAAx0CSlgI7AACA2Ffu4L_5S3dL5YUWNGBEBL60oBNIgACqwADg_8wVe6pdZO2-TIxHgQ",
     "CgACAgQAAx0ESlgI7AACA3Nfu4M3oUQUhZ6X-I5LNrQkWJ1iogACaAgAAlZD0VGB9mP1VKDQJR4E",
 ]
 
-
 DECIDE = ("Yes.", "NoU.", "Maybe.", "No.")
-
 
 # AFK strings credits: PaperPlaneExtended!
 AFKRPL = (
@@ -676,7 +668,6 @@ CRI = (
     "༼ಢ_ಢ༽",
     "༼ ༎ຶ ෴ ༎ຶ༽",
 )
-
 
 BEING_LOGICAL = (
     "Underwater bubbles and raindrops are total opposites of each other.",

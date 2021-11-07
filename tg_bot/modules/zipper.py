@@ -1,16 +1,17 @@
-import zipfile
-import time
 import os
-from tg_bot.events import register
-from tg_bot import TEMP_DOWNLOAD_DIRECTORY
-from tg_bot import client
+import time
+import zipfile
+
 from telethon import types
 from telethon.tl import functions
+
+from tg_bot import TEMP_DOWNLOAD_DIRECTORY
+from tg_bot import client
+from tg_bot.events import register
 
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
         return isinstance(
             (
                 await client(functions.channels.GetParticipantRequest(chat, user))
@@ -18,7 +19,6 @@ async def is_register_admin(chat, user):
             (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
         )
     if isinstance(chat, types.InputPeerChat):
-
         ui = await client.get_peer_id(user)
         ps = (
             await client(functions.messages.GetFullChatRequest(chat.chat_id))
@@ -39,7 +39,7 @@ async def _(event):
         await event.reply("Reply to a file to compress it.")
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(
             "Hai.. You are not admin.. You can't use this command.. But you can use in my pm"
@@ -92,7 +92,6 @@ if not os.path.isdir(extracted):
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
         return isinstance(
             (
                 await client(functions.channels.GetParticipantRequest(chat, user))
@@ -100,7 +99,6 @@ async def is_register_admin(chat, user):
             (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
         )
     if isinstance(chat, types.InputPeerChat):
-
         ui = await client.get_peer_id(user)
         ps = (
             await client(functions.messages.GetFullChatRequest(chat.chat_id))
@@ -121,7 +119,7 @@ async def _(event):
         await event.reply("Reply to a zip file.")
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(
             " Hai.. You are not admin.. You can't use this command.. But you can use in my pm🙈"

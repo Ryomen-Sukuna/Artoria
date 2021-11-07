@@ -2,11 +2,11 @@ import logging
 import os
 import sys
 import time
-import spamwatch
-from redis import StrictRedis
-from pyrogram import Client, errors
 
+import spamwatch
 import telegram.ext as tg
+from pyrogram import Client
+from redis import StrictRedis
 from telethon import TelegramClient
 
 since_time_start = time.time()
@@ -113,7 +113,6 @@ if ENV:
 else:
     LOGGER.warning("Unknown Crash!")
 
-
 SUDO_USERS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
@@ -123,14 +122,12 @@ if SPAMWATCH is None:
 else:
     spamwtc = spamwatch.Client(SPAMWATCH)
 
-
 REDIS = StrictRedis.from_url(REDIS_URL, decode_responses=True)
 try:
     REDIS.ping()
     LOGGER.info("Your redis server is now alive!")
 except BaseException:
     raise Exception("Your redis server is not alive, please check again.")
-
 
 api_id = API_ID
 api_hash = API_HASH

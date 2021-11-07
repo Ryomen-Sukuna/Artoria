@@ -1,15 +1,14 @@
-from PIL import Image, ImageDraw, ImageFont, ImageOps
-from telethon.tl import types, functions
-from fontTools.ttLib import TTFont
-from fontTools.unicode import Unicode
-import emoji
-import textwrap
-import urllib
-import logging
-import random
 import json
 import os
-import re
+import random
+import textwrap
+import urllib
+
+import emoji
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+from fontTools.ttLib import TTFont
+from telethon.tl import types, functions
+
 from tg_bot.events import register
 
 COLORS = [
@@ -374,8 +373,8 @@ async def emoji_fetch(emoji):
         urllib.request.urlopen(
             "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
         )
-        .read()
-        .decode()
+            .read()
+            .decode()
     )
     if emoji in emojis:
         img = emojis[emoji]

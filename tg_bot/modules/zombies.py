@@ -21,7 +21,6 @@ BANNED_RIGHTS = ChatBannedRights(
     embed_links=True,
 )
 
-
 UNBAN_RIGHTS = ChatBannedRights(
     until_date=None,
     send_messages=None,
@@ -35,11 +34,12 @@ UNBAN_RIGHTS = ChatBannedRights(
 
 OFFICERS = [OWNER_ID] + DEV_USERS + SUDO_USERS + SUPPORT_USERS
 
+
 # Check if user has admin rights
 async def is_administrator(user_id: int, message):
     admin = False
     async for user in client.iter_participants(
-        message.chat_id, filter=ChannelParticipantsAdmins
+            message.chat_id, filter=ChannelParticipantsAdmins
     ):
         if user_id == user.id or user_id in OFFICERS:
             admin = True

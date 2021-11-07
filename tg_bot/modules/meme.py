@@ -1,16 +1,17 @@
-import random, io
-from PIL import Image
+import asyncio
 import base64
-from spongemock import spongemock
+import glob
+import io
 import os
+import random
+import urllib.request
 from io import BytesIO
 from pathlib import Path
-import glob
-import requests as r
-import urllib.request
 
-from typing import Optional, List
-from telegram.ext import run_async, CallbackContext
+import nltk  # shitty lib, but it does work
+import requests as r
+from PIL import Image
+from spongemock import spongemock
 from telegram import (
     ChatAction,
     InlineKeyboardButton,
@@ -20,18 +21,15 @@ from telegram import (
     Bot,
     ParseMode,
 )
-from deeppyer import deepfry
-import asyncio
+from telegram.ext import run_async, CallbackContext
 
+from deeppyer import deepfry
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_action
 
-import nltk  # shitty lib, but it does work
-
 nltk.download("punkt")
 nltk.download("averaged_perceptron_tagger")
-
 
 MAXNUMURL = "https://raw.githubusercontent.com/atanet90/expression-pack/master/meta"
 WIDE_MAP = {i: i + 0xFEE0 for i in range(0x21, 0x7F)}

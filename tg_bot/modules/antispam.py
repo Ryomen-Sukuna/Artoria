@@ -2,7 +2,18 @@ import html
 import time
 from datetime import datetime
 from io import BytesIO
-from tg_bot.modules.sql.users_sql import get_user_com_chats
+
+from telegram import ParseMode, Update
+from telegram.error import BadRequest, TelegramError
+from telegram.ext import (
+    CallbackContext,
+    CommandHandler,
+    Filters,
+    MessageHandler,
+    run_async,
+)
+from telegram.utils.helpers import mention_html
+
 import tg_bot.modules.sql.global_bans_sql as sql
 from tg_bot import (
     DEV_USERS,
@@ -23,16 +34,7 @@ from tg_bot.modules.helper_funcs.chat_status import (
 )
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.misc import send_to_list
-from telegram import ParseMode, Update
-from telegram.error import BadRequest, TelegramError
-from telegram.ext import (
-    CallbackContext,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-    run_async,
-)
-from telegram.utils.helpers import mention_html
+from tg_bot.modules.sql.users_sql import get_user_com_chats
 
 GBAN_ENFORCE_GROUP = 6
 
@@ -393,7 +395,6 @@ def gbanlist(update: Update, context: CallbackContext):
 
 
 def check_and_ban(update, user_id, should_message=True):
-
     chat = update.effective_chat  # type: Optional[Chat]
     try:
         sw_ban = spamwtc.get_ban(int(user_id))
@@ -433,8 +434,8 @@ def enforce_gban(update: Update, context: CallbackContext):
     # Not using @restrict handler to avoid spamming - just ignore if cant gban.
     bot = context.bot
     if (
-        sql.does_chat_gban(update.effective_chat.id)
-        and update.effective_chat.get_member(bot.id).can_restrict_members
+            sql.does_chat_gban(update.effective_chat.id)
+            and update.effective_chat.get_member(bot.id).can_restrict_members
     ):
         user = update.effective_user
         chat = update.effective_chat

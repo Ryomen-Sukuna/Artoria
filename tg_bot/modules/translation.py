@@ -1,9 +1,8 @@
-from typing import Optional, List
-from gtts import gTTS
-import os
-import requests
 import json
+import os
 
+import requests
+from gtts import gTTS
 from telegram import ChatAction
 from telegram.ext import run_async
 

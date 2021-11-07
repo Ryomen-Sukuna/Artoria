@@ -1,16 +1,16 @@
 # This Module (Tagall) Is Taken From @zoldycktmbot
 
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import ParseMode
 from telegram.error import BadRequest
-from telegram.utils.helpers import mention_html
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import run_async, Filters, CommandHandler, CallbackQueryHandler
+from telegram.utils.helpers import mention_html
 
 from tg_bot import dispatcher, REDIS
 from tg_bot.modules.disable import DisableAbleCommandHandler
+from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
 from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
-from tg_bot.modules.helper_funcs.alternate import typing_action
 
 
 @run_async
@@ -136,9 +136,9 @@ def tagg_all_button(update, context):
         )
 
     elif (
-        query_match == "tagall_accept"
-        or query_match == "tagall_dicline"
-        and query.from_user.id != int(user_id)
+            query_match == "tagall_accept"
+            or query_match == "tagall_dicline"
+            and query.from_user.id != int(user_id)
     ):
         context.bot.answer_callback_query(
             query.id, text="You're not the user being added in tag list!"
@@ -280,7 +280,6 @@ REMOVE_TAG_HANDLER = DisableAbleCommandHandler(
     "removetag", removetag, pass_args=True, filters=Filters.group
 )
 TAGALL_CALLBACK_HANDLER = CallbackQueryHandler(tagg_all_button, pattern=r"tagall_")
-
 
 dispatcher.add_handler(TAG_ALL_HANDLER)
 dispatcher.add_handler(UNTAG_ALL_HANDLER)

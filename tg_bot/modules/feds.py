@@ -6,6 +6,22 @@ import time
 import uuid
 from io import BytesIO
 
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    MessageEntity,
+    ParseMode,
+    Update,
+)
+from telegram.error import BadRequest, TelegramError, Unauthorized
+from telegram.ext import (
+    CallbackContext,
+    CallbackQueryHandler,
+    CommandHandler,
+    run_async,
+)
+from telegram.utils.helpers import mention_html, mention_markdown
+
 import tg_bot.modules.sql.feds_sql as sql
 from tg_bot import (
     MESSAGE_DUMP,
@@ -26,21 +42,6 @@ from tg_bot.modules.helper_funcs.extraction import (
     extract_user_fban,
 )
 from tg_bot.modules.helper_funcs.string_handling import markdown_parser
-from telegram import (
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    MessageEntity,
-    ParseMode,
-    Update,
-)
-from telegram.error import BadRequest, TelegramError, Unauthorized
-from telegram.ext import (
-    CallbackContext,
-    CallbackQueryHandler,
-    CommandHandler,
-    run_async,
-)
-from telegram.utils.helpers import mention_html, mention_markdown
 
 # Hello bot owner, I spended for feds many hours of my life, Please don't remove this if you still respect MrYacha and peaktogoo and AyraHikari too
 # Federation by MrYacha 2018-2019
@@ -353,13 +354,13 @@ def user_join_fed(update, context):
         elif not msg.reply_to_message and not args:
             user = msg.from_user
         elif not msg.reply_to_message and (
-            not args
-            or (
-                len(args) >= 1
-                and not args[0].startswith("@")
-                and not args[0].isdigit()
-                and not msg.parse_entities([MessageEntity.TEXT_MENTION])
-            )
+                not args
+                or (
+                        len(args) >= 1
+                        and not args[0].startswith("@")
+                        and not args[0].isdigit()
+                        and not msg.parse_entities([MessageEntity.TEXT_MENTION])
+                )
         ):
             msg.reply_text("I cannot extract user from this message")
             return
@@ -482,13 +483,13 @@ def user_demote_fed(update, context):
             user = msg.from_user
 
         elif not msg.reply_to_message and (
-            not args
-            or (
-                len(args) >= 1
-                and not args[0].startswith("@")
-                and not args[0].isdigit()
-                and not msg.parse_entities([MessageEntity.TEXT_MENTION])
-            )
+                not args
+                or (
+                        len(args) >= 1
+                        and not args[0].startswith("@")
+                        and not args[0].isdigit()
+                        and not msg.parse_entities([MessageEntity.TEXT_MENTION])
+                )
         ):
             msg.reply_text("I cannot extract user from this message")
             return
@@ -1810,9 +1811,9 @@ def fed_import_bans(update, context):
                 "fban_{}.csv".format(msg.reply_to_message.document.file_id)
             )
             with open(
-                "fban_{}.csv".format(msg.reply_to_message.document.file_id),
-                "r",
-                encoding="utf8",
+                    "fban_{}.csv".format(msg.reply_to_message.document.file_id),
+                    "r",
+                    encoding="utf8",
             ) as csvFile:
                 reader = csv.reader(csvFile)
                 for data in reader:

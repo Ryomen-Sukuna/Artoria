@@ -1,5 +1,4 @@
 import time
-from typing import List
 
 from telegram import Update
 from telegram.ext import run_async, CallbackContext
@@ -13,48 +12,40 @@ EDIT_SLEEP = 1
 # edit how many times in 'love'
 EDIT_TIMES = 10
 
-
 # sleep how many times after each edit in 'bombs'
 EDIT_SLEEP = 1
 # edit how many times in 'bombs'
 EDIT_TIMES = 9
-
 
 # sleep how many times after each edit in 'hack'
 EDIT_SLEEP = 1
 # edit how many times in 'hack'
 EDIT_TIMES = 10
 
-
 # sleep how many times after each edit in 'earthanimation'
 EDIT_SLEEP = 1
 # edit how many times in 'earthanimation'
 EDIT_TIMES = 18
-
 
 # sleep how many times after each edit in 'moonanimation'
 EDIT_SLEEP = 1
 # edit how many times in 'moonanimation'
 EDIT_TIMES = 32
 
-
 # sleep how many times after each edit in 'clockanimation'
 EDIT_SLEEP = 1
 # edit how many times in 'clockanimation'
 EDIT_TIMES = 11
-
 
 # sleep how many times after each edit in 'blockanimation'
 EDIT_SLEEP = 1
 # edit how many times in 'blockanimation'
 EDIT_TIMES = 18
 
-
 # sleep how many times after each edit in 'kill'
 EDIT_SLEEP = 1
 # edit how many times in 'kill'
 EDIT_TIMES = 12
-
 
 kill_you = [
     "Ｆｉｉｉｉｉｒｅ",
@@ -70,7 +61,6 @@ kill_you = [
     "(￣ー￣) DED",
     "**Target killed successfully",
 ]
-
 
 block_chain = [
     "🟥",
@@ -93,7 +83,6 @@ block_chain = [
     "⬜",
 ]
 
-
 love_siren = [
     "❤️❤️❤️🧡🧡🧡💚💚💚\n💙💙💙💜💜💜🖤🖤🖤",
     "🖤🖤🖤💜💜💜💙💙💙\n❤️❤️❤️🧡🧡🧡💚💚💚",
@@ -106,7 +95,6 @@ love_siren = [
     "💛💛💛💙💙💙❤️❤️❤️\n💜💜💜❤️❤️❤️🧡🧡🧡",
 ]
 
-
 hack_you = [
     "Looking for WhatsApp databases in targeted person...",
     " User online: True\nTelegram access: True\nRead Storage: True ",
@@ -115,7 +103,6 @@ hack_you = [
     "Hacking... 93.50%\n[█████████████████░░░]",
     "hacking....  100%\n[████████████████████]",
 ]
-
 
 bomb_ettu = [
     "▪️▪️▪️▪️\n▪️▪️▪️▪️\n▪️▪️▪️▪️\n▪️▪️▪️▪️\n▪️▪️▪️▪️",
@@ -128,7 +115,6 @@ bomb_ettu = [
     "▪️▪️▪️▪️\n▪️▪️▪️▪️\n▪️▪️▪️▪️\n💥💥💥💥\n💥💥💥💥",
     "▪️▪️▪️▪️\n▪️▪️▪️▪️\n▪️▪️▪️▪️\n▪️▪️▪️▪️\n😵😵😵😵",
 ]
-
 
 moon_ani = [
     "🌗",
@@ -165,9 +151,7 @@ moon_ani = [
     "🌖",
 ]
 
-
 clock_ani = ["🕙", "🕘", "🕗", "🕖", "🕕", "🕔", "🕓", "🕒", "🕑", "🕐", "🕛"]
-
 
 earth_ani = [
     "🌍",
@@ -301,7 +285,6 @@ dispatcher.add_handler(EARTHANIMATION_HANDLER)
 dispatcher.add_handler(MOONANIMATION_HANDLER)
 dispatcher.add_handler(CLOCKANIMATION_HANDLER)
 dispatcher.add_handler(BLOCKANIMATION_HANDLER)
-
 
 __command_list__ = [
     "love",

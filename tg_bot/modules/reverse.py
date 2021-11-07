@@ -1,12 +1,12 @@
 import os
 import re
-import requests
 import urllib
-import urllib.request
 import urllib.parse
+import urllib.request
 from urllib.error import URLError, HTTPError
-from bs4 import BeautifulSoup
 
+import requests
+from bs4 import BeautifulSoup
 from telegram import InputMediaPhoto, TelegramError
 from telegram import Update
 from telegram.ext import CallbackContext, run_async
