@@ -1,10 +1,10 @@
+import argparse
+import asyncio
+import math
 from enum import Enum
 from io import BytesIO
 
 import aiohttp
-import argparse
-import asyncio
-import math
 from PIL import Image, ImageOps, ImageEnhance
 
 
