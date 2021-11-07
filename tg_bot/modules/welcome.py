@@ -1,4 +1,3 @@
-
 import re
 import time
 from html import escape
@@ -104,28 +103,28 @@ def send(update, message, keyboard, backup_message):
         if excp.message == "Button_url_invalid":
             msg = update.effective_message.reply_text(
                 markdown_parser(
-                    backup_message +
-                    "\nNote: the current message has an invalid url "
-                    "in one of its buttons. Please update."),
+                    backup_message + "\nNote: the current message has an invalid url "
+                    "in one of its buttons. Please update."
+                ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
             )
         elif excp.message == "Unsupported url protocol":
             msg = update.effective_message.reply_text(
                 markdown_parser(
-                    backup_message +
-                    "\nNote: the current message has buttons which "
+                    backup_message + "\nNote: the current message has buttons which "
                     "use url protocols that are unsupported by "
-                    "telegram. Please update."),
+                    "telegram. Please update."
+                ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
             )
         elif excp.message == "Wrong url host":
             msg = update.effective_message.reply_text(
                 markdown_parser(
-                    backup_message +
-                    "\nNote: the current message has some bad urls. "
-                    "Please update."),
+                    backup_message + "\nNote: the current message has some bad urls. "
+                    "Please update."
+                ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
             )
@@ -135,9 +134,9 @@ def send(update, message, keyboard, backup_message):
         else:
             msg = update.effective_message.reply_text(
                 markdown_parser(
-                    backup_message +
-                    "\nNote: An error occured when sending the "
-                    "custom message. Please update."),
+                    backup_message + "\nNote: An error occured when sending the "
+                    "custom message. Please update."
+                ),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
             )
@@ -152,8 +151,7 @@ def new_member(update, context):
     user = update.effective_user
     msg = update.effective_message
     chat_name = chat.title or chat.first or chat.username
-    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(
-        chat.id)
+    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
     cust_welcome = markdown_to_html(cust_welcome)
     welc_mutes = sql.welcome_mutes(chat.id)
     user_id = user.id
@@ -170,8 +168,7 @@ def new_member(update, context):
             if cleanserv:
                 reply = False
                 try:
-                    dispatcher.bot.delete_message(
-                        chat.id, update.message.message_id)
+                    dispatcher.bot.delete_message(chat.id, update.message.message_id)
                 except BadRequest:
                     pass
 
@@ -215,8 +212,8 @@ def new_member(update, context):
                 context.bot.send_message(
                     MESSAGE_DUMP,
                     "Saber have been added to <pre>{}</pre> with ID: \n<pre>{}</pre>".format(
-                        chat.title,
-                        chat.id),
+                        chat.title, chat.id
+                    ),
                     parse_mode=ParseMode.HTML,
                 )
             else:
@@ -226,13 +223,14 @@ def new_member(update, context):
                 if welc_type not in [sql.Types.TEXT, sql.Types.BUTTON_TEXT]:
                     # Start formating text
                     if new_mem.last_name:
-                        fullname = "{} {}".format(
-                            first_name, new_mem.last_name)
+                        fullname = "{} {}".format(first_name, new_mem.last_name)
                     else:
                         fullname = first_name
                     count = chat.get_members_count()
                     mention = mention_html(new_mem.id, first_name)
-                    username = "@" + escape(new_mem.username) if new_mem.username else mention
+                    username = (
+                        "@" + escape(new_mem.username) if new_mem.username else mention
+                    )
                     valid_format = escape_invalid_curly_brackets(
                         cust_welcome, VALID_WELCOME_FORMATTERS
                     )
@@ -251,8 +249,7 @@ def new_member(update, context):
                     # build the button
                     buttons = sql.get_welc_buttons(chat.id)
                     if buttons:
-                        keyb = build_keyboard_parser(
-                            context.bot, chat.id, buttons)
+                        keyb = build_keyboard_parser(context.bot, chat.id, buttons)
                         keyboard = InlineKeyboardMarkup(keyb)
                     else:
                         keyboard = None
@@ -269,13 +266,16 @@ def new_member(update, context):
                 else:
                     if cust_welcome:
                         if new_mem.last_name:
-                            fullname = "{} {}".format(
-                                first_name, new_mem.last_name)
+                            fullname = "{} {}".format(first_name, new_mem.last_name)
                         else:
                             fullname = first_name
                         count = chat.get_members_count()
                         mention = mention_html(new_mem.id, first_name)
-                        username = "@" + escape(new_mem.username) if new_mem.username else mention
+                        username = (
+                            "@" + escape(new_mem.username)
+                            if new_mem.username
+                            else mention
+                        )
                         valid_format = escape_invalid_curly_brackets(
                             cust_welcome, VALID_WELCOME_FORMATTERS
                         )
@@ -336,15 +336,21 @@ def new_member(update, context):
                             mention_html(user.id, new_mem.first_name)
                         )
                         msg.reply_text(
-                            "{}\nClick the button below to start talking.".format(new_join_mem),
+                            "{}\nClick the button below to start talking.".format(
+                                new_join_mem
+                            ),
                             reply_markup=InlineKeyboardMarkup(
                                 [
                                     [
                                         InlineKeyboardButton(
                                             text="Yus, I'm a human",
                                             callback_data="user_join_({})".format(
-                                                new_mem.id),
-                                        )]]),
+                                                new_mem.id
+                                            ),
+                                        )
+                                    ]
+                                ]
+                            ),
                             parse_mode=ParseMode.HTML,
                             reply_to_message_id=reply,
                         )
@@ -384,8 +390,7 @@ def left_member(update, context):
         # Clean service welcome
         if cleanserv:
             try:
-                dispatcher.bot.delete_message(
-                    chat.id, update.message.message_id)
+                dispatcher.bot.delete_message(chat.id, update.message.message_id)
             except BadRequest:
                 pass
             reply = False
@@ -431,7 +436,9 @@ def left_member(update, context):
                     fullname = first_name
                 count = chat.get_members_count()
                 mention = mention_html(left_mem.id, first_name)
-                username = "@" + escape(left_mem.username) if left_mem.username else mention
+                username = (
+                    "@" + escape(left_mem.username) if left_mem.username else mention
+                )
                 valid_format = escape_invalid_curly_brackets(
                     cust_goodbye, VALID_WELCOME_FORMATTERS
                 )
@@ -466,11 +473,12 @@ def welcome(update, context):
     # if no args, show current replies.
     if len(args) == 0 or args[0].lower() == "noformat":
         noformat = args and args[0].lower() == "noformat"
-        pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(
-            chat.id)
+        pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(chat.id)
         update.effective_message.reply_text(
             "This chat has it's welcome setting set to: `{}`.\n*The welcome message "
-            "(not filling the {{}}) is:*".format(pref), parse_mode=ParseMode.MARKDOWN, )
+            "(not filling the {{}}) is:*".format(pref),
+            parse_mode=ParseMode.MARKDOWN,
+        )
 
         buttons = sql.get_welc_buttons(chat.id)
         if welcome_type in [sql.Types.BUTTON_TEXT, sql.Types.TEXT]:
@@ -489,8 +497,7 @@ def welcome(update, context):
 
         elif noformat:
             welcome_m += revert_buttons(buttons)
-            ENUM_FUNC_MAP[welcome_type](
-                chat.id, cust_content, caption=welcome_m)
+            ENUM_FUNC_MAP[welcome_type](chat.id, cust_content, caption=welcome_m)
 
         else:
             if buttons:
@@ -514,8 +521,7 @@ def welcome(update, context):
 
         elif args[0].lower() in ("off", "no"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text(
-                "I'm sulking, not gonna greet anymore.")
+            update.effective_message.reply_text("I'm sulking, not gonna greet anymore.")
 
         else:
             # idek what you're writing, say yes or no
@@ -536,7 +542,9 @@ def goodbye(update, context):
         pref, goodbye_m, goodbye_type = sql.get_gdbye_pref(chat.id)
         update.effective_message.reply_text(
             "This chat has it's goodbye setting set to: `{}`.\n*The goodbye  message "
-            "(not filling the {{}}) is:*".format(pref), parse_mode=ParseMode.MARKDOWN, )
+            "(not filling the {{}}) is:*".format(pref),
+            parse_mode=ParseMode.MARKDOWN,
+        )
 
         if goodbye_type == sql.Types.BUTTON_TEXT:
             buttons = sql.get_gdbye_buttons(chat.id)
@@ -561,13 +569,11 @@ def goodbye(update, context):
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
             sql.set_gdbye_preference(str(chat.id), True)
-            update.effective_message.reply_text(
-                "I'll be sorry when people leave!")
+            update.effective_message.reply_text("I'll be sorry when people leave!")
 
         elif args[0].lower() in ("off", "no"):
             sql.set_gdbye_preference(str(chat.id), False)
-            update.effective_message.reply_text(
-                "They leave, they're dead to me.")
+            update.effective_message.reply_text("They leave, they're dead to me.")
 
         else:
             # idek what you're writing, say yes or no
@@ -729,9 +735,7 @@ def welcomemute(update, context) -> str:
         return ""
     curr_setting = sql.welcome_mutes(chat.id)
     reply = "\n Give me a setting! Choose one of: `off`/`no` or `soft` or `strong` only! \nCurrent setting: `{}`"
-    msg.reply_text(
-        reply.format(curr_setting),
-        parse_mode=ParseMode.MARKDOWN)
+    msg.reply_text(reply.format(curr_setting), parse_mode=ParseMode.MARKDOWN)
     return ""
 
 
@@ -758,8 +762,7 @@ def clean_welcome(update, context) -> str:
 
     if args[0].lower() in ("on", "yes"):
         sql.set_clean_welcome(str(chat.id), True)
-        update.effective_message.reply_text(
-            "I'll try to delete old welcome messages!")
+        update.effective_message.reply_text("I'll try to delete old welcome messages!")
         return (
             "<b>{}:</b>"
             "\n#CLEAN_WELCOME"
@@ -770,8 +773,7 @@ def clean_welcome(update, context) -> str:
         )
     if args[0].lower() in ("off", "no"):
         sql.set_clean_welcome(str(chat.id), False)
-        update.effective_message.reply_text(
-            "I won't delete old welcome messages.")
+        update.effective_message.reply_text("I won't delete old welcome messages.")
         return (
             "<b>{}:</b>"
             "\n#CLEAN_WELCOME"
@@ -781,8 +783,7 @@ def clean_welcome(update, context) -> str:
             )
         )
     # idek what you're writing, say yes or no
-    update.effective_message.reply_text(
-        "I understand 'on/yes' or 'off/no' only!")
+    update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
     return ""
 
 
@@ -807,14 +808,10 @@ def cleanservice(update, context):
         var = args[0]
         if var in ["no", "off"]:
             sql.set_clean_service(chat.id, False)
-            update.effective_message.reply_text(
-                "Turned off service messages cleaning."
-            )
+            update.effective_message.reply_text("Turned off service messages cleaning.")
         elif var in ["yes", "on"]:
             sql.set_clean_service(chat.id, True)
-            update.effective_message.reply_text(
-                "Turned on service messages cleaning!"
-            )
+            update.effective_message.reply_text("Turned on service messages cleaning!")
         else:
             update.effective_message.reply_text(
                 "Invalid option", parse_mode=ParseMode.MARKDOWN
@@ -881,15 +878,16 @@ WELC_HELP_TXT = (
     "remove it.\n"
     "If you're feeling fun, you can even set images/gifs/videos/voice messages as the welcome message by "
     "replying to the desired media, and calling /setwelcome.".format(
-        dispatcher.bot.username))
+        dispatcher.bot.username
+    )
+)
 
 
 @run_async
 @user_admin
 @typing_action
 def welcome_help(update, context):
-    update.effective_message.reply_text(
-        WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
 
 
 # TODO: get welcome data from group butler snap
@@ -964,10 +962,8 @@ Tip: Buttons must be placed at the end of welcome messages.
 
 __mod_name__ = "Greetings"
 
-NEW_MEM_HANDLER = MessageHandler(
-    Filters.status_update.new_chat_members, new_member)
-LEFT_MEM_HANDLER = MessageHandler(
-    Filters.status_update.left_chat_member, left_member)
+NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member)
+LEFT_MEM_HANDLER = MessageHandler(Filters.status_update.left_chat_member, left_member)
 WELC_PREF_HANDLER = CommandHandler(
     "welcome", welcome, pass_args=True, filters=Filters.group
 )
@@ -976,14 +972,8 @@ GOODBYE_PREF_HANDLER = CommandHandler(
 )
 SET_WELCOME = CommandHandler("setwelcome", set_welcome, filters=Filters.group)
 SET_GOODBYE = CommandHandler("setgoodbye", set_goodbye, filters=Filters.group)
-RESET_WELCOME = CommandHandler(
-    "resetwelcome",
-    reset_welcome,
-    filters=Filters.group)
-RESET_GOODBYE = CommandHandler(
-    "resetgoodbye",
-    reset_goodbye,
-    filters=Filters.group)
+RESET_WELCOME = CommandHandler("resetwelcome", reset_welcome, filters=Filters.group)
+RESET_GOODBYE = CommandHandler("resetgoodbye", reset_goodbye, filters=Filters.group)
 CLEAN_WELCOME = CommandHandler(
     "cleanwelcome", clean_welcome, pass_args=True, filters=Filters.group
 )
@@ -994,8 +984,7 @@ CLEAN_SERVICE_HANDLER = CommandHandler(
     "cleanservice", cleanservice, pass_args=True, filters=Filters.group
 )
 WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
-BUTTON_VERIFY_HANDLER = CallbackQueryHandler(
-    user_button, pattern=r"user_join_")
+BUTTON_VERIFY_HANDLER = CallbackQueryHandler(user_button, pattern=r"user_join_")
 
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)

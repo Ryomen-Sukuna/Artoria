@@ -98,7 +98,7 @@ def dbcleanup(update, context):
     update.effective_message.reply_text(
         reply, reply_markup=InlineKeyboardMarkup(buttons)
     )
-    
+
 
 def get_muted_chats(bot: Bot, update: Update, leave: bool = False):
     chat_id = update.effective_chat.id

@@ -10,19 +10,33 @@ from io import BytesIO
 from tswift import Song
 from bs4 import BeautifulSoup
 
-from telegram import (Chat, ParseMode, ChatAction, TelegramError, Update,
-                      InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove)
+from telegram import (
+    Chat,
+    ParseMode,
+    ChatAction,
+    TelegramError,
+    Update,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    ReplyKeyboardRemove,
+)
 
-from telegram.ext import CallbackContext ,CommandHandler, run_async, Filters
+from telegram.ext import CallbackContext, CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
 
-from tg_bot import (OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, DEV_USERS,
-                           dispatcher)
+from tg_bot import (
+    OWNER_ID,
+    SUDO_USERS,
+    SUPPORT_USERS,
+    WHITELIST_USERS,
+    DEV_USERS,
+    dispatcher,
+)
 from tg_bot.__main__ import STATS, GDPR
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.filters import CustomFilters
-from tg_bot.modules.helper_funcs.alternate import typing_action , send_action
+from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
 
 
 @run_async
@@ -31,10 +45,10 @@ def gifid(update: Update, context: CallbackContext):
     if msg.reply_to_message and msg.reply_to_message.animation:
         update.effective_message.reply_text(
             f"Gif ID:\n<code>{msg.reply_to_message.animation.file_id}</code>",
-            parse_mode=ParseMode.HTML)
+            parse_mode=ParseMode.HTML,
+        )
     else:
-        update.effective_message.reply_text(
-            "Please reply to a gif to get its ID.")
+        update.effective_message.reply_text("Please reply to a gif to get its ID.")
 
 
 @run_async
@@ -67,6 +81,7 @@ def paste(update: Update, context: CallbackContext):
         reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
     )
 
+
 @run_async
 @typing_action
 def lyrics(update: Update, context: CallbackContext):
@@ -86,11 +101,13 @@ def lyrics(update: Update, context: CallbackContext):
     else:
         reply = "Song not found!"
     if len(reply) > 4090:
-        with open("lyrics.txt", 'w') as f:
+        with open("lyrics.txt", "w") as f:
             f.write(f"{reply}\n\n\nOwO UwU OmO")
-        with open("lyrics.txt", 'rb') as f:
-            msg.reply_document(document=f,
-            caption="Message length exceeded max limit! Sending as a text file.")
+        with open("lyrics.txt", "rb") as f:
+            msg.reply_document(
+                document=f,
+                caption="Message length exceeded max limit! Sending as a text file.",
+            )
     else:
         msg.reply_text(reply)
 
@@ -99,69 +116,80 @@ def lyrics(update: Update, context: CallbackContext):
 @typing_action
 def github(update, context):
     message = update.effective_message
-    text = message.text[len('/git '):]
-    usr = get(f'https://api.github.com/users/{text}').json()
-    if usr.get('login'):
+    text = message.text[len("/git ") :]
+    usr = get(f"https://api.github.com/users/{text}").json()
+    if usr.get("login"):
         text = f"*Username:* [{usr['login']}](https://github.com/{usr['login']})"
 
         whitelist = [
-            'name', 'id', 'type', 'location', 'blog', 'bio', 'followers',
-            'following', 'hireable', 'public_gists', 'public_repos', 'email',
-            'company', 'updated_at', 'created_at'
+            "name",
+            "id",
+            "type",
+            "location",
+            "blog",
+            "bio",
+            "followers",
+            "following",
+            "hireable",
+            "public_gists",
+            "public_repos",
+            "email",
+            "company",
+            "updated_at",
+            "created_at",
         ]
 
         difnames = {
-            'id': 'Account ID',
-            'type': 'Account type',
-            'created_at': 'Account created at',
-            'updated_at': 'Last updated',
-            'public_repos': 'Public Repos',
-            'public_gists': 'Public Gists'
+            "id": "Account ID",
+            "type": "Account type",
+            "created_at": "Account created at",
+            "updated_at": "Last updated",
+            "public_repos": "Public Repos",
+            "public_gists": "Public Gists",
         }
 
-        goaway = [None, 0, 'null', '']
+        goaway = [None, 0, "null", ""]
 
         for x, y in usr.items():
             if x in whitelist:
                 x = difnames.get(x, x.title())
-                if x in ['Account created at', 'Last updated']:
+                if x in ["Account created at", "Last updated"]:
                     y = datetime.strptime(y, "%Y-%m-%dT%H:%M:%SZ")
 
                 if y not in goaway:
-                    if x == 'Blog':
+                    if x == "Blog":
                         x = "Website"
                         y = f"[Here!]({y})"
-                        text += ("\n*{}:* {}".format(x, y))
+                        text += "\n*{}:* {}".format(x, y)
                     else:
-                        text += ("\n*{}:* `{}`".format(x, y))
+                        text += "\n*{}:* `{}`".format(x, y)
         reply_text = text
     else:
         reply_text = "User not found. Make sure you entered valid username!"
-    message.reply_text(reply_text,
-                       parse_mode=ParseMode.MARKDOWN,
-                       disable_web_page_preview=True)
+    message.reply_text(
+        reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
 
 
 @run_async
 def repo(update, context):
     args = context.args
     message = update.effective_message
-    text = message.text[len('/repo '):]
-    usr = get(f'https://api.github.com/users/{text}/repos?per_page=40').json()
+    text = message.text[len("/repo ") :]
+    usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()
     reply_text = "*Repositorys*\n"
     for i in range(len(usr)):
         reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
-    message.reply_text(reply_text,
-                       parse_mode=ParseMode.MARKDOWN,
-                       disable_web_page_preview=True)
-
+    message.reply_text(
+        reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
 
 
 @run_async
 @typing_action
 def mpaste(update, context):
-    args = context.args 
-    BURL = 'https://del.dog'
+    args = context.args
+    BURL = "https://del.dog"
     message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
@@ -171,7 +199,7 @@ def mpaste(update, context):
         message.reply_text("What am I supposed to do with this?!")
         return
 
-    r = requests.post(f'{BURL}/documents', data=data.encode('utf-8'))
+    r = requests.post(f"{BURL}/documents", data=data.encode("utf-8"))
 
     if r.status_code == 404:
         update.effective_message.reply_text("Failed to reach dogbin")
@@ -180,24 +208,26 @@ def mpaste(update, context):
     res = r.json()
 
     if r.status_code != 200:
-        update.effective_message.reply_text(res['message'])
+        update.effective_message.reply_text(res["message"])
         r.raise_for_status()
 
-    key = res['key']
-    if res['isUrl']:
-        reply = "Shortened URL: {}/{}\nYou can view stats, etc. [here]({}/v/{})".format(BURL, key, BURL, key)
+    key = res["key"]
+    if res["isUrl"]:
+        reply = "Shortened URL: {}/{}\nYou can view stats, etc. [here]({}/v/{})".format(
+            BURL, key, BURL, key
+        )
     else:
-        reply = f'{BURL}/{key}'
-    update.effective_message.reply_text(reply,
-                                        parse_mode=ParseMode.MARKDOWN,
-                                        disable_web_page_preview=True)
+        reply = f"{BURL}/{key}"
+    update.effective_message.reply_text(
+        reply, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
 
 
 @run_async
 @typing_action
 def get_paste_content(update, context):
     args = context.args
-    BURL = 'https://del.dog'
+    BURL = "https://del.dog"
     message = update.effective_message
     chat = update.effective_chat  # type: Optional[Chat]
 
@@ -207,32 +237,30 @@ def get_paste_content(update, context):
         message.reply_text("Please supply a dogbin url!")
         return
 
-    format_normal = f'{BURL}/'
-    format_view = f'{BURL}/v/'
+    format_normal = f"{BURL}/"
+    format_view = f"{BURL}/v/"
 
     if key.startswith(format_view):
-        key = key[len(format_view):]
+        key = key[len(format_view) :]
     elif key.startswith(format_normal):
-        key = key[len(format_normal):]
+        key = key[len(format_normal) :]
 
-    r = requests.get(f'{BURL}/raw/{key}')
+    r = requests.get(f"{BURL}/raw/{key}")
 
     if r.status_code != 200:
         try:
             res = r.json()
-            update.effective_message.reply_text(res['message'])
+            update.effective_message.reply_text(res["message"])
         except Exception:
             if r.status_code == 404:
-                update.effective_message.reply_text(
-                    "Failed to reach dogbin")
+                update.effective_message.reply_text("Failed to reach dogbin")
             else:
-                update.effective_message.reply_text(
-                    "Unknown error occured")
+                update.effective_message.reply_text("Unknown error occured")
         r.raise_for_status()
 
-    update.effective_message.reply_text('```' + escape_markdown(r.text) +
-                                        '```',
-                                        parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(
+        "```" + escape_markdown(r.text) + "```", parse_mode=ParseMode.MARKDOWN
+    )
 
 
 @run_async
@@ -247,7 +275,7 @@ def echo(update, context):
     try:
         message.delete()
     except:
-        pass  
+        pass
 
 
 @run_async
@@ -266,7 +294,7 @@ def gdpr(update, context):
         '"for the performance of a task carried out in the public interest", as is '
         "the case for the aforementioned pieces of data.",
         parse_mode=ParseMode.MARKDOWN,
-        disable_web_page_preview=True
+        disable_web_page_preview=True,
     )
 
 
@@ -297,7 +325,6 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 """.format(
     dispatcher.bot.first_name
 )
-
 
 
 @run_async
@@ -407,58 +434,71 @@ def getlink(update, context):
     message.reply_text(links)
 
 
-
-
 @run_async
 @typing_action
 def app(update: Update, _):
     message = update.effective_message
     try:
         progress_message = update.effective_message.reply_text(
-            "Searching In Play-Store.... ")
-        app_name = message.text[len('/app '):]
-        remove_space = app_name.split(' ')
-        final_name = '+'.join(remove_space)
+            "Searching In Play-Store.... "
+        )
+        app_name = message.text[len("/app ") :]
+        remove_space = app_name.split(" ")
+        final_name = "+".join(remove_space)
         page = requests.get(
-            f"https://play.google.com/store/search?q={final_name}&c=apps")
-        soup = BeautifulSoup(page.content, 'lxml', from_encoding='utf-8')
+            f"https://play.google.com/store/search?q={final_name}&c=apps"
+        )
+        soup = BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
-        app_name = results[0].findNext(
-            'div', 'Vpfmgd').findNext(
-            'div', 'WsMG1c nnK0zc').text
-        app_dev = results[0].findNext(
-            'div', 'Vpfmgd').findNext(
-            'div', 'KoLSrc').text
-        app_dev_link = "https://play.google.com" + results[0].findNext(
-            'div', 'Vpfmgd').findNext('a', 'mnKHRc')['href']
-        app_rating = results[0].findNext('div', 'Vpfmgd').findNext(
-            'div', 'pf5lIe').find('div')['aria-label']
-        app_link = "https://play.google.com" + results[0].findNext(
-            'div', 'Vpfmgd').findNext('div', 'vU6FJ p63iDd').a['href']
-        app_icon = results[0].findNext(
-            'div', 'Vpfmgd').findNext(
-            'div', 'uzcko').img['data-src']
+        app_name = (
+            results[0].findNext("div", "Vpfmgd").findNext("div", "WsMG1c nnK0zc").text
+        )
+        app_dev = results[0].findNext("div", "Vpfmgd").findNext("div", "KoLSrc").text
+        app_dev_link = (
+            "https://play.google.com"
+            + results[0].findNext("div", "Vpfmgd").findNext("a", "mnKHRc")["href"]
+        )
+        app_rating = (
+            results[0]
+            .findNext("div", "Vpfmgd")
+            .findNext("div", "pf5lIe")
+            .find("div")["aria-label"]
+        )
+        app_link = (
+            "https://play.google.com"
+            + results[0]
+            .findNext("div", "Vpfmgd")
+            .findNext("div", "vU6FJ p63iDd")
+            .a["href"]
+        )
+        app_icon = (
+            results[0]
+            .findNext("div", "Vpfmgd")
+            .findNext("div", "uzcko")
+            .img["data-src"]
+        )
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
         app_details += " <b>" + app_name + "</b>"
         app_details += "\n\n<i>Developer :</i> <a href='" + app_dev_link + "'>"
         app_details += app_dev + "</a>"
         app_details += "\n<i>Rating :</i> " + app_rating.replace(
-            "Rated ", "⭐️ ").replace(" out of ", "/").replace(
-                " stars", "", 1).replace(" stars", "⭐️").replace("five", "5")
-        app_details += "\n<i>Features :</i> <a href='" + \
-            app_link + "'>View in Play Store</a>"
+            "Rated ", "⭐️ "
+        ).replace(" out of ", "/").replace(" stars", "", 1).replace(
+            " stars", "⭐️"
+        ).replace(
+            "five", "5"
+        )
+        app_details += (
+            "\n<i>Features :</i> <a href='" + app_link + "'>View in Play Store</a>"
+        )
         message.reply_text(
-            app_details,
-            disable_web_page_preview=False,
-            parse_mode='html')
+            app_details, disable_web_page_preview=False, parse_mode="html"
+        )
     except IndexError:
-        message.reply_text(
-            "No Result Found In Search. Please Enter **Valid App Name**")
+        message.reply_text("No Result Found In Search. Please Enter **Valid App Name**")
     except Exception as err:
         message.reply_text(err)
     progress_message.delete()
-
-
 
 
 @run_async
@@ -518,7 +558,7 @@ def slist(update, context):
     sfile += f"\n• DEV USER IDs :-  {DEV_USERS}"
     sfile += f"\n• SUDO USER IDs :- {SUDO_USERS}"
     sfile += f"\n• SUPPORT USER IDs :- {SUPPORT_USERS}"
-    sfile += f"\n• WHITELIST USER IDs :- {WHITELIST_USERS}" 
+    sfile += f"\n• WHITELIST USER IDs :- {WHITELIST_USERS}"
     with BytesIO(str.encode(sfile)) as output:
         output.name = "staff-ids.txt"
         update.effective_message.reply_document(
@@ -534,21 +574,23 @@ def reply_keyboard_remove(update, context):
     reply_markup = ReplyKeyboardRemove(remove_keyboard=True)
     old_message = context.bot.send_message(
         chat_id=update.message.chat_id,
-        text='Trying',  
+        text="Trying",
         reply_markup=reply_markup,
-        reply_to_message_id=update.message.message_id)
-    context.bot.delete_message(chat_id=update.message.chat_id,
-                       message_id=old_message.message_id)
-
+        reply_to_message_id=update.message.message_id,
+    )
+    context.bot.delete_message(
+        chat_id=update.message.chat_id, message_id=old_message.message_id
+    )
 
 
 @run_async
 def stats(update, context):
-    stats = f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n" + "\n┋\n".join([mod.__stats__() for mod in STATS])
-    result = re.sub(r'(\d+)', r'<code>\1</code>', stats)
+    stats = (
+        f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n"
+        + "\n┋\n".join([mod.__stats__() for mod in STATS])
+    )
+    result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
-
-
 
 
 # /ip is for private use
@@ -620,34 +662,30 @@ __mod_name__ = "Extra"
 
 APP_HANDLER = DisableAbleCommandHandler("app", app)
 LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True)
-GIFID_HANDLER = DisableAbleCommandHandler("gifid", gifid) 
+GIFID_HANDLER = DisableAbleCommandHandler("gifid", gifid)
 ECHO_HANDLER = CommandHandler("echo", echo, filters=CustomFilters.sudo_filter)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
-STATS_HANDLER = DisableAbleCommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
+STATS_HANDLER = DisableAbleCommandHandler(
+    "stats", stats, filters=CustomFilters.sudo_filter
+)
 GDPR_HANDLER = CommandHandler("gdpr", gdpr, filters=Filters.private)
 WIKI_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 UD_HANDLER = DisableAbleCommandHandler("ud", ud)
 GETLINK_HANDLER = CommandHandler(
     "getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID)
 )
-STAFFLIST_HANDLER = CommandHandler(
-    "slist", slist, filters=Filters.user(OWNER_ID)
-)
-REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes) 
+STAFFLIST_HANDLER = CommandHandler("slist", slist, filters=Filters.user(OWNER_ID))
+REDDIT_MEMES_HANDLER = DisableAbleCommandHandler("rmeme", rmemes)
 
 GITHUB_HANDLER = DisableAbleCommandHandler("git", github, admin_ok=True)
-REPO_HANDLER = DisableAbleCommandHandler("repo",
-                                         repo,
-                                         pass_args=True,
-                                         admin_ok=True)
+REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=True)
 
 
 MPASTE_HANDLER = DisableAbleCommandHandler("mpaste", mpaste, pass_args=True)
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)
-GET_PASTE_HANDLER = DisableAbleCommandHandler("getpaste",
-                                              get_paste_content,
-                                              pass_args=True)
-
+GET_PASTE_HANDLER = DisableAbleCommandHandler(
+    "getpaste", get_paste_content, pass_args=True
+)
 
 
 dispatcher.add_handler(APP_HANDLER)
@@ -668,6 +706,6 @@ dispatcher.add_handler(STAFFLIST_HANDLER)
 dispatcher.add_handler(REDDIT_MEMES_HANDLER)
 dispatcher.add_handler(GIFID_HANDLER)
 
-dispatcher.add_handler(DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
-
-
+dispatcher.add_handler(
+    DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove)
+)

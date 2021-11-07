@@ -16,14 +16,15 @@ from telegram.ext import (
 )
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, REDIS, SUPPORT_CHAT 
+from tg_bot import dispatcher, REDIS, SUPPORT_CHAT
 from tg_bot.modules.disable import DisableAbleCommandHandler
 import tg_bot.modules.sql.rules_sql as rules_sql
 from tg_bot.modules.helper_funcs.chat_status import (
     is_user_admin,
     bot_admin,
     user_admin,
-    can_restrict)
+    can_restrict,
+)
 from tg_bot.modules.helper_funcs.extraction import (
     extract_text,
     extract_user_and_text,
@@ -50,7 +51,9 @@ def warn(
         message.reply_text("Damn admins, can't even be warned!")
         return ""
     if not user.id or int(user.id) == 777000 or int(user.id) == 1087968824:
-        message.reply_text("This is the Telegram Service Bot or the Group Anonymous Bot. Kinda pointless to warn it, don't you think?")
+        message.reply_text(
+            "This is the Telegram Service Bot or the Group Anonymous Bot. Kinda pointless to warn it, don't you think?"
+        )
         return ""
     if warner:
         warner_tag = mention_html(warner.id, warner.first_name)
@@ -76,7 +79,6 @@ def warn(
         for warn_reason in reasons:
             reply += "\n - {}".format(html.escape(warn_reason))
 
-        
         keyboard = None
         log_reason = (
             "<b>{}:</b>"
@@ -96,17 +98,21 @@ def warn(
         )
 
     else:
-        keyboard = [[
-            InlineKeyboardButton("Remove warn",
-                                 callback_data="rm_warn({})".format(user.id))
-        ]]
+        keyboard = [
+            [
+                InlineKeyboardButton(
+                    "Remove warn", callback_data="rm_warn({})".format(user.id)
+                )
+            ]
+        ]
         rules = rules_sql.get_rules(chat.id)
 
         if rules:
             keyboard[0].append(
-                InlineKeyboardButton("Rules",
-                                     url="t.me/{}?start={}".format(
-                                         bot.username, chat.id)))
+                InlineKeyboardButton(
+                    "Rules", url="t.me/{}?start={}".format(bot.username, chat.id)
+                )
+            )
 
         reply = "User {} has {}/{} warnings... watch out!".format(
             mention_html(user.id, user.first_name), num_warns, limit
@@ -132,12 +138,19 @@ def warn(
         )
 
     try:
-        message.reply_text(reply, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML)
+        message.reply_text(
+            reply,
+            reply_markup=InlineKeyboardMarkup(keyboard),
+            parse_mode=ParseMode.HTML,
+        )
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
             message.reply_text(
-                reply, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML, quote=False
+                reply,
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode=ParseMode.HTML,
+                quote=False,
             )
         else:
             raise
@@ -155,10 +168,12 @@ def button(update, context):
     if match:
         user_id = match.group(1)
         if not is_user_admin(chat, int(user.id)):
-                context.bot.answer_callback_query(query.id,
-                                                  text="You don't have enough rights to remove users warn.",
-                                                  show_alert=True)
-                return ""
+            context.bot.answer_callback_query(
+                query.id,
+                text="You don't have enough rights to remove users warn.",
+                show_alert=True,
+            )
+            return ""
         res = sql.remove_warn(user_id, chat.id)
         if res:
             update.effective_message.edit_text(
@@ -245,6 +260,7 @@ def reset_warns(update, context):
     message.reply_text("No user has been designated!")
     return ""
 
+
 @run_async
 @bot_admin
 @loggable
@@ -256,6 +272,7 @@ def sendrules_handler(update, context) -> str:
         send_rules(update, chat_id, True)
 
     return ""
+
 
 @run_async
 @user_admin
@@ -418,13 +435,11 @@ def reply_filter(update, context) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
 
-    
-    chat_id = str(chat.id)[1:] 
-    approve_list = list(REDIS.sunion(f'approve_list_{chat_id}'))
+    chat_id = str(chat.id)[1:]
+    approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
     target_user = mention_html(user.id, user.first_name)
     if target_user in approve_list:
         return
-
 
     chat_warn_filters = sql.get_chat_warn_triggers(chat.id)
     to_match = extract_text(message)
@@ -527,7 +542,7 @@ def __stats__():
     return (
         "┣⊸ Overall Warns - {} ( {} )\n┋\n"
         "┣⊸ Warn Filters - {} ( {} )"
-       f'\n┇ \n┖──⌊ <a href="https://t.me/{SUPPORT_CHAT}">Support Chat</a> ⌉ '.format(
+        f'\n┇ \n┖──⌊ <a href="https://t.me/{SUPPORT_CHAT}">Support Chat</a> ⌉ '.format(
             sql.num_warns(),
             sql.num_warn_chats(),
             sql.num_warn_filters(),
@@ -589,10 +604,8 @@ RESET_WARN_HANDLER = CommandHandler(
 REMOVE_WARNS_HANDLER = CommandHandler(
     ["rmwarn", "unwarn"], remove_warns, pass_args=True, filters=Filters.group
 )
-CALLBACK_QUERY_HANDLER = CallbackQueryHandler(button,
-                                              pattern=r"rm_warn")
-SENDRULES_QUERY_HANDLER = CallbackQueryHandler(sendrules_handler,
-                                               pattern=r"send_rules")
+CALLBACK_QUERY_HANDLER = CallbackQueryHandler(button, pattern=r"rm_warn")
+SENDRULES_QUERY_HANDLER = CallbackQueryHandler(sendrules_handler, pattern=r"send_rules")
 MYWARNS_HANDLER = DisableAbleCommandHandler(
     "warns", warns, pass_args=True, filters=Filters.group
 )

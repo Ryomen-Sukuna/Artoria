@@ -64,9 +64,9 @@ if is_module_loaded(FILENAME):
                         # disabled, admincmd, user admin
                         if sql.is_command_disabled(chat.id, command[0].lower()):
                             # check if command was disabled
-                            is_disabled = command[
-                                0
-                            ] in ADMIN_CMDS and is_user_admin(chat, user.id)
+                            is_disabled = command[0] in ADMIN_CMDS and is_user_admin(
+                                chat, user.id
+                            )
                             if not is_disabled:
                                 return None
                             return args, filter_result

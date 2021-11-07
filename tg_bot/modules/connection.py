@@ -273,18 +273,12 @@ def connected(bot, update, chat, user_id, need_admin=True):
         ismember = getstatusadmin.status in ("member")
         isallow = sql.allow_connect_to_chat(conn_id)
 
-        if (
-            (isadmin)
-            or (isallow and ismember)
-            or (user.id in SUDO_USERS)
-
-        ):
+        if (isadmin) or (isallow and ismember) or (user.id in SUDO_USERS):
             if need_admin is not True:
                 return conn_id
             if (
                 getstatusadmin.status in ("administrator", "creator")
                 or user_id in SUDO_USERS
-
             ):
                 return conn_id
             send_message(

@@ -7,9 +7,7 @@ from telegram.ext.dispatcher import run_async, CallbackContext
 from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.userinfo_sql as sql
-from tg_bot import (
-    dispatcher,
-    DEV_USERS)
+from tg_bot import dispatcher, DEV_USERS
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.alternate import typing_action
@@ -53,8 +51,7 @@ def set_about_me(update: Update, context: CallbackContext):
     if message.reply_to_message:
         repl_message = message.reply_to_message
         repl_user_id = repl_message.from_user.id
-        if repl_user_id in [bot.id, 777000, 1087968824] and (user_id
-                                                             in DEV_USERS):
+        if repl_user_id in [bot.id, 777000, 1087968824] and (user_id in DEV_USERS):
             user_id = repl_user_id
     text = message.text
     info = text.split(None, 1)
@@ -64,14 +61,15 @@ def set_about_me(update: Update, context: CallbackContext):
             if user_id in [777000, 1087968824]:
                 message.reply_text("Authorized...Information updated!")
             elif user_id == bot.id:
-                message.reply_text(
-                    "I have updated my info with the one you provided!")
+                message.reply_text("I have updated my info with the one you provided!")
             else:
                 message.reply_text("Information updated!")
         else:
             message.reply_text(
                 "The info needs to be under {} characters! You have {}.".format(
-                    MAX_MESSAGE_LENGTH // 4, len(info[1])))
+                    MAX_MESSAGE_LENGTH // 4, len(info[1])
+                )
+            )
 
 
 @run_async
@@ -120,8 +118,7 @@ def set_about_bio(update: Update, context: CallbackContext):
             return
 
         if user_id == bot.id and sender_id not in DEV_USERS:
-            message.reply_text(
-                "Erm... Yeah, I Can't Trust You To Set My Bio.")
+            message.reply_text("Erm... Yeah, I Can't Trust You To Set My Bio.")
             return
 
         text = message.text
@@ -132,15 +129,17 @@ def set_about_bio(update: Update, context: CallbackContext):
         if len(bio) == 2:
             if len(bio[1]) < MAX_MESSAGE_LENGTH // 4:
                 sql.set_user_bio(user_id, bio[1])
-                message.reply_text("Updated {}'s bio!".format(
-                    repl_message.from_user.first_name))
+                message.reply_text(
+                    "Updated {}'s bio!".format(repl_message.from_user.first_name)
+                )
             else:
                 message.reply_text(
-                    "Bio needs to be under {} characters! You tried to set {}."
-                    .format(MAX_MESSAGE_LENGTH // 4, len(bio[1])))
+                    "Bio needs to be under {} characters! You tried to set {}.".format(
+                        MAX_MESSAGE_LENGTH // 4, len(bio[1])
+                    )
+                )
     else:
         message.reply_text("Reply to someone to set their bio!")
-
 
 
 def __user_info__(user_id):

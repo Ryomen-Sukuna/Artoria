@@ -87,9 +87,7 @@ def reply_afk(update: Update, context: CallbackContext):
             if ent.type != MessageEntity.MENTION:
                 return
 
-            user_id = get_user_id(
-                message.text[ent.offset : ent.offset + ent.length]
-            )
+            user_id = get_user_id(message.text[ent.offset : ent.offset + ent.length])
             if not user_id:
                 # Should never happen, since for a user to become AFK they must have spoken. Maybe changed username?
                 return
@@ -101,11 +99,7 @@ def reply_afk(update: Update, context: CallbackContext):
             try:
                 chat = bot.get_chat(user_id)
             except BadRequest:
-                print(
-                    "Error: Could not fetch userid {} for AFK module".format(
-                        user_id
-                    )
-                )
+                print("Error: Could not fetch userid {} for AFK module".format(user_id))
                 return
             fst_name = chat.first_name
 

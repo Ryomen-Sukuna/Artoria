@@ -480,6 +480,8 @@ def lined(update, context):
         message.reply_to_message.reply_text(string)
     else:
         message.reply_text(string)
+
+
 __help__ = """
 
  - /weebify <text>: weebify your text!

@@ -4,11 +4,8 @@ import bs4
 import requests
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update)
-from telegram.ext import (
-    CallbackContext,
-    run_async,
-    CallbackQueryHandler)
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
+from telegram.ext import CallbackContext, run_async, CallbackQueryHandler
 
 info_btn = "More Information"
 kaizoku_btn = "Kaizoku ☠️"
@@ -34,7 +31,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
         search_url = f"https://gogoanime.so//search.html?keyword={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {'class': "title"})
+        search_result = soup.find_all("h2", {"class": "title"})
 
         result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>gogoanime</code>: \n"
         for entry in search_result:
@@ -44,7 +41,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
                 more_results = False
                 break
 
-            post_link = entry.a['href']
+            post_link = entry.a["href"]
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
 
@@ -52,12 +49,12 @@ def site_search(update: Update, context: CallbackContext, site: str):
         search_url = f"https://animekaizoku.com/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {'class': "post-title"})
+        search_result = soup.find_all("h2", {"class": "post-title"})
 
         if search_result:
             result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n"
             for entry in search_result:
-                post_link = "https://animekaizoku.com/" + entry.a['href']
+                post_link = "https://animekaizoku.com/" + entry.a["href"]
                 post_name = html.escape(entry.text)
                 result += f"• <a href='{post_link}'>{post_name}</a>\n"
         else:
@@ -68,7 +65,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
         search_url = f"https://animekayo.com/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {'class': "title"})
+        search_result = soup.find_all("h2", {"class": "title"})
 
         result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>: \n"
         for entry in search_result:
@@ -78,7 +75,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
                 more_results = False
                 break
 
-            post_link = entry.a['href']
+            post_link = entry.a["href"]
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
 
@@ -89,10 +86,12 @@ def site_search(update: Update, context: CallbackContext, site: str):
             result,
             parse_mode=ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup(buttons),
-            disable_web_page_preview=True)
+            disable_web_page_preview=True,
+        )
     else:
         message.reply_text(
-            result, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+            result, parse_mode=ParseMode.HTML, disable_web_page_preview=True
+        )
 
 
 @run_async
@@ -103,11 +102,13 @@ def kaizoku(update: Update, context: CallbackContext):
 @run_async
 def kayo(update: Update, context: CallbackContext):
     site_search(update, context, "kayo")
-    
+
+
 @run_async
 def ganime(update: Update, context: CallbackContext):
     site_search(update, context, "ganime")
- 
+
+
 def anime_quote():
     url = "https://animechanapi.xyz/api/quotes/random"
     response = requests.get(url)
@@ -147,7 +148,6 @@ def change_quote(update: Update, context: CallbackContext):
     message.edit_text(msg, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
-
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
 GANIME_SEARCH_HANDLER = DisableAbleCommandHandler("ganime", ganime)
@@ -163,4 +163,4 @@ dispatcher.add_handler(QUOTE)
 dispatcher.add_handler(CHANGE_QUOTE)
 dispatcher.add_handler(QUOTE_CHANGE)
 
-__handlers__ = [ KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER,  GANIME_SEARCH_HANDLER]
+__handlers__ = [KAIZOKU_SEARCH_HANDLER, KAYO_SEARCH_HANDLER, GANIME_SEARCH_HANDLER]

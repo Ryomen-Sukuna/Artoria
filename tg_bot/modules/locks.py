@@ -10,7 +10,15 @@ from telegram.utils.helpers import mention_html
 from alphabet_detector import AlphabetDetector
 
 import tg_bot.modules.sql.locks_sql as sql
-from tg_bot import dispatcher, OWNER_ID, DEV_USERS, SUDO_USERS, SUPPORT_USERS, LOGGER, REDIS
+from tg_bot import (
+    dispatcher,
+    OWNER_ID,
+    DEV_USERS,
+    SUDO_USERS,
+    SUPPORT_USERS,
+    LOGGER,
+    REDIS,
+)
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import (
     can_delete,
@@ -99,11 +107,18 @@ REST_GROUP = 2
 
 # NOT ASYNC
 def restr_members(
-    bot, update, chat_id, members, messages=False, media=False, other=False, previews=False
+    bot,
+    update,
+    chat_id,
+    members,
+    messages=False,
+    media=False,
+    other=False,
+    previews=False,
 ):
     for mem in members:
         user = update.effective_user
-        approve_list = list(REDIS.sunion(f'approve_list_{chat_id}'))
+        approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
         target_user = mention_html(user.id, user.first_name)
         try:
             bot.restrict_chat_member(
@@ -362,7 +377,7 @@ def del_lockables(update, context):
         if lockable == "rtl":
             if sql.is_locked(chat.id, lockable) and can_delete(chat, context.bot.id):
                 if message.caption:
-                    check = ad.detect_alphabet(u"{}".format(message.caption))
+                    check = ad.detect_alphabet("{}".format(message.caption))
                     if "ARABIC" in check:
                         try:
                             message.delete()
@@ -371,7 +386,7 @@ def del_lockables(update, context):
                                 LOGGER.exception("ERROR in lockables")
                         break
                 if message.text:
-                    check = ad.detect_alphabet(u"{}".format(message.text))
+                    check = ad.detect_alphabet("{}".format(message.text))
                     if "ARABIC" in check:
                         try:
                             message.delete()

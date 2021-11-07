@@ -1,8 +1,9 @@
 from telethon.tl.types import UserStatusLastMonth, UserStatusLastWeek, ChatBannedRights
 from tg_bot.events import register
 from telethon import *
-from telethon.tl.functions.channels import (EditBannedRequest)
-                                            
+from telethon.tl.functions.channels import EditBannedRequest
+
+
 @register(pattern="^/kickthefools")
 async def _(event):
     if event.fwd_from:
@@ -21,18 +22,22 @@ async def _(event):
     async for i in event.client.iter_participants(event.chat_id):
 
         if isinstance(i.status, UserStatusLastMonth):
-            status = await event.client(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
+            status = await event.client(
+                EditBannedRequest(event.chat_id, i, KICK_RIGHTS)
+            )
             if not status:
                 return
             else:
                 c += 1
 
         if isinstance(i.status, UserStatusLastWeek):
-            status = await event.client(EditBannedRequest(event.chat_id, i, KICK_RIGHTS))
+            status = await event.client(
+                EditBannedRequest(event.chat_id, i, KICK_RIGHTS)
+            )
             if not status:
                 return
             else:
-                c += 1                    
+                c += 1
 
     required_string = "Successfully Kicked **{}** users"
     await event.reply(required_string.format(c))

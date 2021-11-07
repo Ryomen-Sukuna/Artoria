@@ -2,7 +2,7 @@ import html
 import os
 from typing import Optional
 
-from telegram import ParseMode ,Update
+from telegram import ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, CallbackContext
 from telegram.ext.dispatcher import run_async
@@ -15,7 +15,7 @@ from tg_bot.modules.helper_funcs.chat_status import (
     can_promote,
     user_admin,
     can_pin,
-    ADMIN_CACHE
+    ADMIN_CACHE,
 )
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.admin_rights import (
@@ -26,6 +26,7 @@ from tg_bot.modules.helper_funcs.admin_rights import (
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.connection import connected
 from tg_bot.modules.log_channel import loggable
+
 
 @run_async
 @bot_admin
@@ -153,6 +154,7 @@ def demote(update, context):
         )
         return ""
 
+
 @run_async
 @user_admin
 def refresh_admin(update: Update, context: CallbackContext):
@@ -162,6 +164,7 @@ def refresh_admin(update: Update, context: CallbackContext):
         pass
 
     update.effective_message.reply_text("Admins cache refreshed!")
+
 
 @run_async
 @bot_admin
@@ -279,14 +282,12 @@ def adminlist(update, context):
     bot = context.bot
 
     if update.effective_message.chat.type == "private":
-        send_message(update.effective_message,
-                     "This Command Only Works In Groups.")
+        send_message(update.effective_message, "This Command Only Works In Groups.")
         return
 
     chat = update.effective_chat
     chat_id = update.effective_chat.id
     chat_name = update.effective_message.chat.title
-
 
     administrators = bot.getChatAdministrators(chat_id)
     text = "Admins In *{}* :".format(update.effective_chat.title)
@@ -298,19 +299,21 @@ def adminlist(update, context):
         status = admin.status
         custom_title = admin.custom_title
 
-        if user.first_name == '':
+        if user.first_name == "":
             name = "💀 Deleted Account "
         else:
             name = "{}".format(
-                mention_markdown(user.id, user.first_name + " " +
-                                 (user.last_name or "")))
+                mention_markdown(
+                    user.id, user.first_name + " " + (user.last_name or "")
+                )
+            )
 
         if user.is_bot:
             bot_admin_list.append(name)
             administrators.remove(admin)
             continue
 
-        #if user.username:
+        # if user.username:
         #    name = escape_markdown("@" + user.username)
         if status == "creator":
             text += "\n 👑 Creator :"
@@ -329,12 +332,14 @@ def adminlist(update, context):
         status = admin.status
         custom_title = admin.custom_title
 
-        if user.first_name == '':
+        if user.first_name == "":
             name = "💀 Deleted Account"
         else:
             name = "{}".format(
-                mention_markdown(user.id, user.first_name + " " +
-                                 (user.last_name or "")))
+                mention_markdown(
+                    user.id, user.first_name + " " + (user.last_name or "")
+                )
+            )
         if status == "administrator":
             if custom_title:
                 try:
@@ -349,8 +354,9 @@ def adminlist(update, context):
 
     for admin_group in custom_admin_list.copy():
         if len(custom_admin_list[admin_group]) == 1:
-            text += "\n` ∘ `{} | `{}`".format(custom_admin_list[admin_group][0],
-                                              escape_markdown(admin_group))
+            text += "\n` ∘ `{} | `{}`".format(
+                custom_admin_list[admin_group][0], escape_markdown(admin_group)
+            )
             custom_admin_list.pop(admin_group)
 
     text += "\n"
@@ -623,7 +629,9 @@ SETCHAT_TITLE_HANDLER = CommandHandler(
     "setgtitle", setchat_title, filters=Filters.group
 )
 SETSTICKET_HANDLER = CommandHandler("setsticker", set_sticker, filters=Filters.group)
-SETDESC_HANDLER = CommandHandler(["setdescription", "setdes"], set_desc, filters=Filters.group)
+SETDESC_HANDLER = CommandHandler(
+    ["setdescription", "setdes"], set_desc, filters=Filters.group
+)
 
 PROMOTE_HANDLER = CommandHandler(
     "promote", promote, pass_args=True, filters=Filters.group
@@ -636,7 +644,8 @@ ADMINLIST_HANDLER = DisableAbleCommandHandler(
 )
 
 ADMIN_REFRESH_HANDLER = CommandHandler(
-    "admincache", refresh_admin, filters=Filters.group)
+    "admincache", refresh_admin, filters=Filters.group
+)
 
 dispatcher.add_handler(PIN_HANDLER)
 dispatcher.add_handler(UNPIN_HANDLER)

@@ -363,7 +363,8 @@ def reply_filter(update, context):
                                 )
                             except BadRequest as excp:
                                 LOGGER.exception(
-                                    "Failed to send message: ", excp.message)
+                                    "Failed to send message: ", excp.message
+                                )
                 else:
                     ENUM_FUNC_MAP[filt.file_type](
                         chat.id,
@@ -549,9 +550,7 @@ __mod_name__ = "Filters"
 
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
-STOPALL_HANDLER = CommandHandler(
-    "stopall", rmall_filters, filters=Filters.group
-)
+STOPALL_HANDLER = CommandHandler("stopall", rmall_filters, filters=Filters.group)
 LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
 CUST_FILTER_HANDLER = MessageHandler(
     CustomFilters.has_text & ~Filters.update.edited_message, reply_filter
