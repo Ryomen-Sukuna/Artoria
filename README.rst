@@ -6,15 +6,15 @@
 A modular telegram Python bot running on *python3* with an *sqlalchemy* database.
 
 .. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master/
    :alt: Commit
 
 .. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&style=flat-square&logo=github&color=F10070
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers/
    :alt: Star
 
 .. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&style=flat-square&logo=github&color=F10070
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
    :alt: Fork
 
 .. image:: https://app.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
