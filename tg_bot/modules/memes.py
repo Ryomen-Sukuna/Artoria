@@ -57,7 +57,7 @@ def pat(update: Update, context: CallbackContext):
     args = context.args
     message = update.effective_message
 
-    reply_to = message.reply_to_message if message.reply_to_message else message
+    reply_to = message.reply_to_message or message
 
     curr_user = html.escape(message.from_user.first_name)
     user_id = extract_user(message, args)
@@ -354,8 +354,7 @@ def shout(update, context):
         data = ("I need a message to meme")
 
     msg = "```"
-    result = []
-    result.append(' '.join(list(data)))
+    result = [' '.join(list(data))]
     for pos, symbol in enumerate(data[1:]):
         result.append(symbol + ' ' + '  ' * pos + symbol)
     result = list("\n".join(result))
@@ -515,10 +514,7 @@ def copypasta(update, context):
             elif c.lower() == b_char:
                 reply_text += "🅱️"
             else:
-                if bool(random.getrandbits(1)):
-                    reply_text += c.upper()
-                else:
-                    reply_text += c.lower()
+                reply_text += c.upper() if bool(random.getrandbits(1)) else c.lower()
         reply_text += random.choice(emojis)
         message.reply_to_message.reply_text(reply_text)
 

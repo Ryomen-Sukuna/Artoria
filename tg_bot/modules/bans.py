@@ -59,8 +59,8 @@ def ban(update, context):
     if user_id == context.bot.id:
         message.reply_text("I'm not gonna ban myself, that's pretty dumb idea!")
         return ""
-    
-    if user_id == 777000 or user_id == 1087968824:
+
+    if user_id in [777000, 1087968824]:
         message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot ban it!")
         return ""            
 
@@ -146,8 +146,8 @@ def temp_ban(update, context):
     if user_id == context.bot.id:
         message.reply_text("I'm not gonna BAN myself, are you crazy or wot?")
         return ""
-    
-    if user_id == 777000 or user_id == 1087968824:
+
+    if user_id in [777000, 1087968824]:
         message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot ban it!")
         return ""  
 
@@ -158,11 +158,7 @@ def temp_ban(update, context):
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     bantime = extract_time(message, time_val)
 
     if not bantime:
@@ -186,7 +182,7 @@ def temp_ban(update, context):
 
     try:
         chat.kick_member(user_id, until_date=bantime)
-        
+
         message.reply_text("Admin {} has successfully banned {} in <b>{}</b> for {}!".format(
                 mention_html(user.id, user.first_name),
                 mention_html(member.user.id, member.user.first_name),
@@ -252,14 +248,14 @@ def kick(update, context):
     if user_id == context.bot.id:
         message.reply_text("Yeahhh I'm not gonna do that")
         return ""
-    
-    if user_id == 777000 or user_id == 1087968824:
+
+    if user_id in [777000, 1087968824]:
         message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot kick it!")
         return ""  
 
     res = chat.unban_member(user_id)  # unban on current user = kick
     if res:
-    
+
         context.bot.sendMessage(
             chat.id,
             "Admin {} has successfully kicked {} in <b>{}</b>!".format(
@@ -304,15 +300,17 @@ def banme(update, context):
     res = update.effective_chat.kick_member(user_id)
     if res:
         update.effective_message.reply_text("Yes, you're right! Get Out!..")
-        log = (
+        return (
             "<b>{}:</b>"
             "\n#BANME"
             "\n<b>User:</b> {}"
             "\n<b>ID:</b> <code>{}</code>".format(
-                html.escape(chat.title), mention_html(user.id, user.first_name), user_id
+                html.escape(chat.title),
+                mention_html(user.id, user.first_name),
+                user_id,
             )
         )
-        return log
+
     update.effective_message.reply_text("Huh? I can't :/")
 
 

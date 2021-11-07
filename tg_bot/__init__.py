@@ -36,7 +36,7 @@ if ENV:
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
     except ValueError:
         raise Exception("Your OWNER_ID env variable is not a valid integer.")
-    
+
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
@@ -57,7 +57,7 @@ if ENV:
     except ValueError:
         raise Exception(
             "Your whitelisted users list does not contain valid integers.")
-    
+
     START_IMG = os.environ.get('START_IMG', "")
     EVENT_LOGS = os.environ.get('EVENT_LOGS', None)
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None) 
@@ -112,13 +112,13 @@ if ENV:
 
 else:
      LOGGER.warning("Unknown Crash!")
-    
-    
+
+
 
 SUDO_USERS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
-if SPAMWATCH == None:
+if SPAMWATCH is None:
     spamwtc = None
     LOGGER.warning("Invalid spamwatch api")
 else:

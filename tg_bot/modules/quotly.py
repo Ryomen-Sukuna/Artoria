@@ -46,26 +46,24 @@ async def process(msg, user, client, reply, replied=None):
         width = 0
         text = []
         for line in msg.split("\n"):
-            length = len(line)
-            if length > 43:
-                text += textwrap.wrap(line, 43)
-                maxlength = 43
-                if width < fallback.getsize(line[:43])[0]:
-                    if "MessageEntityCode" in str(reply.entities):
-                        width = mono.getsize(line[:43])[0] + 30
-                    else:
-                        width = fallback.getsize(line[:43])[0]
-                next
-            else:
-                text.append(line + "\n")
-                if width < fallback.getsize(line)[0]:
-                    if "MessageEntityCode" in str(reply.entities):
-                        width = mono.getsize(line)[0] + 30
-                    else:
-                        width = fallback.getsize(line)[0]
-                if maxlength < length:
-                    maxlength = length
-
+                length = len(line)
+                if length > 43:
+                        text += textwrap.wrap(line, 43)
+                        maxlength = 43
+                        if width < fallback.getsize(line[:43])[0]:
+                            if "MessageEntityCode" in str(reply.entities):
+                                width = mono.getsize(line[:43])[0] + 30
+                            else:
+                                width = fallback.getsize(line[:43])[0]
+                        next
+                else:
+                        text.append(line + "\n")
+                        if width < fallback.getsize(line)[0]:
+                            if "MessageEntityCode" in str(reply.entities):
+                                width = mono.getsize(line)[0] + 30
+                            else:
+                                width = fallback.getsize(line)[0]
+                        maxlength = max(maxlength, length)
         title = ""
         try:
             details = await client(functions.channels.GetParticipantRequest(reply.chat_id, user.id))
@@ -123,42 +121,42 @@ async def process(msg, user, client, reply, replied=None):
 
         y = 80
         if replied:
-            # Creating a big canvas to gather all the elements
-            replname = "" if not replied.sender.last_name else replied.sender.last_name
-            reptot = replied.sender.first_name + " " + replname
-            replywidth = font2.getsize(reptot)[0]
-            if reply.sticker:
-                sticker = await reply.download_media()
-                stimg = Image.open(sticker)
-                canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
-                top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
-                draw = ImageDraw.Draw(top)
-                await replied_user(draw, reptot, replied.message.replace("\n", " "), 20)
-                top = top.crop((135, 70, top.width, 300))
-                canvas.paste(pfpbg, (0,0))
-                canvas.paste(top, (pfpbg.width + 10, 0))
-                canvas.paste(stimg, (pfpbg.width + 10, 140))
-                os.remove(sticker)
-                return True, canvas
-            canvas = canvas.resize((canvas.width + 60, canvas.height + 120))
-            top, middle, bottom = await drawer(middle.width + 60, height + 105)
-            canvas.paste(pfpbg, (0, 0))
-            canvas.paste(top, (pfpbg.width, 0))
-            canvas.paste(middle, (pfpbg.width, top.height))
-            canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-            draw = ImageDraw.Draw(canvas)
-            if replied.sticker:
-                replied.text = "Sticker"
-            elif replied.photo:
-                replied.text = "Photo"
-            elif replied.audio:
-                replied.text = "Audio"
-            elif replied.voice:
-                replied.text = "Voice Message"
-            elif replied.document:
-                replied.text = "Document"
-            await replied_user(draw, reptot, replied.message.replace("\n", " "), maxlength + len(title), len(title))
-            y = 200
+                # Creating a big canvas to gather all the elements
+                replname = "" if not replied.sender.last_name else replied.sender.last_name
+                reptot = replied.sender.first_name + " " + replname
+                replywidth = font2.getsize(reptot)[0]
+                if reply.sticker:
+                    sticker = await reply.download_media()
+                    stimg = Image.open(sticker)
+                    canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
+                    top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
+                    draw = ImageDraw.Draw(top)
+                    await replied_user(draw, reptot, replied.message.replace("\n", " "), 20)
+                    top = top.crop((135, 70, top.width, 300))
+                    canvas.paste(pfpbg, (0,0))
+                    canvas.paste(top, (pfpbg.width + 10, 0))
+                    canvas.paste(stimg, (pfpbg.width + 10, 140))
+                    os.remove(sticker)
+                    return True, canvas
+                canvas = canvas.resize((canvas.width + 60, canvas.height + 120))
+                top, middle, bottom = await drawer(middle.width + 60, height + 105)
+                canvas.paste(pfpbg, (0, 0))
+                canvas.paste(top, (pfpbg.width, 0))
+                canvas.paste(middle, (pfpbg.width, top.height))
+                canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
+                draw = ImageDraw.Draw(canvas)
+                if replied.sticker:
+                    replied.text = "Sticker"
+                elif replied.photo:
+                    replied.text = "Photo"
+                elif replied.audio:
+                    replied.text = "Audio"
+                elif replied.voice:
+                    replied.text = "Voice Message"
+                elif replied.document:
+                    replied.text = "Document"
+                await replied_user(draw, reptot, replied.message.replace("\n", " "), maxlength + len(title), len(title))
+                y = 200
         elif reply.sticker:
             sticker = await reply.download_media()
             stimg = Image.open(sticker)
@@ -167,32 +165,32 @@ async def process(msg, user, client, reply, replied=None):
             canvas.paste(stimg, (pfpbg.width + 10, 10))
             os.remove(sticker)
             return True, canvas
-        elif reply.document and not reply.audio and not reply.audio:
-            docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
-            doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
-            if reply.document.size < 1024:
-                docsize = str(reply.document.size) + " Bytes"
-            elif reply.document.size < 1048576:
-                docsize = str(round(reply.document.size / 1024, 2)) + " KB "
-            elif reply.document.size < 1073741824:
-                docsize = str(round(reply.document.size / 1024**2, 2)) + " MB "
-            else:
-                docsize = str(round(reply.document.size / 1024**3, 2)) + " GB "
-            docbglen = font.getsize(docsize)[0] if font.getsize(docsize)[0] > font.getsize(docname)[0] else font.getsize(docname)[0]
-            canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
-            top, middle, bottom = await drawer(width + docbglen, height + 30)
-            canvas.paste(pfpbg, (0, 0))
-            canvas.paste(top, (pfpbg.width, 0))
-            canvas.paste(middle, (pfpbg.width, top.height))
-            canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-            canvas = await doctype(docname, docsize, doctype, canvas)
-            y = 80 if text else 0
+        elif reply.document and not reply.audio:
+                docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
+                doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
+                if reply.document.size < 1024:
+                    docsize = str(reply.document.size) + " Bytes"
+                elif reply.document.size < 1048576:
+                    docsize = str(round(reply.document.size / 1024, 2)) + " KB "
+                elif reply.document.size < 1073741824:
+                    docsize = str(round(reply.document.size / 1024**2, 2)) + " MB "
+                else:
+                    docsize = str(round(reply.document.size / 1024**3, 2)) + " GB "
+                docbglen = font.getsize(docsize)[0] if font.getsize(docsize)[0] > font.getsize(docname)[0] else font.getsize(docname)[0]
+                canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
+                top, middle, bottom = await drawer(width + docbglen, height + 30)
+                canvas.paste(pfpbg, (0, 0))
+                canvas.paste(top, (pfpbg.width, 0))
+                canvas.paste(middle, (pfpbg.width, top.height))
+                canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
+                canvas = await doctype(docname, docsize, doctype, canvas)
+                y = 80 if text else 0
         else:
-            canvas.paste(pfpbg, (0, 0))
-            canvas.paste(top, (pfpbg.width, 0))
-            canvas.paste(middle, (pfpbg.width, top.height))
-            canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-            y = 85
+                canvas.paste(pfpbg, (0, 0))
+                canvas.paste(top, (pfpbg.width, 0))
+                canvas.paste(middle, (pfpbg.width, top.height))
+                canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
+                y = 85
 
         # Writing User's Name
         space = pfpbg.width + 30

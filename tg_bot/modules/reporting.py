@@ -41,23 +41,22 @@ def report_setting(update: Update, context: CallbackContext):
                 f"Your current report preference is: `{sql.user_should_report(chat.id)}`",
                 parse_mode=ParseMode.MARKDOWN)
 
-    else:
-        if len(args) >= 1:
-            if args[0] in ("yes", "on"):
-                sql.set_chat_setting(chat.id, True)
-                msg.reply_text(
-                    "Turned on reporting! Admins who have turned on reports will be notified when /report "
-                    "or @admin is called.")
-
-            elif args[0] in ("no", "off"):
-                sql.set_chat_setting(chat.id, False)
-                msg.reply_text(
-                    "Turned off reporting! No admins will be notified on /report or @admin."
-                )
-        else:
+    elif len(args) >= 1:
+        if args[0] in ("yes", "on"):
+            sql.set_chat_setting(chat.id, True)
             msg.reply_text(
-                f"This group's current setting is: `{sql.chat_should_report(chat.id)}`",
-                parse_mode=ParseMode.MARKDOWN)
+                "Turned on reporting! Admins who have turned on reports will be notified when /report "
+                "or @admin is called.")
+
+        elif args[0] in ("no", "off"):
+            sql.set_chat_setting(chat.id, False)
+            msg.reply_text(
+                "Turned off reporting! No admins will be notified on /report or @admin."
+            )
+    else:
+        msg.reply_text(
+            f"This group's current setting is: `{sql.chat_should_report(chat.id)}`",
+            parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -142,7 +141,7 @@ def report(update: Update, context: CallbackContext) -> str:
 
             if sql.user_should_report(admin.user.id):
                 try:
-                    if not chat.type == Chat.SUPERGROUP:
+                    if chat.type != Chat.SUPERGROUP:
                         bot.send_message(
                             admin.user.id,
                             msg + link,

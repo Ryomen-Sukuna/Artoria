@@ -33,13 +33,13 @@ def mute(update, context):
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
     args = context.args
-    
+
     if user_can_ban(chat, user, context.bot.id) is False:
         message.reply_text(
             "You don't have enough rights to restrict someone from talking!"
         )
         return ""
-    
+
     user_id = extract_user(message, args)
     if not user_id:
         message.reply_text(
@@ -50,17 +50,17 @@ def mute(update, context):
     if user_id == context.bot.id:
         message.reply_text("Yeahh... I'm not muting myself!")
         return ""
-    
-    if user_id == 777000 or user_id == 1087968824:
+
+    if user_id in [777000, 1087968824]:
         message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot mute it!")
         return ""  
-    
+
     member = chat.get_member(int(user_id))
 
     if member:
         if is_user_admin(chat, user_id, member=member):
             message.reply_text("Well I'm not gonna stop an admin from talking!")
-        
+
         elif member.can_send_messages is None or member.can_send_messages:
             context.bot.restrict_chat_member(
                 chat.id, user_id, permissions=ChatPermissions(can_send_messages=False)
@@ -68,7 +68,7 @@ def mute(update, context):
             reply_msg = "*{}* (`{}`) has been muted in *{}*.".format(
                 member.user.first_name,
                 member.user.id, chat.title) 
-            
+
             message.reply_text(reply_msg,
                                reply_markup=InlineKeyboardMarkup(
                                    [
@@ -120,50 +120,49 @@ def unmute(update, context):
             "You don't seem to be referring to a user."
         )
         return ""
-    
+
     member = chat.get_member(int(user_id))
 
-    if member.status != "kicked" and member.status != "left":
-        if (
-            member.can_send_messages
-            and member.can_send_media_messages
-            and member.can_send_other_messages
-            and member.can_add_web_page_previews
-        ):
-            message.reply_text("This user already has the right to speak.")
-        else:
-            context.bot.restrict_chat_member(
-                chat.id,
-                int(user_id),
-                permissions=ChatPermissions(
-                    can_send_messages=True,
-                    can_invite_users=True,
-                    can_pin_messages=True,
-                    can_send_polls=True,
-                    can_change_info=True,
-                    can_send_media_messages=True,
-                    can_send_other_messages=True,
-                    can_add_web_page_previews=True,
-                ),
-            )
-            message.reply_text(f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
-                               parse_mode=ParseMode.MARKDOWN)
-            return (
-                "<b>{}:</b>"
-                "\n#UNMUTE"
-                "\n<b>Admin:</b> {}"
-                "\n<b>User:</b> {}".format(
-                    html.escape(chat.title),
-                    mention_html(user.id, user.first_name),
-                    mention_html(member.user.id, member.user.first_name),
-                )
-            )
-    else:
+    if member.status in ["kicked", "left"]:
         message.reply_text(
             "This user isn't even in the chat, unmuting them won't make them talk more than they "
             "already do!"
         )
 
+    elif (
+            member.can_send_messages
+            and member.can_send_media_messages
+            and member.can_send_other_messages
+            and member.can_add_web_page_previews
+        ):
+        message.reply_text("This user already has the right to speak.")
+    else:
+        context.bot.restrict_chat_member(
+            chat.id,
+            int(user_id),
+            permissions=ChatPermissions(
+                can_send_messages=True,
+                can_invite_users=True,
+                can_pin_messages=True,
+                can_send_polls=True,
+                can_change_info=True,
+                can_send_media_messages=True,
+                can_send_other_messages=True,
+                can_add_web_page_previews=True,
+            ),
+        )
+        message.reply_text(f"Yep! *{member.user.first_name}* (`{member.user.id}`) can start talking again!",
+                           parse_mode=ParseMode.MARKDOWN)
+        return (
+            "<b>{}:</b>"
+            "\n#UNMUTE"
+            "\n<b>Admin:</b> {}"
+            "\n<b>User:</b> {}".format(
+                html.escape(chat.title),
+                mention_html(user.id, user.first_name),
+                mention_html(member.user.id, member.user.first_name),
+            )
+        )
     return ""
 
 
@@ -206,8 +205,8 @@ def temp_mute(update, context):
     if user_id == context.bot.id:
         message.reply_text("I'm not gonna mute myself.")
         return ""
-    
-    if user_id == 777000 or user_id == 1087968824:
+
+    if user_id in [777000, 1087968824]:
         message.reply_text(str(user_id) + " is an account reserved for telegram, I cannot mute it!")
         return ""  
 
@@ -218,11 +217,7 @@ def temp_mute(update, context):
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     mutetime = extract_time(message, time_val)
 
     if not mutetime:
@@ -287,13 +282,13 @@ def temp_mute(update, context):
 @loggable
 def muteb_callback(update, context):
     query = update.callback_query
-    chat = update.effective_chat  
+    chat = update.effective_chat
     user = update.effective_user
-    if not query.data == "muteb_del":
+    if query.data != "muteb_del":
         splitter = query.data.split("=")
         query_match = splitter[0]
-        user_id = splitter[1]
         if query_match == "muteb_mute":
+            user_id = splitter[1]
             if not is_user_admin(chat, int(user.id)):
                 context.bot.answer_callback_query(query.id,
                                                 text="You don't have enough rights to unmute people",
@@ -301,7 +296,7 @@ def muteb_callback(update, context):
                 return ""
             member = chat.get_member(int(user_id))
 
-            if member.status != "kicked" and member.status != "left":
+            if member.status not in ["kicked", "left"]:
                 if (
                     member.can_send_messages
                     and member.can_send_media_messages
@@ -339,7 +334,7 @@ def muteb_callback(update, context):
                             mention_html(member.user.id, member.user.first_name),
                         )
                     )
-        
+
     else:
         if not is_user_admin(chat, int(user.id)):
             context.bot.answer_callback_query(query.id,

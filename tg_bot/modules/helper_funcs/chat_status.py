@@ -15,12 +15,14 @@ def can_delete(chat: Chat, bot_id: int) -> bool:
 
 
 def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    if chat.type == 'private' \
-            or user_id in SUDO_USERS \
-            or user_id in DEV_USERS \
-            or user_id in WHITELIST_USERS \
-            or user_id in [777000, 1087968824]\
-            or chat.all_members_are_administrators:
+    if (
+        chat.type == 'private'
+        or user_id in SUDO_USERS
+        or user_id in DEV_USERS
+        or user_id in WHITELIST_USERS
+        or user_id in {777000, 1087968824}
+        or chat.all_members_are_administrators
+    ):
         return True
 
     if not member:
@@ -30,10 +32,13 @@ def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -
 
 @MWT(timeout=60 * 5)  # Cache admin status for 5 mins to avoid extra requests.
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    if (chat.type == 'private' or user_id in SUDO_USERS or user_id in DEV_USERS or
-            chat.all_members_are_administrators or
-            user_id in [777000, 1087968824
-                       ]):  # Count telegram and Group Anonymous as admin
+    if (
+        chat.type == 'private'
+        or user_id in SUDO_USERS
+        or user_id in DEV_USERS
+        or chat.all_members_are_administrators
+        or user_id in {777000, 1087968824}
+    ):  # Count telegram and Group Anonymous as admin
         return True
     if not member:
         member = chat.get_member(user_id)

@@ -177,26 +177,26 @@ def callback_button(update, context):
 
     bot.answer_callback_query(query.id)
 
-    if query_type == "db_leave_chat":
-        if query.from_user.id in admin_list:
-            leaving = bot.editMessageText("Leaving Chats...", chat_id, message.message_id)
-            chat_count = get_muted_chats(bot, update, True)
-            bot.sendMessage(chat_id, f"Left {chat_count} Chats.")
-            leaving.delete()
-        else:
-            query.answer("You are not allowed to use this.")
+    if query_type == "db_leave_chat" and query.from_user.id in admin_list:
+        leaving = bot.editMessageText("Leaving Chats...", chat_id, message.message_id)
+        chat_count = get_muted_chats(bot, update, True)
+        bot.sendMessage(chat_id, f"Left {chat_count} Chats.")
+        leaving.delete()
+    elif (
+        query_type == "db_leave_chat"
+        or query_type == "db_cleanup"
+        and query.from_user.id not in admin_list
+    ):
+        query.answer("You are not allowed to use this.")
     elif query_type == "db_cleanup":
-        if query.from_user.id in admin_list:
-            cleaning = bot.editMessageText("Cleaning Up DB...", chat_id, message.message_id)
-            invalid_chat_count = get_invalid_chats(bot, update, True)
-            invalid_gban_count = get_invalid_gban(bot, update, True)
-            reply = "Cleaned Up {} Chats And {} Gbanned Users From DB.".format(
-                invalid_chat_count, invalid_gban_count
-            )
-            bot.sendMessage(chat_id, reply)
-            cleaning.delete()
-        else:
-            query.answer("You are not allowed to use this.")
+        cleaning = bot.editMessageText("Cleaning Up DB...", chat_id, message.message_id)
+        invalid_chat_count = get_invalid_chats(bot, update, True)
+        invalid_gban_count = get_invalid_gban(bot, update, True)
+        reply = "Cleaned Up {} Chats And {} Gbanned Users From DB.".format(
+            invalid_chat_count, invalid_gban_count
+        )
+        bot.sendMessage(chat_id, reply)
+        cleaning.delete()
 
 
 DB_CLEANUP_HANDLER = CommandHandler(

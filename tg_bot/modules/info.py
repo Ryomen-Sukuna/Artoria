@@ -49,7 +49,7 @@ def info(update: Update, context: CallbackContext):
         return
 
     del_msg = message.reply_text("searching info data of user....",parse_mode=ParseMode.HTML)
-    
+
     text = (f"<b>• User Information :-</b>\n\n"
             f"∘ ID: <code>{user.id}</code>\n"
             f"∘ First Name: {html.escape(user.first_name)}")
@@ -64,24 +64,17 @@ def info(update: Update, context: CallbackContext):
     isafk = is_afk(user.id)
     try:
         text += "\n\n∘ Currently AFK: "
-        if user.id == bot.id:
-             text += "<code>???</code>"
-        else:
-             text += str(isafk)
+        text += "<code>???</code>" if user.id == bot.id else str(isafk)
     except:
          pass
 
     try:
-        if user.id == bot.id:
-           num_chats = "???"
-        else:
-           num_chats = get_user_num_chats(user.id)
-       
+        num_chats = "???" if user.id == bot.id else get_user_num_chats(user.id)
         text += f"\n∘ Mutual Chats: <code>{num_chats}</code> "
     except BadRequest:
         pass
-    
-    
+
+
     try:
         status = status = bot.get_chat_member(chat.id, user.id).status
         if status:
@@ -95,9 +88,9 @@ def info(update: Update, context: CallbackContext):
                    text += "\n∘ Chat Status: <em>Creator!</em>"
     except BadRequest:
         pass
-    
-    
-    
+
+
+
     try:
         user_member = chat.get_member(user.id)
         if user_member.status == 'administrator':
@@ -108,30 +101,30 @@ def info(update: Update, context: CallbackContext):
                 text += f"\n∘ Admin Title: <code>{custom_title}</code> \n"
     except BadRequest:
         pass
-   
+
     if user.id ==1286562476:
         text += "\n🚶🏻‍♂️Uff,This person is sudo \n HE IS is the cutie!."
 
     if user.id == OWNER_ID:
         text += "\nThis person is my Owner\nI would never do anything against him!."
-        
+
     elif user.id in DEV_USERS:
         text += "\nThis person is my dev\nI would never do anything against him!."
-        
+
     elif user.id in SUDO_USERS:
         text += "\nThis person is one of my sudo users! " \
                     "Nearly as powerful as my owner🕊so watch it.."
-        
+
     elif user.id in SUPPORT_USERS:
         text += "\nThis person is one of my support users! " \
                         " He can gban you off the map."
-        
-       
+
+
     elif user.id in WHITELIST_USERS:
         text += "\nThis person has been whitelisted! " \
                         "That means I'm not allowed to ban/kick them."
-    
-       
+
+
     elif user.id == bot.id:
         text+= "\n\nI've Seen Them In... Wow. Are They Stalking Me? They're In All The Same Places I Am... Oh. It's Me.\n"
 

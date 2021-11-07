@@ -146,37 +146,37 @@ def get_user_fban(fed_id, user_id):
 
 
 def get_user_admin_fed_name(user_id):
-    user_feds = []
-    for f in FEDERATION_BYFEDID:
-        if int(user_id) in eval(
-                eval(FEDERATION_BYFEDID[f]['fusers'])['members']):
-            user_feds.append(FEDERATION_BYFEDID[f]['fname'])
-    return user_feds
+    return [
+        FEDERATION_BYFEDID[f]['fname']
+        for f in FEDERATION_BYFEDID
+        if int(user_id)
+        in eval(eval(FEDERATION_BYFEDID[f]['fusers'])['members'])
+    ]
 
 
 def get_user_owner_fed_name(user_id):
-    user_feds = []
-    for f in FEDERATION_BYFEDID:
-        if int(user_id) == int(eval(FEDERATION_BYFEDID[f]['fusers'])['owner']):
-            user_feds.append(FEDERATION_BYFEDID[f]['fname'])
-    return user_feds
+    return [
+        FEDERATION_BYFEDID[f]['fname']
+        for f in FEDERATION_BYFEDID
+        if int(user_id) == int(eval(FEDERATION_BYFEDID[f]['fusers'])['owner'])
+    ]
 
 
 def get_user_admin_fed_full(user_id):
-    user_feds = []
-    for f in FEDERATION_BYFEDID:
-        if int(user_id) in eval(
-                eval(FEDERATION_BYFEDID[f]['fusers'])['members']):
-            user_feds.append({"fed_id": f, "fed": FEDERATION_BYFEDID[f]})
-    return user_feds
+    return [
+        {"fed_id": f, "fed": FEDERATION_BYFEDID[f]}
+        for f in FEDERATION_BYFEDID
+        if int(user_id)
+        in eval(eval(FEDERATION_BYFEDID[f]['fusers'])['members'])
+    ]
 
 
 def get_user_owner_fed_full(user_id):
-    user_feds = []
-    for f in FEDERATION_BYFEDID:
-        if int(user_id) == int(eval(FEDERATION_BYFEDID[f]['fusers'])['owner']):
-            user_feds.append({"fed_id": f, "fed": FEDERATION_BYFEDID[f]})
-    return user_feds
+    return [
+        {"fed_id": f, "fed": FEDERATION_BYFEDID[f]}
+        for f in FEDERATION_BYFEDID
+        if int(user_id) == int(eval(FEDERATION_BYFEDID[f]['fusers'])['owner'])
+    ]
 
 
 def get_user_fbanlist(user_id):
@@ -336,9 +336,7 @@ def search_user_in_fed(fed_id, user_id):
     if getfed is None:
         return False
     getfed = eval(getfed['fusers'])['members']
-    if user_id in eval(getfed):
-        return True
-    return False
+    return user_id in eval(getfed)
 
 
 def user_demote_fed(fed_id, user_id):
@@ -379,18 +377,6 @@ def user_demote_fed(fed_id, user_id):
         SESSION.merge(fed)
         SESSION.commit()
         return True
-
-        curr = SESSION.query(UserF).all()
-        result = False
-        for r in curr:
-            if int(r.user_id) == int(user_id):
-                if r.fed_id == fed_id:
-                    SESSION.delete(r)
-                    SESSION.commit()
-                    result = True
-
-        SESSION.close()
-        return result
 
 
 def user_join_fed(fed_id, user_id):
@@ -473,8 +459,7 @@ def all_fed_users(fed_id):
 def all_fed_members(fed_id):
     with FEDS_LOCK:
         getfed = FEDERATION_BYFEDID.get(str(fed_id))
-        fed_admins = eval(eval(getfed['fusers'])['members'])
-        return fed_admins
+        return eval(eval(getfed['fusers'])['members'])
 
 
 def set_frules(fed_id, rules):
@@ -502,17 +487,15 @@ def set_frules(fed_id, rules):
 
 def get_frules(fed_id):
     with FEDS_LOCK:
-        rules = FEDERATION_BYFEDID[str(fed_id)]['frules']
-        return rules
+        return FEDERATION_BYFEDID[str(fed_id)]['frules']
 
 
 def fban_user(fed_id, user_id, first_name, last_name, user_name, reason, time):
     with FEDS_LOCK:
         r = SESSION.query(BansF).all()
         for I in r:
-            if I.fed_id == fed_id:
-                if int(I.user_id) == int(user_id):
-                    SESSION.delete(I)
+            if I.fed_id == fed_id and int(I.user_id) == int(user_id):
+                SESSION.delete(I)
 
         r = BansF(
             str(fed_id), str(user_id), first_name, last_name, user_name, reason,
@@ -532,52 +515,49 @@ def fban_user(fed_id, user_id, first_name, last_name, user_name, reason, time):
 
 def multi_fban_user(multi_fed_id, multi_user_id, multi_first_name,
                     multi_last_name, multi_user_name, multi_reason):
-    if True:  # with FEDS_LOCK:
-        counter = 0
-        time = 0
-        for x in range(len(multi_fed_id)):
-            fed_id = multi_fed_id[x]
-            user_id = multi_user_id[x]
-            first_name = multi_first_name[x]
-            last_name = multi_last_name[x]
-            user_name = multi_user_name[x]
-            reason = multi_reason[x]
-            r = SESSION.query(BansF).all()
-            for I in r:
-                if I.fed_id == fed_id:
-                    if int(I.user_id) == int(user_id):
-                        SESSION.delete(I)
+    counter = 0
+    time = 0
+    for x in range(len(multi_fed_id)):
+        fed_id = multi_fed_id[x]
+        user_id = multi_user_id[x]
+        first_name = multi_first_name[x]
+        last_name = multi_last_name[x]
+        user_name = multi_user_name[x]
+        reason = multi_reason[x]
+        r = SESSION.query(BansF).all()
+        for I in r:
+            if I.fed_id == fed_id and int(I.user_id) == int(user_id):
+                SESSION.delete(I)
 
-            r = BansF(
-                str(fed_id), str(user_id), first_name, last_name, user_name,
-                reason, time)
+        r = BansF(
+            str(fed_id), str(user_id), first_name, last_name, user_name,
+            reason, time)
 
-            SESSION.add(r)
-            counter += 1
-            if str(str(counter)[-2:]) == "00":
-                print(user_id)
-                print(first_name)
-                print(reason)
-                print(counter)
-        try:
-            SESSION.commit()
-        except:
-            SESSION.rollback()
-            return False
-        finally:
-            SESSION.commit()
-        __load_all_feds_banned()
-        print("Done")
-        return counter
+        SESSION.add(r)
+        counter += 1
+        if str(str(counter)[-2:]) == "00":
+            print(user_id)
+            print(first_name)
+            print(reason)
+            print(counter)
+    try:
+        SESSION.commit()
+    except:
+        SESSION.rollback()
+        return False
+    finally:
+        SESSION.commit()
+    __load_all_feds_banned()
+    print("Done")
+    return counter
 
 
 def un_fban_user(fed_id, user_id):
     with FEDS_LOCK:
         r = SESSION.query(BansF).all()
         for I in r:
-            if I.fed_id == fed_id:
-                if int(I.user_id) == int(user_id):
-                    SESSION.delete(I)
+            if I.fed_id == fed_id and int(I.user_id) == int(user_id):
+                SESSION.delete(I)
         try:
             SESSION.commit()
         except:
@@ -597,10 +577,9 @@ def get_fban_user(fed_id, user_id):
         r = SESSION.query(BansF).all()
         reason = None
         for I in r:
-            if I.fed_id == fed_id:
-                if int(I.user_id) == int(user_id):
-                    reason = I.reason
-                    time = I.time
+            if I.fed_id == fed_id and int(I.user_id) == int(user_id):
+                reason = I.reason
+                time = I.time
         return True, reason, time
     return False, None, None
 
@@ -617,8 +596,7 @@ def get_all_fban_users_target(fed_id, user_id):
     if list_fbanned is None:
         FEDERATION_BANNED_FULL[fed_id] = []
         return False
-    getuser = list_fbanned[str(user_id)]
-    return getuser
+    return list_fbanned[str(user_id)]
 
 
 def get_all_fban_users_global():
@@ -632,10 +610,7 @@ def get_all_fban_users_global():
 
 def get_all_feds_users_global():
     list_fed = FEDERATION_BYFEDID
-    total = []
-    for x in list(FEDERATION_BYFEDID):
-        total.append(FEDERATION_BYFEDID[x])
-    return total
+    return [FEDERATION_BYFEDID[x] for x in list(FEDERATION_BYFEDID)]
 
 
 def search_fed_by_id(fed_id):
@@ -643,12 +618,6 @@ def search_fed_by_id(fed_id):
     if get is None:
         return False
     return get
-    result = False
-    for Q in curr:
-        if Q.fed_id == fed_id:
-            result = Q.fed_id
-
-    return result
 
 
 def user_feds_report(user_id: int) -> bool:
@@ -681,10 +650,7 @@ def get_fed_log(fed_id):
     if fed_setting.get('flog'):
         try:
             dispatcher.bot.get_chat(fed_setting.get('flog'))
-        except BadRequest:
-            set_fed_log(fed_id, None)
-            return False
-        except Unauthorized:
+        except (BadRequest, Unauthorized):
             set_fed_log(fed_id, None)
             return False
         return fed_setting.get('flog')

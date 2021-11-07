@@ -37,11 +37,7 @@ def extract_user_and_text(
     text = ""
 
     entities = list(message.parse_entities([MessageEntity.TEXT_MENTION]))
-    if len(entities) > 0:
-        ent = entities[0]
-    else:
-        ent = None
-
+    ent = entities[0] if entities else None
     # if entity offset matches (command end/text start) then all good
     if entities and ent and ent.offset == len(message.text) - len(text_to_parse):
         ent = entities[0]
@@ -113,11 +109,7 @@ def extract_unt_fedban(
     text = ""
 
     entities = list(message.parse_entities([MessageEntity.TEXT_MENTION]))
-    if len(entities) > 0:
-        ent = entities[0]
-    else:
-        ent = None
-
+    ent = entities[0] if entities else None
     # if entity offset matches (command end/text start) then all good
     if entities and ent and ent.offset == len(message.text) - len(text_to_parse):
         ent = entities[0]
@@ -189,16 +181,15 @@ async def get_user(event):
                     replied_user = await event.client(GetFullUserRequest(user_id))
                 except Exception:
                     replied_user = await event.reply("This user's got his profile private. Ain't no peeping allowed.")
-                    pass
     else:
         user = event.pattern_match.group(1)
         user = user.split(" ")
         user = user[0]
-        
+
         if not user:
             user_id = event.from_id
             replied_user = await event.client(GetFullUserRequest(user_id))
-            
+
         else:
             if user.isnumeric():
                 user = int(user)
@@ -217,7 +208,7 @@ async def get_user(event):
             except (TypeError, ValueError) as err:
                 await event.reply(str(err))
                 return None
-    
+
     return replied_user
 
 
