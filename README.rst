@@ -1,10 +1,21 @@
-![cruel](https://telegra.ph/file/b6fbf04a9018eac3a0308.jpg)
+.. image:: https://telegra.ph/file/b6fbf04a9018eac3a0308.jpg
+   :align: center
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone
+   :alt: Saber-Clone
 
-<p align="center">
-    <a href="https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master"><img src="https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070" alt="Commit" /></a>
-    <a href="https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers"><img src="https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&style=flat-square&logo=github&color=F10070" alt="Stars" /></a>
-    <a href="https://github.com/Ryomen-Sukuna/Saber-Clone/network/members"><img src="https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&style=flat-square&logo=github&color=F10070" alt="Fork" /></a>
-</p>
+A modular telegram Python bot running on *python3* with an *sqlalchemy* database.
+
+.. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Saber-Clone/master?label=Last%20Commit&style=flat-square&logo=github&color=F10070
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master
+   :alt: Commit
+
+.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&style=flat-square&logo=github&color=F10070
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers
+   :alt: Star
+
+.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&style=flat-square&logo=github&color=F10070
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members
+   :alt: Fork
 
 # Saber bot - telegram
 
@@ -16,8 +27,6 @@
 [![Open Source Love](https://badges.frapsoft.com/os/v3/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/) 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Join Support!](https://img.shields.io/badge/Support%20Chat-FateUnion-blue)](https://t.me/fateunion)
-
-A modular telegram Python bot running on python3 with an sqlalchemy database.
 
 Originally a marie fork - Saber has evolved further and was built to be more useful for Anime Chats.
 
