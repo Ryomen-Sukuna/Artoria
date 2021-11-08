@@ -115,11 +115,11 @@ def new_fed(update, context):
             return
 
         update.effective_message.reply_text(
-            "*You have succeeded in creating a new federation!*"
-            "\nName: `{}`"
-            "\nID: `{}`"
-            "\n\nUse the command below to join the federation:"
-            "\n`/joinfed {}`".format(fed_name, fed_id, fed_id),
+            f"*You have succeeded in creating a new federation!*\n"
+            f"Name: `{fed_name}`\n"
+            f"ID: `{fed_id}`\n"
+            f"Use the command below to join the federation:\n\n"
+            f"`/joinfed {fed_id}`",
             parse_mode=ParseMode.MARKDOWN,
         )
         try:
