@@ -14,7 +14,6 @@ from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
 @typing_action
 def approval(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -60,7 +59,6 @@ def approval(update, context):
 @typing_action
 def approve(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -108,7 +106,6 @@ def approve(update, context):
 @typing_action
 def unapprove(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -155,7 +152,6 @@ def unapprove(update, context):
 @typing_action
 def approved(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     chat_id = str(chat.id)[1:]
     approved_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
@@ -180,7 +176,6 @@ def approved(update, context):
 @typing_action
 def unapproveall(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     chat_id = str(chat.id)[1:]
     approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))

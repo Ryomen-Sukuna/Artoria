@@ -245,7 +245,6 @@ def invite(update, context):
     user = update.effective_user
     msg = update.effective_message
     chat = update.effective_chat
-    context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
@@ -278,16 +277,12 @@ def invite(update, context):
 def adminlist(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
-    context.args
     bot = context.bot
 
     if update.effective_message.chat.type == "private":
         send_message(update.effective_message, "This Command Only Works In Groups.")
         return
-
-    update.effective_chat
     chat_id = update.effective_chat.id
-    update.effective_message.chat.title
 
     administrators = bot.getChatAdministrators(chat_id)
     text = "Admins In *{}* :".format(update.effective_chat.title)

@@ -171,7 +171,6 @@ def github(update, context):
 
 @run_async
 def repo(update, context):
-    context.args
     message = update.effective_message
     text = message.text[len("/repo ") :]
     usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()

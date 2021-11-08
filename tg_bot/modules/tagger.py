@@ -18,7 +18,6 @@ from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
 @typing_action
 def addtag(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -73,7 +72,6 @@ def addtag(update, context):
 @typing_action
 def removetag(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -202,7 +200,6 @@ def tagme(update, context):
 @typing_action
 def tagall(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     args = context.args
     query = " ".join(args)
@@ -240,7 +237,6 @@ def tagall(update, context):
 @typing_action
 def untagall(update, context):
     chat = update.effective_chat
-    update.effective_user
     message = update.effective_message
     chat_id = str(chat.id)[1:]
     tagall_list = list(REDIS.sunion(f"tagall2_{chat_id}"))
