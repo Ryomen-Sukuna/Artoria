@@ -982,15 +982,15 @@ def fed_ban(update, context):
         if len(subscriber) != 0:
             for fedsid in subscriber:
                 all_fedschat = sql.all_fed_chats(fedsid)
-                for fedschat in all_fedschat:
+                for fedschat_ in all_fedschat:
                     try:
-                        bot.kick_chat_member(fedschat, fban_user_id)
+                        bot.kick_chat_member(fedschat_, fban_user_id)
                     except BadRequest as excp:
                         if excp.message in FBAN_ERRORS:
                             try:
-                                dispatcher.bot.getChat(fedschat)
+                                dispatcher.bot.getChat(fedschat_)
                             except Unauthorized:
-                                targetfed_id = sql.get_fed_id(fedschat)
+                                targetfed_id = sql.get_fed_id(fedschat_)
                                 sql.unsubs_fed(fed_id, targetfed_id)
                                 LOGGER.info(
                                     "Chat {} has unsub fed {} because I was kicked".format(
