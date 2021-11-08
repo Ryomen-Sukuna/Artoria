@@ -397,7 +397,7 @@ def del_blackliststicker(update, context):
                         ),
                         message,
                         update.effective_user,
-                        conn=False,
+                        # conn=False,
                     )
                     return
                 elif getmode == 3:
