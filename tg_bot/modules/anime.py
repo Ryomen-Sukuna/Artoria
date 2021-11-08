@@ -599,7 +599,7 @@ def readmanga(update, context):
 
 @run_async
 def removemangalist(update, context):
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
     removewlist = message.text.split(" ", 1)
     args = context.args
@@ -607,7 +607,7 @@ def removemangalist(update, context):
     if not query:
         message.reply_text("Please enter a manga name to remove from your manga list.")
         return
-    fvrt_char = list(REDIS.sunion(f"anime_mangaread{user.id}"))
+    fvrt_char = list(REDIS.sunion(f"anime_mangaread{us.id}"))
     removewlist = removewlist[1]
 
     if removewlist not in fvrt_char:
@@ -620,7 +620,7 @@ def removemangalist(update, context):
             f"<code>{removewlist}</code> has been removed from your favorite characters list.",
             parse_mode=ParseMode.HTML,
         )
-        REDIS.srem(f"anime_mangaread{user.id}", removewlist)
+        REDIS.srem(f"anime_mangaread{us.id}", removewlist)
 
 
 def animestuffs(update, context):
