@@ -147,7 +147,7 @@ async def process(msg, user, client, reply, replied=None):
             canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
             top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
             draw = ImageDraw.Draw(top)
-            await replied_user(draw, reptot, replied.message.replace("\n", " "), 20)
+            await replied_user(draw, reptot, replied.message.replace("\n", " "), 20) # pylint: disable=PYL-E1120
             top = top.crop((135, 70, top.width, 300))
             canvas.paste(pfpbg, (0, 0))
             canvas.paste(top, (pfpbg.width + 10, 0))
