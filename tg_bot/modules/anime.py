@@ -622,7 +622,7 @@ def removemangalist(update, context):
         REDIS.srem(f"anime_mangaread{us.id}", removewlist)
 
 
-#pylint: disable=PYL-E0602
+# pylint: disable=PYL-E0602
 def animestuffs(update, context):
     query = update.callback_query
     us = update.effective_user
