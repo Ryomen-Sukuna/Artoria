@@ -347,7 +347,7 @@ def reply_filter(update, context):
                                     reply_markup=keyboard,
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Error in filters: ", excp.message)
+                                LOGGER.exception("Error in filters: " + excp.message)
                                 send_message(
                                     update.effective_message,
                                     get_exception(excp, filt, chat),
@@ -360,7 +360,7 @@ def reply_filter(update, context):
                                 )
                             except BadRequest as excp:
                                 LOGGER.exception(
-                                    "Failed to send message: ", excp.message
+                                    "Failed to send message: " + excp.message
                                 )
                 else:
                     ENUM_FUNC_MAP[filt.file_type](
@@ -408,7 +408,7 @@ def reply_filter(update, context):
                                 "again...",
                             )
                         except BadRequest as excp:
-                            LOGGER.exception("Error in filters: ", excp.message)
+                            LOGGER.exception("Error in filters: " + excp.message)
                     elif excp.message == "Reply message not found":
                         try:
                             context.bot.send_message(
@@ -419,7 +419,7 @@ def reply_filter(update, context):
                                 reply_markup=keyboard,
                             )
                         except BadRequest as excp:
-                            LOGGER.exception("Error in filters: ", excp.message)
+                            LOGGER.exception("Error in filters: " + excp.message)
                     else:
                         try:
                             send_message(
@@ -427,7 +427,7 @@ def reply_filter(update, context):
                                 "This message couldn't be sent as it's incorrectly formatted.",
                             )
                         except BadRequest as excp:
-                            LOGGER.exception("Error in filters: ", excp.message)
+                            LOGGER.exception("Error in filters: " + excp.message)
                         LOGGER.warning(
                             "Message %s could not be parsed", str(filt.reply)
                         )
@@ -442,7 +442,7 @@ def reply_filter(update, context):
                 try:
                     send_message(update.effective_message, filt.reply)
                 except BadRequest as excp:
-                    LOGGER.exception("Error in filters: ", excp.message)
+                    LOGGER.exception("Error in filters: " + excp.message)
             break
 
 
