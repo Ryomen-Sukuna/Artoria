@@ -546,6 +546,7 @@ def multi_fban_user(
 
 
 def un_fban_user(fed_id, user_id):
+    I = []
     with FEDS_LOCK:
         r = SESSION.query(BansF).all()
         for I in r:
