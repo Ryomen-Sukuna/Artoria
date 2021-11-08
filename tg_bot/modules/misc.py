@@ -211,7 +211,7 @@ def mpaste(update, context):
 
     key = res["key"]
     if res["isUrl"]:
-        reply = reply = f'Shortened URL: {BASE_URL}/{key}\nYou can view stats, etc. [here]({BASE_URL}/v/{key})'
+        reply = reply = f'Shortened URL: {BURL}/{key}\nYou can view stats, etc. [here]({BURL}/v/{key})'
     else:
         reply = f"{BURL}/{key}"
     update.effective_message.reply_text(
@@ -581,11 +581,11 @@ def reply_keyboard_remove(update, context):
 
 @run_async
 def stats(update, context):
-    stats = (
+    statistics = (
         f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n"
         + "\n┋\n".join([mod.__stats__() for mod in STATS])
     )
-    result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
+    result = re.sub(r"(\d+)", r"<code>\1</code>", statistics)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
 
 
