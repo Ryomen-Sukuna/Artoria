@@ -2326,9 +2326,6 @@ def welcome_fed(update, context):
 
 
 def __user_info__(user_id, chat_id):
-    if user_id == dispatcher.bot.id:
-        return ""
-
     fed_id = sql.get_fed_id(chat_id)
     if fed_id:
         fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user_id)
@@ -2336,36 +2333,19 @@ def __user_info__(user_id, chat_id):
         infoname = info["fname"]
 
         if int(info["owner"]) == user_id:
-            text = "∘ Federation Owner Of : <b>{}</b>.".format(infoname)
+            text = "Federation owner of: <b>{}</b>.".format(infoname)
         elif is_user_fed_admin(fed_id, user_id):
-            text = "∘ Federation Admin Of : <b>{}</b>.".format(infoname)
+            text = "Federation admin of: <b>{}</b>.".format(infoname)
+
+        elif fban:
+            text = "Federation banned: <b>Yes</b>"
+            text += "\n<b>Reason:</b> {}".format(fbanreason)
         else:
-            text = ""
-
+            text = "Federation banned: <b>No</b>"
     else:
         text = ""
     return text
 
-
-def __user_info__(user_id, chat_id):
-    text = "<b>Federation Banned : </b>{} "
-    fed_id = sql.get_fed_id(chat_id)
-    if user_id == dispatcher.bot.id:
-        return ""
-    if fed_id:
-        fban, fbanreason, fbantime = sql.get_fban_user(fed_id, user_id)
-        info = sql.get_fed_info(fed_id)
-        infoname = info["fname"]
-        if fban:
-            text = text.format("Yes")
-        if fbanreason:
-            text += "\nReason: {}".format(fbanreason)
-        if not fban:
-            text = text.format("No")
-
-    else:
-        text = ""
-    return text
 
 
 def __stats__():
