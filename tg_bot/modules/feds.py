@@ -1199,7 +1199,7 @@ def unfban(update, context):
                             sql.unsubs_fed(fed_id, targetfed_id)
                             LOGGER.info(
                                 "Chat {} has unsub fed {} because I was kicked".format(
-                                    fedschat, info["fname"]
+                                    fedschat_, info["fname"]
                                 )
                             )
                             continue
