@@ -564,7 +564,8 @@ GBAM_REASON = (
     "Shit of telegram",
     "Official gay of tg",
     "Official pro of tg ",
-    "Waifu stealer", "Nibha",
+    "Waifu stealer",
+    "Nibha",
 )
 
 GIFS = [
