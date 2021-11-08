@@ -1284,15 +1284,14 @@ def set_frules(update, context):
         rules = sql.get_fed_info(fed_id)["frules"]
         getfed = sql.get_fed_info(fed_id)
         get_fedlog = sql.get_fed_log(fed_id)
-        if get_fedlog:
-            if ast.literal_eval(get_fedlog):
-                bot.send_message(
-                    get_fedlog,
-                    "*{}* has updated federation rules for fed *{}*".format(
-                        user.first_name, getfed["fname"]
-                    ),
-                    parse_mode="markdown",
-                )
+        if get_fedlog and ast.literal_eval(get_fedlog):
+            bot.send_message(
+                get_fedlog,
+                "*{}* has updated federation rules for fed *{}*".format(
+                    user.first_name, getfed["fname"]
+                ),
+                parse_mode="markdown",
+            )
         update.effective_message.reply_text(f"Rules have been changed to :\n{rules}!")
     else:
         update.effective_message.reply_text("Please write rules to set this up!")
@@ -1791,14 +1790,13 @@ def fed_import_bans(update, context):
             if failed >= 1:
                 text += " {} Failed to import.".format(failed)
             get_fedlog = sql.get_fed_log(fed_id)
-            if get_fedlog:
-                if ast.literal_eval(get_fedlog):
-                    teks = "Fed *{}* has successfully imported data. {} banned.".format(
-                        getfed["fname"], success
-                    )
-                    if failed >= 1:
-                        teks += " {} Failed to import.".format(failed)
-                    bot.send_message(get_fedlog, teks, parse_mode="markdown")
+            if get_fedlog and ast.literal_eval(get_fedlog):
+                teks = "Fed *{}* has successfully imported data. {} banned.".format(
+                    getfed["fname"], success
+                )
+                if failed >= 1:
+                    teks += " {} Failed to import.".format(failed)
+                bot.send_message(get_fedlog, teks, parse_mode="markdown")
         elif fileformat == "csv":
             multi_fed_id = []
             multi_import_userid = []
@@ -1867,14 +1865,13 @@ def fed_import_bans(update, context):
             if failed >= 1:
                 text += " {} Failed to import.".format(failed)
             get_fedlog = sql.get_fed_log(fed_id)
-            if get_fedlog:
-                if ast.literal_eval(get_fedlog):
-                    teks = "Fed *{}* has successfully imported data. {} banned.".format(
-                        getfed["fname"], success
-                    )
-                    if failed >= 1:
-                        teks += " {} Failed to import.".format(failed)
-                    bot.send_message(get_fedlog, teks, parse_mode="markdown")
+            if get_fedlog and ast.literal_eval(get_fedlog):
+                teks = "Fed *{}* has successfully imported data. {} banned.".format(
+                    getfed["fname"], success
+                )
+                if failed >= 1:
+                    teks += " {} Failed to import.".format(failed)
+                bot.send_message(get_fedlog, teks, parse_mode="markdown")
         else:
             send_message(update.effective_message, "This file is not supported.")
             return
@@ -2135,15 +2132,14 @@ def subs_feds(update, context):
                 parse_mode="markdown",
             )
             get_fedlog = sql.get_fed_log(args[0])
-            if get_fedlog:
-                if int(get_fedlog) != int(chat.id):
-                    bot.send_message(
-                        get_fedlog,
-                        "Federation `{}` has subscribe the federation `{}`".format(
-                            fedinfo["fname"], getfed["fname"]
-                        ),
-                        parse_mode="markdown",
-                    )
+            if get_fedlog and int(get_fedlog) != int(chat.id):
+                bot.send_message(
+                    get_fedlog,
+                    "Federation `{}` has subscribe the federation `{}`".format(
+                        fedinfo["fname"], getfed["fname"]
+                    ),
+                    parse_mode="markdown",
+                )
         else:
             send_message(
                 update.effective_message,
@@ -2200,15 +2196,14 @@ def unsubs_feds(update, context):
                 parse_mode="markdown",
             )
             get_fedlog = sql.get_fed_log(args[0])
-            if get_fedlog:
-                if int(get_fedlog) != int(chat.id):
-                    bot.send_message(
-                        get_fedlog,
-                        "Federation `{}` has unsubscribe fed `{}`.".format(
-                            fedinfo["fname"], getfed["fname"]
-                        ),
-                        parse_mode="markdown",
-                    )
+            if get_fedlog and int(get_fedlog) != int(chat.id):
+                bot.send_message(
+                    get_fedlog,
+                    "Federation `{}` has unsubscribe fed `{}`.".format(
+                        fedinfo["fname"], getfed["fname"]
+                    ),
+                    parse_mode="markdown",
+                )
         else:
             send_message(
                 update.effective_message,
