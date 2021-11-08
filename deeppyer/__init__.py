@@ -43,12 +43,12 @@ async def deepfry(
 
     Returns: PIL.Image - Deepfried image.
     """
-    IMG = img.copy().convert('RGB')
+    img = IMG.copy().convert('RGB')
 
     if type_ not in DeepfryTypes:
         raise ValueError(f'Unknown deepfry type "{type}", expected a value from deeppyer.DeepfryTypes')
 
-    if TOKAN:
+    if TOKEN:
         req_url = f'https://{url_base}.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true'  # WHY THE FUCK IS THIS SO LONG
         headers = {
             'Content-Type': 'application/octet-stream',
@@ -137,11 +137,11 @@ if __name__ == '__main__':
     parser.add_argument('file', metavar='FILE', help='File to deepfry.')
     args = parser.parse_args()
 
-    token = args.token
+    TOKEN = args.token
     img = Image.open(args.file)
     out = args.output or './deepfried.jpg'
 
     loop = asyncio.get_event_loop()
-    img = loop.run_until_complete(deepfry(img, token=token))
+    img = loop.run_until_complete(deepfry(img, token=TOKEN))
 
     img.save(out, 'jpeg')
