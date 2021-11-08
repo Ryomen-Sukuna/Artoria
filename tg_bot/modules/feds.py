@@ -733,7 +733,7 @@ def fed_ban(update, context):
             )
             return
 
-        fed_chat = sql.all_fed_chats(fed_id)
+        f_chat = sql.all_fed_chats(fed_id)
         # Will send to current chat
         bot.send_message(
             chat.id,
@@ -788,17 +788,16 @@ def fed_ban(update, context):
                 ),
                 parse_mode="HTML",
             )
-        for fedschat in fed_chat:
+        for fedschat in f_chat:
             try:
                 # Do not spam all fed chats
-                """
-				bot.send_message(chat, "<b>FedBan reason updated</b>" \
-							 "\n<b>Federation:</b> {}" \
-							 "\n<b>Federation Admin:</b> {}" \
-							 "\n<b>User:</b> {}" \
-							 "\n<b>User ID:</b> <code>{}</code>" \
-							 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
-				"""
+                # bot.send_message(chat, "<b>FedBan reason updated</b>"\
+                # "\n<b>Federation:</b> {}" \
+                # "\n<b>Federation Admin:</b> {}" \
+                # "\n<b>User:</b> {}" \
+                # "\n<b>User ID:</b> <code>{}</code>" \
+                # "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason),
+                # parse_mode="HTML")
                 bot.kick_chat_member(fedschat, fban_user_id)
             except BadRequest as excp:
                 if excp.message in FBAN_ERRORS:
@@ -821,16 +820,15 @@ def fed_ban(update, context):
             except TelegramError:
                 pass
         # Also do not spam all fed admins
-        """
-		send_to_list(bot, FEDADMIN,
-				 "<b>FedBan reason updated</b>" \
-							 "\n<b>Federation:</b> {}" \
-							 "\n<b>Federation Admin:</b> {}" \
-							 "\n<b>User:</b> {}" \
-							 "\n<b>User ID:</b> <code>{}</code>" \
-							 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason),
-							html=True)
-		"""
+
+        # send_to_list(bot, FEDADMIN,
+        # "<b>FedBan reason updated</b>" \
+        # "\n<b>Federation:</b> {}" \
+        # "\n<b>Federation Admin:</b> {}" \
+        # "\n<b>User:</b> {}" \
+        # "\n<b>User ID:</b> <code>{}</code>" \
+        # "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason),
+        # html=True)
 
         # Fban for fed subscriber
         subscriber = list(sql.get_subscriber(fed_id))
@@ -890,7 +888,7 @@ def fed_ban(update, context):
         )
         return
 
-    fed_chats = sql.all_fed_chats(fed_id)
+    f_chat = sql.all_fed_chats(fed_id)
     # Will send to current chat
     bot.send_message(
         chat.id,
@@ -946,18 +944,17 @@ def fed_ban(update, context):
             parse_mode="HTML",
         )
     chats_in_fed = 0
-    for fedschat in fed_chats:
+    for fedschat in f_chat:
         chats_in_fed += 1
         try:
             # Do not spamming all fed chats
-            """
-			bot.send_message(chat, "<b>FedBan reason updated</b>" \
-							"\n<b>Federation:</b> {}" \
-							"\n<b>Federation Admin:</b> {}" \
-							"\n<b>User:</b> {}" \
-							"\n<b>User ID:</b> <code>{}</code>" \
-							"\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
-			"""
+
+            # bot.send_message(chat, "<b>FedBan reason updated</b>" \
+            # "\n<b>Federation:</b> {}" \
+            # "\n<b>Federation Admin:</b> {}" \
+            # "\n<b>User:</b> {}" \
+            # "\n<b>User ID:</b> <code>{}</code>" \
+            # "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
             bot.kick_chat_member(fedschat, fban_user_id)
         except BadRequest as excp:
             if excp.message in FBAN_ERRORS:
@@ -971,16 +968,14 @@ def fed_ban(update, context):
         except TelegramError:
             pass
         # Also do not spamming all fed admins
-        """
-		send_to_list(bot, FEDADMIN,
-				 "<b>FedBan reason updated</b>" \
-							 "\n<b>Federation:</b> {}" \
-							 "\n<b>Federation Admin:</b> {}" \
-							 "\n<b>User:</b> {}" \
-							 "\n<b>User ID:</b> <code>{}</code>" \
-							 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason),
-							html=True)
-		"""
+        # send_to_list(bot, FEDADMIN,
+        # "<b>FedBan reason updated</b>" \
+        # "\n<b>Federation:</b> {}" \
+        # "\n<b>Federation Admin:</b> {}" \
+        # "\n<b>User:</b> {}" \
+        # "\n<b>User ID:</b> <code>{}</code>" \
+        # "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason),
+        # html=True)
 
         # Fban for fed subscriber
         subscriber = list(sql.get_subscriber(fed_id))
