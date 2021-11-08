@@ -677,7 +677,8 @@ def animestuffs(update, context):
             )
 
 
-"""def button(update, context):
+"""
+def button(update, context):
     bot = context.bot
     query = update.callback_query
     message = query.message
@@ -753,10 +754,10 @@ REMOVE_FVRT_CHAR_HANDLER = DisableAbleCommandHandler(
 REMOVE_MANGA_CHAR_HANDLER = DisableAbleCommandHandler(
     ["rmanga", "rml"], removemangalist
 )
-BUTTON_HANDLER = CallbackQueryHandler(button, pattern="anime_.*")
+# BUTTON_HANDLER = CallbackQueryHandler(button, pattern="anime_.*")
 ANIME_STUFFS_HANDLER = CallbackQueryHandler(animestuffs, pattern="xanime_.*")
 
-dispatcher.add_handler(BUTTON_HANDLER)
+# dispatcher.add_handler(BUTTON_HANDLER)
 dispatcher.add_handler(ANIME_STUFFS_HANDLER)
 dispatcher.add_handler(ANIME_HANDLER)
 dispatcher.add_handler(CHARACTER_HANDLER)
