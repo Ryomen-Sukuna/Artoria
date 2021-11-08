@@ -3,6 +3,7 @@ from telethon.tl import functions
 from telethon.tl import types
 from telethon.tl.types import *
 
+from tg_bot import IBM_WATSON_CRED_URL, IBM_WATSON_CRED_PASSWORD, TEMP_DOWNLOAD_DIRECTORY
 from tg_bot.events import register
 
 
