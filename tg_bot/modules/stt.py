@@ -1,7 +1,5 @@
 import requests
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
+from telethon.tl import functions, types
 
 from tg_bot import (
     client,
