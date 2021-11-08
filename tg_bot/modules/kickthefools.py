@@ -27,8 +27,7 @@ async def _(event):
             )
             if not status:
                 return
-            else:
-                c += 1
+            c += 1
 
         if isinstance(i.status, UserStatusLastWeek):
             status = await event.client(
@@ -36,8 +35,7 @@ async def _(event):
             )
             if not status:
                 return
-            else:
-                c += 1
+            c += 1
 
     required_string = "Successfully Kicked **{}** users"
     await event.reply(required_string.format(c))

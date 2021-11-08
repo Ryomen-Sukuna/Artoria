@@ -193,8 +193,7 @@ def rmemes(update, context):
     if res.status_code != 200:  # Like if api is down?
         msg.reply_text("Sorry some error occurred :(")
         return
-    else:
-        res = res.json()
+    res = res.json()
 
     rpage = res.get(str("subreddit"))  # Subreddit
     title = res.get(str("title"))  # Post title
