@@ -221,7 +221,7 @@ def rmemes(update, context):
 
 # plugin by t.me/RCage
 @run_async
-def meme(update: Update, context: CallbackContext):
+def meme_(update: Update, context: CallbackContext):
     msg = update.effective_message
     meme = r.get("https://meme-api.herokuapp.com/gimme/Animemes/").json()
     image = meme.get("url")
