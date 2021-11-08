@@ -849,7 +849,6 @@ def user_button(update, context):
             ),
         )
         context.bot.deleteMessage(chat.id, message.message_id)
-        db_checks
     else:
         query.answer(text="You're not allowed to do this!")
 
