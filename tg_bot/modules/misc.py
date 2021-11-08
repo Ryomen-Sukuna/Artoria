@@ -176,7 +176,7 @@ def repo(update, context):
     text = message.text[len("/repo ") :]
     usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()
     reply_text = "*Repositorys*\n"
-    for i in range(len(usr)):
+    for i, _ in enumarate(usr):
         reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
     message.reply_text(
         reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
