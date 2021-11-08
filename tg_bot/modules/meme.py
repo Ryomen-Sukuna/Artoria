@@ -309,7 +309,7 @@ def chinesememes(update: Update, context: CallbackContext) -> str:
 
 
 TRUMP_HANDLER = DisableAbleCommandHandler("trump", trumptext, admin_ok=True)
-MEME_HANDLER = DisableAbleCommandHandler("meme_", meme)
+MEME_HANDLER = DisableAbleCommandHandler("meme", meme_)
 DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
 CHINESEMEMES_HANDLER = DisableAbleCommandHandler("dllm", chinesememes, pass_args=True)
 MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, admin_ok=True)
