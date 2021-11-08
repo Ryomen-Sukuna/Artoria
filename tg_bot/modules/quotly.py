@@ -190,7 +190,7 @@ async def process(msg, user, client, reply, replied=None):
         return True, canvas
     elif reply.document and not reply.audio:
         docname_ = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
-        doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
+        doctype_ = reply.document.attributes[-1].file_name.split(".")[-1].upper()
         if reply.document.size < 1024:
             docsize = str(reply.document.size) + " Bytes"
         elif reply.document.size < 1048576:
@@ -210,7 +210,7 @@ async def process(msg, user, client, reply, replied=None):
         canvas.paste(top, (pfpbg.width, 0))
         canvas.paste(middle, (pfpbg.width, top.height))
         canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-        canvas = await doctype(docname_, docsize, doctype, canvas)
+        canvas = await doctype_(docname_, docsize, doctype_, canvas)
         y = 80 if text else 0
     else:
         canvas.paste(pfpbg, (0, 0))
