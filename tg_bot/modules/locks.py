@@ -1,8 +1,15 @@
 import html
+from typing import Optional
 
 from alphabet_detector import AlphabetDetector
-from telegram import Message, Chat, ParseMode, MessageEntity
-from telegram import TelegramError, ChatPermissions
+from telegram import (
+    Message,
+    Chat,
+    ParseMode,
+    MessageEntity,
+    TelegramError,
+    ChatPermissions,
+)
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
@@ -369,7 +376,7 @@ def del_lockables(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
 
-    for lockable, filter in LOCK_TYPES.items():
+    for lockable, filt in LOCK_TYPES.items():
         if lockable == "rtl":
             if sql.is_locked(chat.id, lockable) and can_delete(chat, context.bot.id):
                 if message.caption:
@@ -420,7 +427,7 @@ def del_lockables(update, context):
                 break
             continue
         if (
-            filter(update)
+            filt(update)
             and sql.is_locked(chat.id, lockable)
             and can_delete(chat, context.bot.id)
         ):
