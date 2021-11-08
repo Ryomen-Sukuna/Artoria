@@ -47,9 +47,9 @@ async def download_video(v_url):
         url = q[0]["link"]
     except:
         return await rkp.edit("`failed to find`")
-    type = "audio"
+    zero = "audio"
     await rkp.edit("`Preparing to download...`")
-    if type == "audio":
+    if zero == "audio":
         opts = {
             "format": "best",
             "addmetadata": True,
