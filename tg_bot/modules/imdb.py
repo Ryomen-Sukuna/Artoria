@@ -2,7 +2,7 @@ import re
 
 import bs4
 import requests
-from telethon import types
+from telethon import events, types
 from telethon.tl import functions
 
 from tg_bot import client
