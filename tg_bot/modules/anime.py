@@ -677,8 +677,7 @@ def animestuffs(update, context):
             )
 
 
-# pylint: disable=PYL-E0602
-def button(update, context):
+"""def button(update, context):
     bot = context.bot
     query = update.callback_query
     message = query.message
@@ -714,6 +713,7 @@ def button(update, context):
             progress_message.delete()
         else:
             query.answer("You are not allowed to use this.")
+"""
 
 
 __help__ = """
