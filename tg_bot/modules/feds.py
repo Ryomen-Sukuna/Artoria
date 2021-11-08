@@ -2347,7 +2347,6 @@ def __user_info__(user_id, chat_id):
     return text
 
 
-
 def __stats__():
     all_fbanned = sql.get_all_fban_users_global()
     all_feds = sql.get_all_feds_users_global()

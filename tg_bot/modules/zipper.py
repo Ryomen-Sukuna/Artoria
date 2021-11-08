@@ -20,7 +20,7 @@ thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 if not os.path.isdir(extracted):
     os.makedirs(extracted)
 
-    
+
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
         return isinstance(
@@ -88,8 +88,8 @@ def zipdir(path, ziph):
         for file in files:
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
-            
-            
+
+
 @register(pattern="^/unzip")
 async def _(event):
     if event.fwd_from:
