@@ -250,7 +250,7 @@ def deepfryer(update: Update, context: CallbackContext):
 
     # download last photo (highres) as byte array
     if data:
-        photodata = data[len(data) - 1].get_file().download_as_bytearray()
+        photodata = data[-1].get_file().download_as_bytearray()
         image = Image.open(io.BytesIO(photodata))
     elif data2:
         sticker = bot.get_file(data2.file_id)
