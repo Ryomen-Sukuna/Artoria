@@ -302,7 +302,7 @@ def leave_fed(update, context):
         return
 
     fed_id = sql.get_fed_id(chat.id)
-    fed_info = sql.get_fed_info(fed_id)
+    fed_infos = sql.get_fed_info(fed_id)
 
     # administrators = chat.get_administrators().status
     getuser = bot.get_chat_member(chat.id, user.id).status
@@ -319,7 +319,7 @@ def leave_fed(update, context):
                 )
             send_message(
                 update.effective_message,
-                "This group has left the federation {}!".format(fed_info["fname"]),
+                "This group has left the federation {}!".format(fed_infos["fname"]),
             )
         else:
             update.effective_message.reply_text(
