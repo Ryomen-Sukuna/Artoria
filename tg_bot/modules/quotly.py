@@ -189,7 +189,7 @@ async def process(msg, user, client, reply, replied=None):
         os.remove(sticker)
         return True, canvas
     elif reply.document and not reply.audio:
-        docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
+        docname_ = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
         doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
         if reply.document.size < 1024:
             docsize = str(reply.document.size) + " Bytes"
@@ -201,8 +201,8 @@ async def process(msg, user, client, reply, replied=None):
             docsize = str(round(reply.document.size / 1024 ** 3, 2)) + " GB "
         docbglen = (
             font.getsize(docsize)[0]
-            if font.getsize(docsize)[0] > font.getsize(docname)[0]
-            else font.getsize(docname)[0]
+            if font.getsize(docsize)[0] > font.getsize(docname_)[0]
+            else font.getsize(docname_)[0]
         )
         canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
         top, middle, bottom = await drawer(width + docbglen, height + 30)
@@ -210,7 +210,7 @@ async def process(msg, user, client, reply, replied=None):
         canvas.paste(top, (pfpbg.width, 0))
         canvas.paste(middle, (pfpbg.width, top.height))
         canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-        canvas = await doctype(docname, docsize, doctype, canvas)
+        canvas = await doctype(docname_, docsize, doctype, canvas)
         y = 80 if text else 0
     else:
         canvas.paste(pfpbg, (0, 0))
