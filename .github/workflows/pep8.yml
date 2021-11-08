@@ -1,0 +1,38 @@
+name: PyLint
+
+on: [push, pull_request]
+
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Python lint libraries
+        run: |
+          pip install autoflake isort black
+      - name: Remove unused imports and variables
+        run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
+      - name: lint with isort
+        run: |
+          isort .
+      - name: lint with black
+        run: |
+          black .
+      # commit changes
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Ryomen-Sukuna: Auto Fixes
+          title: Ryomen-Sukuna: Auto Fixes.
+          body: Ryomen-Sukuna: Auto Fixes
+          branch: Auto Fixes
+          committer: Ryomen-Sukuna<80420642+Ryomen-Sukuna@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: true
+          delete-branch: true
