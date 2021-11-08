@@ -2,7 +2,7 @@ import re
 
 import bs4
 import requests
-from telethon import events, types
+from telethon import types
 from telethon.tl import functions
 
 from tg_bot import client
@@ -34,7 +34,7 @@ async def is_register_admin(chat, user):
 @register(pattern="^/imdb (.*)")
 async def imdb(e):
     if e.is_group and not (await is_register_admin(e.input_chat, e.message.sender_id)):
-        await event.reply(
+        await e.reply(
             " You are not admin. You can't use this command.. But you can use in my pm"
         )
         return
