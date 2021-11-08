@@ -446,8 +446,6 @@ def fpro_callback(update, context):
             query.message.edit_text(
                 "Fedadmin promotion cancelled by {}.".format(
                     mention_html(member.user.id, member.user.first_name),
-                    fed_name,
-                    fed_id,
                 ),
                 parse_mode=ParseMode.HTML,
             )
@@ -684,12 +682,12 @@ def fed_ban(update, context):
         return
 
     try:
-        user_chat = bot.get_chat(user_id)
+        us_chat = bot.get_chat(user_id)
         isvalid = True
-        fban_user_id = user_chat.id
-        fban_user_name = user_chat.first_name
-        fban_user_lname = user_chat.last_name
-        fban_user_uname = user_chat.username
+        fban_user_id = us_chat.id
+        fban_user_name = us_chat.first_name
+        fban_user_lname = us_chat.last_name
+        fban_user_uname = us_chat.username
     except BadRequest as excp:
         if not str(user_id).isdigit():
             send_message(update.effective_message, excp.message)
@@ -703,7 +701,7 @@ def fed_ban(update, context):
         fban_user_lname = None
         fban_user_uname = None
 
-    if isvalid and user_chat.type != "private":
+    if isvalid and us_chat.type != "private":
         send_message(update.effective_message, "That's so not a user!")
         return
 
