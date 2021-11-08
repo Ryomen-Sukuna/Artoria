@@ -733,7 +733,7 @@ def fed_ban(update, context):
             )
             return
 
-        fed_chats = sql.all_fed_chats(fed_id)
+        fed_chat = sql.all_fed_chats(fed_id)
         # Will send to current chat
         bot.send_message(
             chat.id,
@@ -788,7 +788,7 @@ def fed_ban(update, context):
                 ),
                 parse_mode="HTML",
             )
-        for fedschat in fed_chats:
+        for fedschat in fed_chat:
             try:
                 # Do not spam all fed chats
                 """
