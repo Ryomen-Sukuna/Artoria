@@ -3,7 +3,7 @@ import re
 
 
 async def md5(fname: str) -> str:
-    hash_md5 = hashlib.md5()
+    hash_md5 = hashlib.sha512()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
