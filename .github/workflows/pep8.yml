@@ -25,14 +25,11 @@ jobs:
         run: |
           black .
       # commit changes
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit-message: Ryomen-Sukuna: Auto Fixes
-          title: Ryomen-Sukuna: Auto Fixes.
-          body: Ryomen-Sukuna: Auto Fixes
-          branch: Auto Fixes
-          committer: Ryomen-Sukuna<80420642+Ryomen-Sukuna@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: true
-          delete-branch: true
+          commit_message: 'Ryomen-Sukuna: Auto Fixes'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: Ryomen-Sukuna
+          commit_user_email: 80420642+Ryomen-Sukuna@users.noreply.github.com
+          commit_author: Ryomen-Sukuna <80420642+Ryomen-Sukuna@users.noreply.github.com>
