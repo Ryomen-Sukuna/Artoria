@@ -149,7 +149,10 @@ def get_user_admin_fed_name(user_id):
     return [
         FEDERATION_BYFEDID[f]["fname"]
         for f in FEDERATION_BYFEDID
-        if int(user_id) in ast.literal_eval(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["members"])
+        if int(user_id)
+        in ast.literal_eval(
+            ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["members"]
+        )
     ]
 
 
@@ -157,7 +160,8 @@ def get_user_owner_fed_name(user_id):
     return [
         FEDERATION_BYFEDID[f]["fname"]
         for f in FEDERATION_BYFEDID
-        if int(user_id) == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
+        if int(user_id)
+        == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
     ]
 
 
@@ -165,7 +169,10 @@ def get_user_admin_fed_full(user_id):
     return [
         {"fed_id": f, "fed": FEDERATION_BYFEDID[f]}
         for f in FEDERATION_BYFEDID
-        if int(user_id) in ast.literal_eval(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["members"])
+        if int(user_id)
+        in ast.literal_eval(
+            ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["members"]
+        )
     ]
 
 
@@ -173,7 +180,8 @@ def get_user_owner_fed_full(user_id):
     return [
         {"fed_id": f, "fed": FEDERATION_BYFEDID[f]}
         for f in FEDERATION_BYFEDID
-        if int(user_id) == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
+        if int(user_id)
+        == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
     ]
 
 
