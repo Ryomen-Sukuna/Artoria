@@ -25,8 +25,14 @@ class Colours:
 
 # TODO: Replace face recognition API with something like OpenCV.
 
-async def deepfry(img: Image, *, token: str = None, url_base: str = 'westcentralus',
-                  session: aiohttp.ClientSession = None, type=DeepfryTypes.RED) -> Image:
+async def deepfry(
+    img: Image,
+    *,
+    token: str = None,
+    url_base: str = 'westcentralus',
+    session: aiohttp.ClientSession = None,
+    type_=DeepfryTypes.RED
+) -> Image:
     """
     Deepfry an image.
     
@@ -39,7 +45,7 @@ async def deepfry(img: Image, *, token: str = None, url_base: str = 'westcentral
     """
     img = img.copy().convert('RGB')
 
-    if type not in DeepfryTypes:
+    if type_ not in DeepfryTypes:
         raise ValueError(f'Unknown deepfry type "{type}", expected a value from deeppyer.DeepfryTypes')
 
     if token:
