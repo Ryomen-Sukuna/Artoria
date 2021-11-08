@@ -208,9 +208,7 @@ def unblackliststicker(update, context):
         elif not successful:
             send_message(
                 update.effective_message,
-                "None of these stickers exist, so they cannot be removed.".format(
-                    successful, len(to_unblacklist) - successful
-                ),
+                "None of these stickers exist, so they cannot be removed.",
                 parse_mode=ParseMode.HTML,
             )
 
