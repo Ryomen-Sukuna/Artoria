@@ -208,11 +208,11 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(update, context, chat, chatP, user):
+def __chat_settings__(chat_id, _):
     return f"This chat is setup to send user reports to admins, via /report and @admin: `{sql.chat_should_report(chat_id)}`"
 
 
-def __user_settings__(update, context, user):
+def __user_settings__(_, _, user):
     if sql.user_should_report(user.id) is True:
         text = "You will receive reports from chats you're admin."
         keyboard = [
@@ -307,3 +307,4 @@ __handlers__ = [
     (ADMIN_REPORT_HANDLER, REPORT_GROUP),
     (SETTING_HANDLER),
 ]
+def __chat_settings__(chat_id, _):
