@@ -5,9 +5,7 @@ import html2text
 import requests
 from bing_image_downloader import downloader
 from requests import get, post
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
+from telethon.tl import functions, types
 
 from tg_bot import client
 from tg_bot.events import register
