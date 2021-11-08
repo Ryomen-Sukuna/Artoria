@@ -54,7 +54,6 @@ speedtest_create = filters.create(speedtest_callback)
 
 @pbot.on_message(filters.command("song"))
 async def song(client, message):
-    message.chat.id
     user_id = message.from_user["id"]
     args = get_arg(message) + " " + "song"
     if args.startswith(" "):

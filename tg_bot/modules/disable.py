@@ -151,7 +151,6 @@ if is_module_loaded(FILENAME):
                 )
                 return ""
             chat = update.effective_chat
-            update.effective_chat.id
             chat_name = update.effective_message.chat.title
 
         if len(args) >= 1:
@@ -216,7 +215,6 @@ if is_module_loaded(FILENAME):
                 )
                 return ""
             chat = update.effective_chat
-            update.effective_chat.id
 
         text = build_curr_disabled(chat.id)
         send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN)

@@ -306,7 +306,6 @@ CONN_HELP = """
 
 @run_async
 def help_connect_chat(update, context):
-    context.args
 
     if update.effective_message.chat.type != "private":
         send_message(update.effective_message, "PM me with that command to get help.")

@@ -209,7 +209,6 @@ def anime(update, context):
         anime_name_w = f"{json['title']['romaji']}"
         info = json.get("siteUrl")
         trailer = json.get("trailer", None)
-        json["id"]
         if trailer:
             trailer_id = trailer.get("id", None)
             site = trailer.get("site", None)
@@ -488,7 +487,6 @@ def upcoming(update, context):
 
 @run_async
 def watchlist(update, context):
-    update.effective_chat
     us = update.effective_user
     message = update.effective_message
     watchlis = list(REDIS.sunion(f"anime_watch_list{us.id}"))
@@ -532,7 +530,6 @@ def removewatchlist(update, context):
 
 @run_async
 def fvrtchar(update, context):
-    update.effective_chat
     us = update.effective_user
     message = update.effective_message
     fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{us.id}"))
@@ -580,7 +577,6 @@ def removefvrtchar(update, context):
 
 @run_async
 def readmanga(update, context):
-    update.effective_chat
     us = update.effective_user
     message = update.effective_message
     manga_list = list(REDIS.sunion(f"anime_mangaread{us.id}"))

@@ -139,8 +139,6 @@ def quotes(update: Update, context: CallbackContext):
 
 @run_async
 def change_quote(update: Update, context: CallbackContext):
-    update.callback_query
-    update.effective_chat
     message = update.effective_message
     quote, character, anime = anime_quote()
     msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"

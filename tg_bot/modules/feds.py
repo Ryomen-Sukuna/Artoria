@@ -210,7 +210,6 @@ def rename_fed(update, context):
 def fed_chat(update, context):
     bot, args = context.bot, context.args
     chat = update.effective_chat
-    update.effective_user
     fed_id = sql.get_fed_id(chat.id)
 
     user_id = update.effective_message.from_user.id
@@ -223,8 +222,6 @@ def fed_chat(update, context):
     if not fed_id:
         update.effective_message.reply_text("This group is not in any federation!")
         return
-
-    update.effective_user
     chat = update.effective_chat
     info = sql.get_fed_info(fed_id)
 
@@ -305,7 +302,7 @@ def leave_fed(update, context):
         return
 
     fed_id = sql.get_fed_id(chat.id)
-    fed_info = sql.get_fed_info(fed_id)
+    fed_infos = sql.get_fed_info(fed_id)
 
     # administrators = chat.get_administrators().status
     getuser = bot.get_chat_member(chat.id, user.id).status
@@ -322,7 +319,7 @@ def leave_fed(update, context):
                 )
             send_message(
                 update.effective_message,
-                "This group has left the federation {}!".format(fed_info["fname"]),
+                "This group has left the federation {}!".format(fed_infos["fname"]),
             )
         else:
             update.effective_message.reply_text(
@@ -1080,8 +1077,6 @@ def unfban(update, context):
     if fban is False:
         message.reply_text("This user is not fbanned!")
         return
-
-    update.effective_user
 
     message.reply_text(
         "I'll give {} another chance in this federation".format(user_chat.first_name)
@@ -1874,7 +1869,6 @@ def fed_import_bans(update, context):
 @run_async
 def del_fed_button(update, context):
     query = update.callback_query
-    query.message.chat.id
     fed_id = query.data.split("_")[1]
 
     if fed_id == "cancel":
@@ -1896,8 +1890,6 @@ def del_fed_button(update, context):
 @run_async
 def fed_stat_user(update, context):
     bot, args = context.bot, context.args
-    update.effective_chat
-    update.effective_user
     msg = update.effective_message
 
     if args:
@@ -2006,7 +1998,6 @@ def set_fed_log(update, context):
     args = context.args
     chat = update.effective_chat
     user = update.effective_user
-    update.effective_message
 
     if chat.type == "private":
         send_message(
@@ -2047,7 +2038,6 @@ def unset_fed_log(update, context):
     args = context.args
     chat = update.effective_chat
     user = update.effective_user
-    update.effective_message
 
     if chat.type == "private":
         send_message(
@@ -2088,7 +2078,6 @@ def subs_feds(update, context):
     bot, args = context.bot, context.args
     chat = update.effective_chat
     user = update.effective_user
-    update.effective_message
 
     if chat.type == "private":
         send_message(
@@ -2152,7 +2141,6 @@ def unsubs_feds(update, context):
     bot, args = context.bot, context.args
     chat = update.effective_chat
     user = update.effective_user
-    update.effective_message
 
     if chat.type == "private":
         send_message(
@@ -2213,10 +2201,8 @@ def unsubs_feds(update, context):
 
 @run_async
 def get_myfedsubs(update, context):
-    context.args
     chat = update.effective_chat
     user = update.effective_user
-    update.effective_message
 
     if chat.type == "private":
         send_message(
@@ -2261,9 +2247,7 @@ def get_myfedsubs(update, context):
 
 @run_async
 def get_myfeds_list(update, context):
-    update.effective_chat
     user = update.effective_user
-    update.effective_message
 
     fedowner = sql.get_user_owner_fed_full(user.id)
     if fedowner:

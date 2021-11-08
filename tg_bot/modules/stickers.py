@@ -566,9 +566,7 @@ def delsticker(update, context):
 
 @run_async
 def add_fvrtsticker(update, context):
-    context.bot
     message = update.effective_message
-    update.effective_chat
     user = update.effective_user
     args = context.args
     query = " ".join(args)
@@ -599,7 +597,6 @@ def add_fvrtsticker(update, context):
 @run_async
 def list_fvrtsticker(update, context):
     message = update.effective_message
-    update.effective_chat
     user = update.effective_user
     fvrt_stickers_list = REDIS.hvals(f"fvrt_stickers2_{user.id}")
     fvrt_stickers_list.sort()
@@ -618,7 +615,6 @@ def list_fvrtsticker(update, context):
 @run_async
 def remove_fvrtsticker(update, context):
     message = update.effective_message
-    update.effective_chat
     user = update.effective_user
     args = context.args
     del_stick = " ".join(args)
