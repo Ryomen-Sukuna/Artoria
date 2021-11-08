@@ -1,7 +1,7 @@
 import html
 
 import requests
-from telegram import Update, ParseMode
+from telegram import Update, ParseMode, MessageEntity
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from telegram.ext.dispatcher import run_async
