@@ -26,9 +26,9 @@ class Colours:
 # TODO: Replace face recognition API with something like OpenCV.
 
 async def deepfry(
-    img: Image,
+    IMG: Image,
     *,
-    token: str = None,
+    TOKEN: str = None,
     url_base: str = 'westcentralus',
     session: aiohttp.ClientSession = None,
     type_=DeepfryTypes.RED
@@ -43,12 +43,12 @@ async def deepfry(
 
     Returns: PIL.Image - Deepfried image.
     """
-    img = img.copy().convert('RGB')
+    IMG = img.copy().convert('RGB')
 
     if type_ not in DeepfryTypes:
         raise ValueError(f'Unknown deepfry type "{type}", expected a value from deeppyer.DeepfryTypes')
 
-    if token:
+    if TOKAN:
         req_url = f'https://{url_base}.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true'  # WHY THE FUCK IS THIS SO LONG
         headers = {
             'Content-Type': 'application/octet-stream',
