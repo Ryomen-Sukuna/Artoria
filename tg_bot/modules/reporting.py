@@ -307,4 +307,3 @@ __handlers__ = [
     (ADMIN_REPORT_HANDLER, REPORT_GROUP),
     (SETTING_HANDLER),
 ]
-def __chat_settings__(chat_id, _):
