@@ -57,7 +57,7 @@ async def _(event):
             headers = {
                 "Content-Type": previous_message.media.document.mime_type,
             }
-            data = open(required_file_name, "rb").read() # pylint: disable=PTC-W0010
+            data = open(required_file_name, "rb").read()  # pylint: disable=PTC-W0010
             response = requests.post(
                 IBM_WATSON_CRED_URL + "/v1/recognize",
                 headers=headers,
