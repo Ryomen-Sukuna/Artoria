@@ -207,24 +207,24 @@ def tagall(update, context):
         message.reply_text("Please give a reason why are you want to tag all!")
         return
     chat_id = str(chat.id)[1:]
-    tagall = list(REDIS.sunion(f"tagall2_{chat_id}"))
-    tagall.sort()
-    tagall = ", ".join(tagall)
+    t_all = list(REDIS.sunion(f"tagall2_{chat_id}"))
+    t_all.sort()
+    t_all = ", ".join(t_all)
 
-    if tagall:
+    if t_all:
         tagall_reason = query
         if message.reply_to_message:
             message.reply_to_message.reply_text(
                 "{}"
                 "\n\n<b>• Tagged Reason : </b>"
-                "\n{}".format(tagall, tagall_reason),
+                "\n{}".format(t_all, tagall_reason),
                 parse_mode=ParseMode.HTML,
             )
         else:
             message.reply_text(
                 "{}"
                 "\n\n<b>• Tagged Reason : </b>"
-                "\n{}".format(tagall, tagall_reason),
+                "\n{}".format(t_all, tagall_reason),
                 parse_mode=ParseMode.HTML,
             )
     else:
