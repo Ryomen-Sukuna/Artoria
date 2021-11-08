@@ -21,6 +21,7 @@ from telegram import (
     Bot,
     ParseMode,
 )
+from telegram.error import BadRequest
 from telegram.ext import run_async, CallbackContext
 
 from deeppyer import deepfry
