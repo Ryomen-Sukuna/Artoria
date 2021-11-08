@@ -510,7 +510,7 @@ def multi_fban_user(
 ):
     counter = 0
     time = 0
-    for x in range(len(multi_fed_id)):
+    for x. _ in enumerate(multi_fed_id):
         fed_id = multi_fed_id[x]
         user_id = multi_user_id[x]
         first_name = multi_first_name[x]
