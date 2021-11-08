@@ -1,9 +1,9 @@
 import threading
 
-from sqlalchemy import Integer, Column, String, UnicodeText, func, distinct, Boolean
+from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, distinct, func
 from sqlalchemy.dialects import postgresql
 
-from tg_bot.modules.sql import SESSION, BASE
+from tg_bot.modules.sql import BASE, SESSION
 
 
 class Warns(BASE):
@@ -112,7 +112,7 @@ def remove_warn(user_id, chat_id):
             warned_user.num_warns -= 1
 
             if warned_user and warned_user.reasons is not None:
-                pos = len(warned_user.reasons)
+                len(warned_user.reasons)
                 for reason in warned_user.reasons:
                     temp_reason.append(reason)
                 del temp_reason[-1]

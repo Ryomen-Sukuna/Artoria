@@ -6,34 +6,41 @@ import traceback
 from sys import argv
 from typing import Optional
 
-from telegram import Message, Chat, User, Update
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import (
+    Chat,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
+    Update,
+    User,
+)
 from telegram.error import BadRequest
 from telegram.ext import (
     CallbackContext,
+    CallbackQueryHandler,
     CommandHandler,
     Filters,
     MessageHandler,
-    CallbackQueryHandler,
 )
-from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
+from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot import (
-    dispatcher,
-    updater,
-    TOKEN,
-    OWNER_ID,
-    WEBHOOK,
-    SUPPORT_CHAT,
-    CERT_PATH,
-    PORT,
-    URL,
-    LOGGER,
     BLACKLIST_CHATS,
+    CERT_PATH,
+    LOGGER,
+    OWNER_ID,
+    PORT,
+    SUPPORT_CHAT,
+    TOKEN,
+    URL,
+    WEBHOOK,
     WHITELIST_CHATS,
-    pbot,
     client,
+    dispatcher,
+    pbot,
+    updater,
 )
 
 # needed to dynamically load modules

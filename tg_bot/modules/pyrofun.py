@@ -12,7 +12,7 @@ from pyrogram.types import Message
 from pytube import YouTube
 from youtubesearchpython import VideosSearch
 
-from tg_bot import pbot, LOGGER
+from tg_bot import LOGGER, pbot
 from tg_bot.utils.ut import get_arg
 
 DART_E_MOJI = "🎯"
@@ -54,7 +54,7 @@ speedtest_create = filters.create(speedtest_callback)
 
 @pbot.on_message(filters.command("song"))
 async def song(client, message):
-    chat_id = message.chat.id
+    message.chat.id
     user_id = message.from_user["id"]
     args = get_arg(message) + " " + "song"
     if args.startswith(" "):
@@ -73,7 +73,7 @@ async def song(client, message):
         await status.edit("Failed to download song")
         LOGGER.error(ex)
         return ""
-    rename = os.rename(download, f"{str(user_id)}.mp3")
+    os.rename(download, f"{str(user_id)}.mp3")
     await pbot.send_chat_action(message.chat.id, "upload_audio")
     await pbot.send_audio(
         chat_id=message.chat.id,

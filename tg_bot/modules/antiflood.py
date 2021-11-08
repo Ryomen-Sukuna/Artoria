@@ -1,12 +1,12 @@
 import html
 from typing import Optional
 
-from telegram import Message, Chat, User, ParseMode, ChatPermissions
+from telegram import Chat, ChatPermissions, Message, ParseMode, User
 from telegram.error import BadRequest
-from telegram.ext import Filters, MessageHandler, CommandHandler, run_async
+from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, REDIS
+from tg_bot import REDIS, dispatcher
 from tg_bot.modules.connection import connected
 from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pyrogram import filters
 from pyrogram.errors import PeerIdInvalid
-from pyrogram.types import User, Message
+from pyrogram.types import Message, User
 
 from tg_bot import pbot
 

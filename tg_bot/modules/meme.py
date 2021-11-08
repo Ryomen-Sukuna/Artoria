@@ -10,21 +10,21 @@ from pathlib import Path
 
 import nltk  # shitty lib, but it does work
 import requests as r
+from deeppyer import deepfry
 from PIL import Image
 from spongemock import spongemock
 from telegram import (
+    Bot,
     ChatAction,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
-    Update,
-    Bot,
     ParseMode,
+    Update,
 )
 from telegram.error import BadRequest
-from telegram.ext import run_async, CallbackContext
+from telegram.ext import CallbackContext, run_async
 
-from deeppyer import deepfry
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_action

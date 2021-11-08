@@ -5,10 +5,10 @@ import requests
 from telethon.tl import functions, types
 
 from tg_bot import (
-    client,
-    IBM_WATSON_CRED_URL,
     IBM_WATSON_CRED_PASSWORD,
+    IBM_WATSON_CRED_URL,
     TEMP_DOWNLOAD_DIRECTORY,
+    client,
 )
 from tg_bot.events import register
 

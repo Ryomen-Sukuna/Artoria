@@ -1,8 +1,8 @@
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct
+from sqlalchemy import Column, String, UnicodeText, distinct, func
 
-from tg_bot.modules.sql import SESSION, BASE
+from tg_bot.modules.sql import BASE, SESSION
 
 
 class Disable(BASE):

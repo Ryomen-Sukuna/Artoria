@@ -1,13 +1,13 @@
 import html
 import re
 
-from telegram import ParseMode, ChatPermissions
+from telegram import ChatPermissions, ParseMode
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
+from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.blacklist_sql as sql
-from tg_bot import dispatcher, REDIS, ERROR_DUMP
+from tg_bot import ERROR_DUMP, REDIS, dispatcher
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_message, typing_action

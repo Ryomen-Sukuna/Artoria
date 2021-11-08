@@ -5,7 +5,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from tg_bot import client, SUDO_USERS
+from tg_bot import SUDO_USERS, client
 
 
 # Check if user has admin rights

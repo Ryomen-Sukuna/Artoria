@@ -1,7 +1,7 @@
 from typing import Union
 
 from future.utils import string_types
-from telegram import ParseMode, Update, Chat
+from telegram import Chat, ParseMode, Update
 from telegram.ext import CommandHandler, MessageHandler
 from telegram.utils.helpers import escape_markdown
 
@@ -15,9 +15,9 @@ FILENAME = __name__.rsplit(".", 1)[-1]
 
 # If module is due to be loaded, then setup all the magical handlers
 if is_module_loaded(FILENAME):
-    from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_admin
     from telegram.ext.dispatcher import run_async
 
+    from tg_bot.modules.helper_funcs.chat_status import is_user_admin, user_admin
     from tg_bot.modules.sql import disable_sql as sql
 
     DISABLE_CMDS = []
@@ -142,7 +142,6 @@ if is_module_loaded(FILENAME):
         conn = connected(context.bot, update, chat, user.id, need_admin=True)
         if conn:
             chat = dispatcher.bot.getChat(conn)
-            chat_id = conn
             chat_name = dispatcher.bot.getChat(conn).title
         else:
             if update.effective_message.chat.type == "private":
@@ -152,7 +151,7 @@ if is_module_loaded(FILENAME):
                 )
                 return ""
             chat = update.effective_chat
-            chat_id = update.effective_chat.id
+            update.effective_chat.id
             chat_name = update.effective_message.chat.title
 
         if len(args) >= 1:
@@ -209,7 +208,6 @@ if is_module_loaded(FILENAME):
         conn = connected(context.bot, update, chat, user.id, need_admin=True)
         if conn:
             chat = dispatcher.bot.getChat(conn)
-            chat_id = conn
         else:
             if update.effective_message.chat.type == "private":
                 send_message(
@@ -218,7 +216,7 @@ if is_module_loaded(FILENAME):
                 )
                 return ""
             chat = update.effective_chat
-            chat_id = update.effective_chat.id
+            update.effective_chat.id
 
         text = build_curr_disabled(chat.id)
         send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN)

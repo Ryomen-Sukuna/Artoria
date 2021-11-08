@@ -4,37 +4,37 @@ from typing import Optional
 
 from alphabet_detector import AlphabetDetector
 from telegram import (
-    Message,
     Chat,
-    ParseMode,
-    MessageEntity,
-    TelegramError,
     ChatPermissions,
+    Message,
+    MessageEntity,
+    ParseMode,
+    TelegramError,
 )
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, Filters, MessageHandler
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.locks_sql as sql
 from tg_bot import (
-    dispatcher,
-    OWNER_ID,
     DEV_USERS,
+    LOGGER,
+    OWNER_ID,
+    REDIS,
     SUDO_USERS,
     SUPPORT_USERS,
-    LOGGER,
-    REDIS,
+    dispatcher,
 )
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
     can_delete,
-    is_user_admin,
-    user_not_admin,
     is_bot_admin,
+    is_user_admin,
     user_admin,
+    user_not_admin,
 )
 from tg_bot.modules.log_channel import loggable
 
@@ -122,8 +122,8 @@ def restr_members(
 ):
     for mem in members:
         user = update.effective_user
-        approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
-        target_user = mention_html(user.id, user.first_name)
+        list(REDIS.sunion(f"approve_list_{chat_id}"))
+        mention_html(user.id, user.first_name)
         try:
             bot.restrict_chat_member(
                 chat_id,

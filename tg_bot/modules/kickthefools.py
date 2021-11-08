@@ -1,5 +1,5 @@
 from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import UserStatusLastMonth, UserStatusLastWeek, ChatBannedRights
+from telethon.tl.types import ChatBannedRights, UserStatusLastMonth, UserStatusLastWeek
 
 from tg_bot.events import register
 

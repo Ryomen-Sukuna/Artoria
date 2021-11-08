@@ -4,7 +4,7 @@ import json
 import bs4
 import requests
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
-from telegram.ext import CallbackContext, run_async, CallbackQueryHandler
+from telegram.ext import CallbackContext, CallbackQueryHandler, run_async
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
@@ -139,8 +139,8 @@ def quotes(update: Update, context: CallbackContext):
 
 @run_async
 def change_quote(update: Update, context: CallbackContext):
-    query = update.callback_query
-    chat = update.effective_chat
+    update.callback_query
+    update.effective_chat
     message = update.effective_message
     quote, character, anime = anime_quote()
     msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"

@@ -6,18 +6,18 @@ from typing import Optional
 
 from telegram import (
     MAX_MESSAGE_LENGTH,
-    ParseMode,
-    InlineKeyboardMarkup,
     InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
 )
-from telegram import Message
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import CallbackQueryHandler, CommandHandler, Filters, MessageHandler
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.notes_sql as sql
-from tg_bot import dispatcher, MESSAGE_DUMP, LOGGER
+from tg_bot import LOGGER, MESSAGE_DUMP, dispatcher
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
@@ -60,10 +60,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
     conn = connected(bot, update, chat, user.id, need_admin=False)
     if conn:
         chat_id = conn
-        send_id = user.id
+        user.id
     else:
         chat_id = update.effective_chat.id
-        send_id = chat_id
 
     note = sql.get_note(chat_id, notename)
     message = update.effective_message  # type: Optional[Message]

@@ -1,19 +1,16 @@
 import os
 import time
 import zipfile
-
 from datetime import datetime
+
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-
 from telethon import types
 from telethon.tl import functions
 from telethon.tl.types import DocumentAttributeVideo
 
-from tg_bot import TEMP_DOWNLOAD_DIRECTORY
-from tg_bot import client
+from tg_bot import TEMP_DOWNLOAD_DIRECTORY, client
 from tg_bot.events import register
-
 
 extracted = TEMP_DOWNLOAD_DIRECTORY + "extracted/"
 thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -63,7 +60,7 @@ async def _(event):
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         try:
-            c_time = time.time()
+            time.time()
             downloaded_file_name = await event.client.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
@@ -113,7 +110,7 @@ async def _(event):
         start = datetime.now()
         reply_message = await event.get_reply_message()
         try:
-            c_time = time.time()
+            time.time()
             downloaded_file_name = await client.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
@@ -121,7 +118,7 @@ async def _(event):
             await mone.reply(str(e))
         else:
             end = datetime.now()
-            ms = (end - start).seconds
+            (end - start).seconds
 
         with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)

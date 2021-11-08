@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import OWNER_ID, SUDO_USERS, REDIS, dispatcher
+from tg_bot import REDIS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 info_btn = "More Information"
@@ -209,7 +209,7 @@ def anime(update, context):
         anime_name_w = f"{json['title']['romaji']}"
         info = json.get("siteUrl")
         trailer = json.get("trailer", None)
-        anime_id = json["id"]
+        json["id"]
         if trailer:
             trailer_id = trailer.get("id", None)
             site = trailer.get("site", None)
@@ -488,7 +488,7 @@ def upcoming(update, context):
 
 @run_async
 def watchlist(update, context):
-    chat = update.effective_chat
+    update.effective_chat
     us = update.effective_user
     message = update.effective_message
     watchlis = list(REDIS.sunion(f"anime_watch_list{us.id}"))
@@ -532,7 +532,7 @@ def removewatchlist(update, context):
 
 @run_async
 def fvrtchar(update, context):
-    chat = update.effective_chat
+    update.effective_chat
     us = update.effective_user
     message = update.effective_message
     fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{us.id}"))
@@ -580,7 +580,7 @@ def removefvrtchar(update, context):
 
 @run_async
 def readmanga(update, context):
-    chat = update.effective_chat
+    update.effective_chat
     us = update.effective_user
     message = update.effective_message
     manga_list = list(REDIS.sunion(f"anime_mangaread{us.id}"))

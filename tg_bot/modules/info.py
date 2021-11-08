@@ -1,7 +1,7 @@
 import html
 
 import requests
-from telegram import Update, ParseMode, MessageEntity
+from telegram import MessageEntity, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from telegram.ext.dispatcher import run_async
@@ -16,10 +16,10 @@ from tg_bot import (
     SUDO_USERS,
     SUPPORT_USERS,
     WHITELIST_USERS,
-    dispatcher,
     client,
+    dispatcher,
 )
-from tg_bot.__main__ import USER_INFO, TOKEN
+from tg_bot.__main__ import TOKEN, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user, get_user
 from tg_bot.modules.sql.afk_sql import is_afk

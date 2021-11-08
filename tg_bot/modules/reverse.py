@@ -3,12 +3,11 @@ import re
 import urllib
 import urllib.parse
 import urllib.request
-from urllib.error import URLError, HTTPError
+from urllib.error import HTTPError, URLError
 
 import requests
 from bs4 import BeautifulSoup
-from telegram import InputMediaPhoto, TelegramError
-from telegram import Update
+from telegram import InputMediaPhoto, TelegramError, Update
 from telegram.ext import CallbackContext, run_async
 
 from tg_bot import dispatcher

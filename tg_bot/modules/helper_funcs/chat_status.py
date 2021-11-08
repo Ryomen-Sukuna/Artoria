@@ -2,16 +2,16 @@ from functools import wraps
 from threading import RLock
 
 from cachetools import TTLCache
-from telegram import Update, User, Chat, ChatMember
+from telegram import Chat, ChatMember, Update, User
 from telegram.ext import CallbackContext
 
 from tg_bot import (
     DEL_CMDS,
-    SUDO_USERS,
-    WHITELIST_USERS,
-    SUPPORT_USERS,
     DEV_USERS,
+    SUDO_USERS,
     SUPPORT_CHAT,
+    SUPPORT_USERS,
+    WHITELIST_USERS,
 )
 from tg_bot.mwt import MWT
 
@@ -198,7 +198,7 @@ def is_sudo_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
 def dev_plus(func):
     @wraps(func)
     def is_dev_plus_func(update: Update, context: CallbackContext, *args, **kwargs):
-        bot = context.bot
+        context.bot
         user = update.effective_user
 
         if user.id in DEV_USERS:
@@ -222,7 +222,7 @@ def dev_plus(func):
 def sudo_plus(func):
     @wraps(func)
     def is_sudo_plus_func(update: Update, context: CallbackContext, *args, **kwargs):
-        bot = context.bot
+        context.bot
         user = update.effective_user
         chat = update.effective_chat
 
@@ -239,7 +239,7 @@ def sudo_plus(func):
 def support_plus(func):
     @wraps(func)
     def is_support_plus_func(update: Update, context: CallbackContext, *args, **kwargs):
-        bot = context.bot
+        context.bot
         user = update.effective_user
         chat = update.effective_chat
 
@@ -256,7 +256,7 @@ def whitelist_plus(func):
     def is_whitelist_plus_func(
         update: Update, context: CallbackContext, *args, **kwargs
     ):
-        bot = context.bot
+        context.bot
         user = update.effective_user
         chat = update.effective_chat
 

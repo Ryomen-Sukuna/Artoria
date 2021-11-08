@@ -8,7 +8,7 @@ from telegram.ext import run_async
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
+from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
 
 
 @run_async

@@ -5,9 +5,9 @@ import textwrap
 import urllib
 
 import emoji
-from PIL import Image, ImageDraw, ImageFont, ImageOps
 from fontTools.ttLib import TTFont
-from telethon.tl import types, functions
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+from telethon.tl import functions, types
 
 from tg_bot.events import register
 
@@ -140,7 +140,7 @@ async def process(msg, user, client, reply, replied=None):
         # Creating a big canvas to gather all the elements
         replname = "" if not replied.sender.last_name else replied.sender.last_name
         reptot = replied.sender.first_name + " " + replname
-        replywidth = font2.getsize(reptot)[0]
+        font2.getsize(reptot)[0]
         if reply.sticker:
             sticker = await reply.download_media()
             stimg = Image.open(sticker)
@@ -244,7 +244,6 @@ async def process(msg, user, client, reply, replied=None):
     # Writing all separating emojis and regular texts
     x = pfpbg.width + 30
     bold, mono, italic, link = await get_entity(reply)
-    mdlength = 0
     index = 0
     emojicount = 0
     textfallback = ImageFont.truetype("resources/Quivira.otf", 33, encoding="utf-16")

@@ -4,26 +4,25 @@ from typing import Optional
 
 from telegram import ParseMode, Update
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters, CallbackContext
+from telegram.ext import CallbackContext, CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html, escape_markdown, mention_markdown
+from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
 
 from tg_bot import dispatcher
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.admin_rights import (
+    user_can_changeinfo,
     user_can_pin,
     user_can_promote,
-    user_can_changeinfo,
 )
-from tg_bot.modules.helper_funcs.alternate import send_message
-from tg_bot.modules.helper_funcs.alternate import typing_action
+from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
+    ADMIN_CACHE,
     bot_admin,
+    can_pin,
     can_promote,
     user_admin,
-    can_pin,
-    ADMIN_CACHE,
 )
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.log_channel import loggable
@@ -246,7 +245,7 @@ def invite(update, context):
     user = update.effective_user
     msg = update.effective_message
     chat = update.effective_chat
-    args = context.args
+    context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
@@ -279,16 +278,16 @@ def invite(update, context):
 def adminlist(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
-    args = context.args
+    context.args
     bot = context.bot
 
     if update.effective_message.chat.type == "private":
         send_message(update.effective_message, "This Command Only Works In Groups.")
         return
 
-    chat = update.effective_chat
+    update.effective_chat
     chat_id = update.effective_chat.id
-    chat_name = update.effective_message.chat.title
+    update.effective_message.chat.title
 
     administrators = bot.getChatAdministrators(chat_id)
     text = "Admins In *{}* :".format(update.effective_chat.title)

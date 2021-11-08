@@ -2,10 +2,10 @@ import threading
 
 from sqlalchemy import (
     Column,
-    Integer,
-    UnicodeText,
-    String,
     ForeignKey,
+    Integer,
+    String,
+    UnicodeText,
     UniqueConstraint,
     func,
 )

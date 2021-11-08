@@ -3,33 +3,39 @@ import re
 from typing import Optional
 
 import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User
-from telegram import Message, Chat
+from telegram import (
+    Chat,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
+    User,
+)
 from telegram.error import BadRequest
 from telegram.ext import (
-    CommandHandler,
-    run_async,
-    DispatcherHandlerStop,
-    MessageHandler,
-    Filters,
     CallbackQueryHandler,
+    CommandHandler,
+    DispatcherHandlerStop,
+    Filters,
+    MessageHandler,
+    run_async,
 )
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.rules_sql as rules_sql
-from tg_bot import dispatcher, REDIS, SUPPORT_CHAT
+from tg_bot import REDIS, SUPPORT_CHAT, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
-    is_user_admin,
     bot_admin,
-    user_admin,
     can_restrict,
+    is_user_admin,
+    user_admin,
 )
 from tg_bot.modules.helper_funcs.extraction import (
     extract_text,
-    extract_user_and_text,
     extract_user,
+    extract_user_and_text,
 )
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.misc import split_message

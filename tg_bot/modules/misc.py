@@ -10,30 +10,30 @@ from bs4 import BeautifulSoup
 from requests import get
 from telegram import (
     Chat,
-    ParseMode,
     ChatAction,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    ParseMode,
+    ReplyKeyboardRemove,
     TelegramError,
     Update,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    ReplyKeyboardRemove,
 )
 from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler, run_async, Filters
+from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
 from telegram.utils.helpers import escape_markdown
 from tswift import Song
 
 from tg_bot import (
+    DEV_USERS,
     OWNER_ID,
     SUDO_USERS,
     SUPPORT_USERS,
     WHITELIST_USERS,
-    DEV_USERS,
     dispatcher,
 )
-from tg_bot.__main__ import STATS, GDPR
+from tg_bot.__main__ import GDPR, STATS
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
+from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 
@@ -171,7 +171,7 @@ def github(update, context):
 
 @run_async
 def repo(update, context):
-    args = context.args
+    context.args
     message = update.effective_message
     text = message.text[len("/repo ") :]
     usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()

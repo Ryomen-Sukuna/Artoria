@@ -3,7 +3,7 @@ import os
 import time
 from io import BytesIO
 
-from telegram import ParseMode, Message
+from telegram import Message, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 
@@ -17,7 +17,7 @@ import tg_bot.modules.sql.notes_sql as sql
 
 # from tg_bot.modules.rules import get_rules
 import tg_bot.modules.sql.rules_sql as rulessql
-from tg_bot import dispatcher, LOGGER, OWNER_ID, JOIN_LOGGER
+from tg_bot import JOIN_LOGGER, LOGGER, OWNER_ID, dispatcher
 from tg_bot.__main__ import DATA_IMPORT
 from tg_bot.modules.connection import connected
 from tg_bot.modules.helper_funcs.alternate import typing_action
