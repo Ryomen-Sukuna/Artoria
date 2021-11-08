@@ -1522,9 +1522,7 @@ def fed_ban_list(update, context):
         new_jam = jam + 1800
         cek = get_chat(chat.id, chat_data)
         if cek.get("status") and jam <= int(cek.get("value")):
-            waktu = time.strftime(
-                "%H:%M:%S %d/%m/%Y", time.localtime(cek.get("value"))
-            )
+            waktu = time.strftime("%H:%M:%S %d/%m/%Y", time.localtime(cek.get("value")))
             update.effective_message.reply_text(
                 "You can back up data once every 30 minutes!\nYou can back up data again at `{}`".format(
                     waktu
@@ -1679,9 +1677,7 @@ def fed_import_bans(update, context):
         new_jam = jam + 1800
         cek = get_chat(chat.id, chat_data)
         if cek.get("status") and jam <= int(cek.get("value")):
-            waktu = time.strftime(
-                "%H:%M:%S %d/%m/%Y", time.localtime(cek.get("value"))
-            )
+            waktu = time.strftime("%H:%M:%S %d/%m/%Y", time.localtime(cek.get("value")))
             update.effective_message.reply_text(
                 "You can get your data once every 30 minutes!\nYou can get data again at `{}`".format(
                     waktu
