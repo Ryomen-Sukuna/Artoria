@@ -9,12 +9,10 @@ from telegram.ext import CommandHandler, run_async
 
 # from tg_bot.modules.sql import warns_sql as warnssql
 import tg_bot.modules.sql.blacklist_sql as blacklistsql
-
 # from tg_bot.modules.sql import cust_filters_sql as filtersql
 # import tg_bot.modules.sql.welcome_sql as welcsql
 import tg_bot.modules.sql.locks_sql as locksql
 import tg_bot.modules.sql.notes_sql as sql
-
 # from tg_bot.modules.rules import get_rules
 import tg_bot.modules.sql.rules_sql as rulessql
 from tg_bot import JOIN_LOGGER, LOGGER, OWNER_ID, dispatcher

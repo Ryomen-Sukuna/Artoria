@@ -273,8 +273,8 @@ def connected(bot, update, chat, user_id, need_admin=True):
             if need_admin is not True:
                 return conn_id
             if (
-                getstatusadmin.status in ("administrator", "creator")
-                or user_id in SUDO_USERS
+                    getstatusadmin.status in ("administrator", "creator")
+                    or user_id in SUDO_USERS
             ):
                 return conn_id
             send_message(
@@ -306,7 +306,6 @@ CONN_HELP = """
 
 @run_async
 def help_connect_chat(update, context):
-
     if update.effective_message.chat.type != "private":
         send_message(update.effective_message, "PM me with that command to get help.")
         return

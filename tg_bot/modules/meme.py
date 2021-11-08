@@ -10,8 +10,8 @@ from pathlib import Path
 
 import nltk  # shitty lib, but it does work
 import requests as r
-from deeppyer import deepfry
 from PIL import Image
+from deeppyer import deepfry
 from spongemock import spongemock
 from telegram import (
     Bot,

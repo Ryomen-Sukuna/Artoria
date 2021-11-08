@@ -24,7 +24,6 @@ def progress(current, total):
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
         return isinstance(
             (
                 await client(functions.channels.GetParticipantRequest(chat, user))
@@ -32,7 +31,6 @@ async def is_register_admin(chat, user):
             (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
         )
     if isinstance(chat, types.InputPeerChat):
-
         ui = await client.get_peer_id(user)
         ps = (
             await client(functions.messages.GetFullChatRequest(chat.chat_id))
@@ -49,7 +47,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(
             " Hai.. You are not admin..  You can't use this command.. But you can use in my pm"
@@ -79,7 +77,7 @@ async def img_sampler(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(".. You are not admin.. use in bot  pm")
         return

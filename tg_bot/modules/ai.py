@@ -1,5 +1,4 @@
 import html
-
 # AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
 from time import sleep, time
 

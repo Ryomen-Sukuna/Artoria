@@ -20,7 +20,7 @@ from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_an
 from tg_bot.modules.log_channel import gloggable
 
 BLACKLISTWHITELIST = (
-    [OWNER_ID] + DEV_USERS + SUDO_USERS + SUPPORT_USERS + WHITELIST_USERS
+        [OWNER_ID] + DEV_USERS + SUDO_USERS + SUPPORT_USERS + WHITELIST_USERS
 )
 BLABLEUSERS = [OWNER_ID] + DEV_USERS
 

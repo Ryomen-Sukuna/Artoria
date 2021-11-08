@@ -38,7 +38,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.is_group and not (
-        await is_register_admin(event.input_chat, event.message.sender_id)
+            await is_register_admin(event.input_chat, event.message.sender_id)
     ):
         await event.reply(
             " Hi.. You are not admin.. You can't use this command.. But you can use in my pm🙈"
@@ -80,7 +80,7 @@ async def _(event):
                     alternatives = alternative["alternatives"][0]
                     transcript_response += " " + str(alternatives["transcript"])
                     transcript_confidence += (
-                        " " + str(alternatives["confidence"]) + " + "
+                            " " + str(alternatives["confidence"]) + " + "
                     )
                 end = datetime.now()
                 ms = (end - start).seconds

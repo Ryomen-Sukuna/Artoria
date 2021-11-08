@@ -35,11 +35,11 @@ def t(milliseconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " Days, ") if days else "")
-        + ((str(hours) + " Hours, ") if hours else "")
-        + ((str(minutes) + " Minutes, ") if minutes else "")
-        + ((str(seconds) + " Seconds, ") if seconds else "")
-        + ((str(milliseconds) + " ms, ") if milliseconds else "")
+            ((str(days) + " Days, ") if days else "")
+            + ((str(hours) + " Hours, ") if hours else "")
+            + ((str(minutes) + " Minutes, ") if minutes else "")
+            + ((str(seconds) + " Seconds, ") if seconds else "")
+            + ((str(milliseconds) + " ms, ") if milliseconds else "")
     )
     return tmp[:-2]
 
@@ -216,9 +216,9 @@ def anime(update, context):
                 trailer = "https://youtu.be/" + trailer_id
         description = (
             json.get("description", "N/A")
-            .replace("<i>", "")
-            .replace("</i>", "")
-            .replace("<br>", "")
+                .replace("<i>", "")
+                .replace("</i>", "")
+                .replace("<br>", "")
         )
         msg += shorten(description, info)
         image = info.replace("anilist.co/anime/", "img.anili.st/media/")
@@ -711,7 +711,6 @@ def button(update, context):
         else:
             query.answer("You are not allowed to use this.")
 """
-
 
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).

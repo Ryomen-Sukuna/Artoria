@@ -51,7 +51,7 @@ def blackliststicker(update, context):
     split_text = split_message(sticker_list)
     for text in split_text:
         if sticker_list == "<b>List blacklisted stickers currently in {}:</b>\n".format(
-            chat_name
+                chat_name
         ).format(chat_name):
             send_message(
                 update.effective_message,

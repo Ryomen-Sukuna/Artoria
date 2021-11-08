@@ -5,8 +5,8 @@ import textwrap
 import urllib
 
 import emoji
-from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
+from fontTools.ttLib import TTFont
 from telethon.tl import functions, types
 
 from tg_bot.events import register
@@ -373,8 +373,8 @@ async def emoji_fetch(emoji):
         urllib.request.urlopen(
             "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
         )
-        .read()
-        .decode()
+            .read()
+            .decode()
     )
     if emoji in emojis:
         img = emojis[emoji]
