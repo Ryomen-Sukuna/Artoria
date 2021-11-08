@@ -520,7 +520,7 @@ def rmemes(update, context):
     ]
 
     subreddit = random.choice(SUBREDS)
-    res = r.get(f"https://meme-api.herokuapp.com/gimme/{subreddit}")
+    res = requests.get(f"https://meme-api.herokuapp.com/gimme/{subreddit}")
 
     if res.status_code != 200:  # Like if api is down?
         msg.reply_text("Sorry some error occurred :(")
