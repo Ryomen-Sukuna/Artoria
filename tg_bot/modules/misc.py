@@ -211,9 +211,7 @@ def mpaste(update, context):
 
     key = res["key"]
     if res["isUrl"]:
-        reply = "Shortened URL: {}/{}\nYou can view stats, etc. [here]({}/v/{})".format(
-            BURL, key, BURL, key
-        )
+        reply = reply = f'Shortened URL: {BASE_URL}/{key}\nYou can view stats, etc. [here]({BASE_URL}/v/{key})'
     else:
         reply = f"{BURL}/{key}"
     update.effective_message.reply_text(
