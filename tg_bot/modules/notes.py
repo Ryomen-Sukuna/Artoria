@@ -59,11 +59,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id, need_admin=False)
-    if conn:
-        chat_id = conn
-    else:
-        chat_id = update.effective_chat.id
-
+    chat_id = conn or update.effective_chat.id
     note = sql.get_note(chat_id, notename)
     message = update.effective_message  # type: Optional[Message]
 
