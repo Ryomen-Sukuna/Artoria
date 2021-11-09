@@ -42,13 +42,13 @@ def info(update: Update, context: CallbackContext):
         user = message.from_user
 
     elif not message.reply_to_message and (
-            not args
-            or (
-                    len(args) >= 1
-                    and not args[0].startswith("@")
-                    and not args[0].isdigit()
-                    and not message.parse_entities([MessageEntity.TEXT_MENTION])
-            )
+        not args
+        or (
+            len(args) >= 1
+            and not args[0].startswith("@")
+            and not args[0].isdigit()
+            and not message.parse_entities([MessageEntity.TEXT_MENTION])
+        )
     ):
         message.reply_text("I can't extract a user from this.")
         return
@@ -139,8 +139,10 @@ def info(update: Update, context: CallbackContext):
         )
 
     elif user.id == bot.id:
-        text += "\n\nI've Seen Them In... Wow. Are They Stalking Me? They're In All The Same Places I Am... Oh. It's " \
-                "Me.\n "
+        text += (
+            "\n\nI've Seen Them In... Wow. Are They Stalking Me? They're In All The Same Places I Am... Oh. It's "
+            "Me.\n "
+        )
 
     text += "\n"
     text += "\nCAS banned: "

@@ -72,7 +72,7 @@ async def whatanime(c: Client, m: Message):
         await reply.edit_text("Uploading...")
         with open(new_path, "rb") as file:
             async with session.post(
-                    "https://trace.moe/api/search", data={"image": file}
+                "https://trace.moe/api/search", data={"image": file}
             ) as resp:
                 json = await resp.json()
     if isinstance(json, str):

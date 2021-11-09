@@ -51,7 +51,7 @@ def blackliststicker(update, context):
     split_text = split_message(sticker_list)
     for text in split_text:
         if sticker_list == "<b>List blacklisted stickers currently in {}:</b>\n".format(
-                chat_name
+            chat_name
         ).format(chat_name):
             send_message(
                 update.effective_message,
@@ -260,9 +260,7 @@ def blacklist_mode(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if msg.chat.type == "private":
-            send_message(
-                msg, "You can do this command in groups, not PM"
-            )
+            send_message(msg, "You can do this command in groups, not PM")
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id

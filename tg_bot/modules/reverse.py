@@ -14,8 +14,10 @@ from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 opener = urllib.request.build_opener()
-useragent = "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) " \
-            "Chrome/52.0.2743.98 Mobile Safari/537.36 "
+useragent = (
+    "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/52.0.2743.98 Mobile Safari/537.36 "
+)
 opener.addheaders = [("User-agent", useragent)]
 
 
@@ -133,8 +135,7 @@ def reverse(update: Update, context: CallbackContext):
         images = scam(imgspage, lim)
         if len(images) == 0:
             xx.edit_text(
-                f"[{guess}]({fetch_url})\n\n"
-                f"[Visually similar images]({imgspage})",
+                f"[{guess}]({fetch_url})\n\n" f"[Visually similar images]({imgspage})",
                 parse_mode="Markdown",
                 disable_web_page_preview=True,
             )
@@ -147,8 +148,7 @@ def reverse(update: Update, context: CallbackContext):
 
         bot.send_media_group(chat_id=chat_id, media=imglinks, reply_to_message_id=rtmid)
         xx.edit_text(
-            f"[{guess}]({fetch_url})\n\n"
-            f"[Visually similar images]({imgspage})",
+            f"[{guess}]({fetch_url})\n\n" f"[Visually similar images]({imgspage})",
             parse_mode="Markdown",
             disable_web_page_preview=True,
         )
