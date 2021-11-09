@@ -29,9 +29,8 @@ Artoria
    :target: https://GitHub.com/Ryomen-Sukuna/Artoria
    :alt: Maintenance
 
-.. image:: https://api.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
-   :target: https://www.codacy.com/app/Ryomen-Sukuna/Artoria?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
-   :alt: Codacy Badge
+.. image:: https://app.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
+   :target: https://www.codacy.com/gh/Ryomen-Sukuna/Artoria/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Artoria&amp;utm_campaign=Badge_Grade
 
 .. image:: https://www.codefactor.io/repository/github/ryomen-sukuna/artoria/badge
    :target: https://www.codefactor.io/repository/github/ryomen-sukuna/artoria
