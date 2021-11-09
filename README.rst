@@ -20,21 +20,18 @@ Artoria
 
 .. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Artoria/master?label=Last%20Commit&logo=github
    :target: https://github.com/Ryomen-Sukuna/Artoria/commits/master/
-   :alt: Commit
 
-.. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Artoria
+.. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Artoria?label=License&logo=github
    :target: https://gitlicense.com/license/Ryomen-Sukuna/Artoria
 
 .. image:: https://img.shields.io/badge/Maintained-Yes-brightgreen.svg
    :target: https://GitHub.com/Ryomen-Sukuna/Artoria
-   :alt: Maintenance
 
 .. image:: https://app.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
    :target: https://www.codacy.com/gh/Ryomen-Sukuna/Artoria/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Artoria&amp;utm_campaign=Badge_Grade
 
-.. image:: https://img.shields.io/github/contributors/Ryomen-Sukuna/Artoria.svg
-   :target: https://GitHub.com/Ryomen-Sukuna/Artoria/graphs/contributors
-   :alt: GitHub contributors
+.. image:: https://img.shields.io/github/contributors/Ryomen-Sukuna/Artoria?label=Contributors&logo=github
+   :target: https://github.com/Ryomen-Sukuna/Artoria/graphs/contributors
 
 .. image:: https://img.shields.io/badge/Telegram-Group-blue.svg?logo=telegram
    :target: https://telegram.me/ironbloodnations
@@ -42,11 +39,9 @@ Artoria
 
 .. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Artoria?label=Stars&logo=github
    :target: https://github.com/Ryomen-Sukuna/Artoria/stargazers/
-   :alt: Star
 
 .. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Artoria?label=Fork&logo=github
    :target: https://github.com/Ryomen-Sukuna/Artoria/network/members/
-   :alt: Fork
 
 .. image:: https://img.shields.io/badge/PRs-Welcome-blue.svg?style=flat-round
    :target: https://makeapullrequest.com
