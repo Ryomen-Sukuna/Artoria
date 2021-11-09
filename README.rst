@@ -32,10 +32,6 @@ Artoria
 .. image:: https://app.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
    :target: https://www.codacy.com/gh/Ryomen-Sukuna/Artoria/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Artoria&amp;utm_campaign=Badge_Grade
 
-.. image:: https://www.codefactor.io/repository/github/ryomen-sukuna/artoria/badge
-   :target: https://www.codefactor.io/repository/github/ryomen-sukuna/artoria
-   :alt: CodeFactor
-
 .. image:: https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg
    :target: https://GitHub.com/Ryomen-Sukuna/Artoria/graphs/contributors
    :alt: GitHub contributors
