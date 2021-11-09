@@ -22,13 +22,12 @@ Artoria
    :target: https://github.com/Ryomen-Sukuna/Saber-Clone/commits/master/
    :alt: Commit
 
-.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&logo=github
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers/
-   :alt: Star
+.. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Saber-Clone
+   :target: https://gitlicense.com/license/Ryomen-Sukuna/Saber-Clone
 
-.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&logo=github
-   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
-   :alt: Fork
+.. image:: https://img.shields.io/badge/Maintained-Yes-brightgreen.svg
+   :target: https://GitHub.com/Ryomen-Sukuna/PrinzEugen
+   :alt: Maintenance
 
 .. image:: https://api.codacy.com/project/badge/Grade/7b3ddf1ce8b3494ebbbcb340b5f966f6
    :target: https://www.codacy.com/app/Ryomen-Sukuna/Saber-Clone?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
@@ -38,12 +37,17 @@ Artoria
    :target: https://GitHub.com/Ryomen-Sukuna/Saber-Clone/graphs/contributors
    :alt: GitHub contributors
 
-.. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Saber-Clone
-   :target: https://gitlicense.com/license/Ryomen-Sukuna/Saber-Clone
-
 .. image:: https://img.shields.io/badge/Support%20Chat-IronBlood-blue
    :target: https://t.me/ironbloodnations
    :alt: Join Support
+
+.. image:: https://img.shields.io/github/stars/Ryomen-Sukuna/Saber-Clone?label=Stars&logo=github
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/stargazers/
+   :alt: Star
+
+.. image:: https://img.shields.io/github/forks/Ryomen-Sukuna/Saber-Clone?label=Fork&logo=github
+   :target: https://github.com/Ryomen-Sukuna/Saber-Clone/network/members/
+   :alt: Fork
 
 .. image:: https://img.shields.io/badge/PRs-Welcome-blue.svg?style=flat-round
    :target: https://makeapullrequest.com
