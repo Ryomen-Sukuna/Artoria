@@ -155,8 +155,9 @@ def get_readable_time(seconds: int) -> str:
 
 
 __help__ = """
- • `/afk <reason>`*:* mark yourself as AFK(away from keyboard).
 When marked as AFK, any mentions will be replied to with a message to say you're not available!
+
+- `/afk <reason>`*:* mark yourself as AFK(away from keyboard).
 """
 
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk)

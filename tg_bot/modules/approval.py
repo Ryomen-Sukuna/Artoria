@@ -150,7 +150,7 @@ def unapprove(update, context):
 @bot_admin
 @user_admin
 @typing_action
-def approved(update, context):
+def approved(update, _):
     chat = update.effective_chat
     message = update.effective_message
     chat_id = str(chat.id)[1:]
@@ -174,7 +174,7 @@ def approved(update, context):
 @bot_admin
 @user_admin
 @typing_action
-def unapproveall(update, context):
+def unapproveall(update, _):
     chat = update.effective_chat
     message = update.effective_message
     chat_id = str(chat.id)[1:]

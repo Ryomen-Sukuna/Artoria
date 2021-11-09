@@ -1,7 +1,7 @@
 import time
 
 from telegram import Update
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import run_async
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
@@ -177,8 +177,7 @@ earth_ani = [
 
 @user_admin
 @run_async
-def blockanimation(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def blockanimation(update: Update, _):
     msg = update.effective_message.reply_text("⬜")
     for x in range(EDIT_TIMES):
         msg.edit_text(block_chain[x % 18])
@@ -188,8 +187,7 @@ def blockanimation(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def clockanimation(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def clockanimation(update: Update, _):
     msg = update.effective_message
     reply_text = (
         msg.reply_to_message.reply_text if msg.reply_to_message else msg.reply_text
@@ -202,8 +200,7 @@ def clockanimation(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def earthanimation(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def earthanimation(update: Update, _):
     msg = update.effective_message
     reply_text = (
         msg.reply_to_message.reply_text if msg.reply_to_message else msg.reply_text
@@ -216,8 +213,7 @@ def earthanimation(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def moonanimation(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def moonanimation(update: Update, _):
     msg = update.effective_message.reply_text("🌚")
     for x in range(EDIT_TIMES):
         msg.edit_text(moon_ani[x % 32])
@@ -227,8 +223,7 @@ def moonanimation(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def bombs(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def bombs(update: Update, _):
     msg = update.effective_message.reply_text("💣")
     for x in range(EDIT_TIMES):
         msg.edit_text(bomb_ettu[x % 9])
@@ -238,8 +233,7 @@ def bombs(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def hack(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def hack(update: Update, _):
     msg = update.effective_message.reply_text("Target selected")
     for x in range(EDIT_TIMES):
         msg.edit_text(hack_you[x % 5])
@@ -249,8 +243,7 @@ def hack(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def love(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def love(update: Update, _):
     msg = update.effective_message.reply_text("❣️")
     for x in range(EDIT_TIMES):
         msg.edit_text(love_siren[x % 5])
@@ -260,8 +253,7 @@ def love(update: Update, context: CallbackContext):
 
 @user_admin
 @run_async
-def kill(update: Update, context: CallbackContext):
-    bot, args = context.bot, context.args
+def kill(update: Update, _):
     msg = update.effective_message.reply_text("🔫")
     for x in range(EDIT_TIMES):
         msg.edit_text(kill_you[x % 12])

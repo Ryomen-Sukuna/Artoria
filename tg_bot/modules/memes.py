@@ -1,9 +1,10 @@
 import html
 import random
 import re
+from typing import Optional
 
 import requests as r
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update
+from telegram import Message, MAX_MESSAGE_LENGTH, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
 from telegram.utils.helpers import escape_markdown
@@ -17,36 +18,35 @@ from tg_bot.modules.helper_funcs.extraction import extract_user
 
 @run_async
 @typing_action
-def truth(update, context):
+def truth(update, _):
     update.effective_message.reply_text(random.choice(fun.TRUTH))
 
 
 @run_async
 @typing_action
-def dare(update, context):
+def dare(update, _):
     update.effective_message.reply_text(random.choice(fun.DARE))
 
 
 # run
 @run_async
 @typing_action
-def runs(update, context):
+def runs(update, _):
     update.effective_message.reply_text(random.choice(fun.RUN_STRINGS))
 
 
 @run_async
 @typing_action
-def judge(update: Update, context: CallbackContext):
+def judge(update: Update, _):
     judger = ["<b>is lying!</b>", "<b>is telling the truth!</b>"]
     rep = update.effective_message
-    msg = ""
     msg = update.effective_message.reply_to_message
     if not msg:
         rep.reply_text("Reply to someone's message to judge them!")
     else:
         user = msg.from_user.first_name
     res = random.choice(judger)
-    reply = msg.reply_text(f"{user} {res}", parse_mode=ParseMode.HTML)
+    msg.reply_text(f"{user} {res}", parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -92,14 +92,14 @@ def pat(update: Update, context: CallbackContext):
 
 
 @run_async
-def react(update: Update, context: CallbackContext):
+def react(update: Update, _):
     # reply to correct message
     reply_text = (
         update.effective_message.reply_to_message.reply_text
         if update.effective_message.reply_to_message
         else update.effective_message.reply_text
     )
-    reply_text = reply_text(random.choice(REACTS))
+    reply_text(random.choice(REACTS))
 
 
 @run_async
@@ -150,7 +150,7 @@ def slap(update, context):
 # sanitize a user - by @saitamarobot
 @run_async
 @typing_action
-def sanitize(update: Update, context: CallbackContext):
+def sanitize(update: Update, _):
     message = update.effective_message
     name = (
         message.reply_to_message.from_user.first_name
@@ -203,16 +203,16 @@ def hug(update, context):
         user2 = curr_user
 
     temp = random.choice(fun.HUG_TEMPLATES)
-    hug = random.choice(fun.HUG)
+    huge = random.choice(fun.HUG)
 
-    repl = temp.format(user1=user1, user2=user2, hug=hug)
+    repl = temp.format(user1=user1, user2=user2, hug=huge)
 
     reply_text(repl, parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
 @typing_action
-def abuse(update, context):
+def abuse(update, _):
     # reply to correct message
     reply_text = (
         update.effective_message.reply_to_message.reply_text
@@ -230,7 +230,7 @@ def dice(update, context):
 
 @run_async
 @typing_action
-def shrug(update, context):
+def shrug(update, _):
     # reply to correct message
     reply_text = (
         update.effective_message.reply_to_message.reply_text
@@ -242,7 +242,7 @@ def shrug(update, context):
 
 @run_async
 @typing_action
-def decide(update, context):
+def decide(update, _):
     args = update.effective_message.text.split(None, 1)
     if len(args) >= 2:  # Don't reply if no args
         reply_text = (
@@ -271,7 +271,7 @@ def yesnowtf(update, context):
 
 @run_async
 @typing_action
-def table(update, context):
+def table(update, _):
     reply_text = (
         update.effective_message.reply_to_message.reply_text
         if update.effective_message.reply_to_message
@@ -282,7 +282,7 @@ def table(update, context):
 
 @run_async
 @typing_action
-def cri(update, context):
+def cri(update, _):
     reply_text = (
         update.effective_message.reply_to_message.reply_text
         if update.effective_message.reply_to_message
@@ -293,7 +293,7 @@ def cri(update, context):
 
 @run_async
 @typing_action
-def recite(update, context):
+def recite(update, _):
     reply_text = (
         update.effective_message.reply_to_message.reply_text
         if update.effective_message.reply_to_message
@@ -354,7 +354,6 @@ def shout(update, context):
     else:
         data = "I need a message to meme"
 
-    msg = "```"
     result = [" ".join(list(data))]
     for pos, symbol in enumerate(data[1:]):
         result.append(symbol + " " + "  " * pos + symbol)
@@ -469,7 +468,7 @@ REACTS = (
 
 @run_async
 @typing_action
-def copypasta(update, context):
+def copypasta(update, _):
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to make pasta.")
@@ -524,7 +523,7 @@ def copypasta(update, context):
 
 @run_async
 @typing_action
-def clapmoji(update, context):
+def clapmoji(update, _):
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to clap!")
@@ -537,7 +536,7 @@ def clapmoji(update, context):
 
 @run_async
 @typing_action
-def owo(update, context):
+def owo(update, _):
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
@@ -568,7 +567,7 @@ def owo(update, context):
         reply_text = re.sub(r"ｎ([ａｅｉｏｕ])", r"ｎｙ\1", reply_text)
         reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
         reply_text = re.sub(r"Ｎ([ａｅｉｏｕＡＥＩＯＵ])", r"Ｎｙ\1", reply_text)
-        reply_text = re.sub(r"\!+", " " + random.choice(faces), reply_text)
+        reply_text = re.sub(r"!+", " " + random.choice(faces), reply_text)
         reply_text = re.sub(r"！+", " " + random.choice(faces), reply_text)
         reply_text = reply_text.replace("ove", "uv")
         reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
@@ -578,7 +577,7 @@ def owo(update, context):
 
 @run_async
 @typing_action
-def stretch(update, context):
+def stretch(update, _):
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to streeeeeeeeetch.")
@@ -597,7 +596,7 @@ def stretch(update, context):
 
 @run_async
 @typing_action
-def goodnight(update, context):
+def goodnight(update, _):
     message = update.effective_message
     first_name = update.effective_user.first_name
     reply = f"Good Night! {escape_markdown(first_name)}"
@@ -606,7 +605,7 @@ def goodnight(update, context):
 
 @run_async
 @typing_action
-def goodmorning(update, context):
+def goodmorning(update, _):
     message = update.effective_message
     first_name = update.effective_user.first_name
     reply = f"Good Morning! {escape_markdown(first_name)}"

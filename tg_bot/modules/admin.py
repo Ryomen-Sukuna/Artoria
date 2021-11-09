@@ -588,23 +588,23 @@ Lazy to promote or demote someone for admins? Want to see basic information abou
 All stuff about chatroom such as admin lists, pinning or grabbing an invite link can be \
 done easily using the bot.
 
- - /admins or /adminslist: list of admins in the chat
+- /admins or /adminslist: list of admins in the chat
 
 *Admin only:*
- - /pin: Silently pins the message replied to - add `loud`, `notify` or `violent` to give notificaton to users.
- - /unpin: Unpins the currently pinned message.
- - /invitelink: Gets private chat's invitelink.
- - /promote: Promotes the user replied to.
- - /demote: Demotes the user replied to.
- - /settitle: Sets a custom title for an admin which is promoted by bot.
- - /setgpic: As a reply to file or photo to set group profile pic!
- - /delgpic: Same as above but to remove group profile pic.
- - /setgtitle <newtitle>: Sets new chat title in your group.
- - /setsticker: As a reply to some sticker to set it as group sticker set!
- - /setdescription or /setdes <description>: Sets new chat description in group.
- - /zombies: list all the zombies in a chat.
- - /kickthefools : kick all inactive members from group ( broken )
- - /admincache : force refresh the admins list
+- /pin: Silently pins the message replied to - add `loud`, `notify` or `violent` to give notificaton to users.
+- /unpin: Unpins the currently pinned message.
+- /invitelink: Gets private chat's invitelink.
+- /promote: Promotes the user replied to.
+- /demote: Demotes the user replied to.
+- /settitle: Sets a custom title for an admin which is promoted by bot.
+- /setgpic: As a reply to file or photo to set group profile pic!
+- /delgpic: Same as above but to remove group profile pic.
+- /setgtitle <newtitle>: Sets new chat title in your group.
+- /setsticker: As a reply to some sticker to set it as group sticker set!
+- /setdescription or /setdes <description>: Sets new chat description in group.
+- /zombies: list all the zombies in a chat.
+- /kickthefools : kick all inactive members from group ( broken )
+- /admincache : force refresh the admins list
 
 *Note*: To set group sticker set chat must needs to have min 100 members.
 

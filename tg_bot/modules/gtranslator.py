@@ -8,7 +8,7 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 
 
 @run_async
-def totranslate(update: Update, context: CallbackContext):
+def totranslate(update: Update, _):
     message = update.effective_message
     problem_lang_code = [key for key in LANGUAGES if "-" in key]
     try:

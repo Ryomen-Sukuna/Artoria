@@ -42,7 +42,7 @@ URL = "http://services.gingersoftware.com/Ginger/correct/json/GingerTheText"
 
 @run_async
 @typing_action
-def spellcheck(update, context):
+def spellcheck(update, _):
     if update.effective_message.reply_to_message:
         msg = update.effective_message.reply_to_message
 

@@ -38,6 +38,10 @@ async def imdb(e):
             " You are not admin. You can't use this command.. But you can use in my pm"
         )
         return
+
+    mov_rating = []
+    mov_country = []
+    mov_language = []
     try:
         movie_name = e.pattern_match.group(1)
         remove_space = movie_name.split(" ")

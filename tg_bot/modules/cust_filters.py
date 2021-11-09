@@ -1,8 +1,9 @@
 import re
 from html import escape
+from typing import Optional
 
 import telegram
-from telegram import InlineKeyboardMarkup, Message, ParseMode
+from telegram import Chat, InlineKeyboardMarkup, Message, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import (
     CommandHandler,
@@ -203,8 +204,8 @@ def filters(update, context):
         return
 
     add = addnew_filter(update, chat_id, keyword, text, file_type, file_id, buttons)
-    # This is an old method
-    # sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video, buttons)
+    # This is an old method sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio,
+    # is_voice, is_video, buttons)
 
     if add is True:
         send_message(
@@ -449,7 +450,7 @@ def reply_filter(update, context):
 @run_async
 @user_admin
 @typing_action
-def rmall_filters(update, context):
+def rmall_filters(update, _):
     chat = update.effective_chat
     user = update.effective_user
     msg = update.effective_message
@@ -480,7 +481,8 @@ def rmall_filters(update, context):
 # NOT ASYNC NOT A HANDLER
 def get_exception(excp, filt, chat):
     if excp.message == "Unsupported url protocol":
-        return "You seem to be trying to use the URL protocol which is not supported. Telegram does not support key for multiple protocols, such as tg: //. Please try again!"
+        return "You seem to be trying to use the URL protocol which is not supported. Telegram does not support key " \
+               "for multiple protocols, such as tg: //. Please try again! "
     if excp.message == "Reply message not found":
         return "noreply"
     LOGGER.warning("Message %s could not be parsed", str(filt.reply))
@@ -518,27 +520,26 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
+def __chat_settings__(chat_id, _):
     cust_filters = sql.get_chat_triggers(chat_id)
     return "There are `{}` custom filters here.".format(len(cust_filters))
 
 
 __help__ = """
- - /filters: List all active filters saved in the chat.
+- /filters: List all active filters saved in the chat.
 
 *Admin only:*
- - /filter <keyword> <reply message>: Add a filter to this chat. The bot will now reply that message whenever 'keyword'\
+- /filter <keyword> <reply message>: Add a filter to this chat. The bot will now reply that message whenever 'keyword'\
 is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
 keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter "hey there" How you \
 doin?
- - /stop <filter keyword>: Stop that filter.
+- /stop <filter keyword>: Stop that filter.
 
 *Chat creator only:*
- - /stopall: Stop all chat filters at once.
+- /stopall: Stop all chat filters at once.
 
 *Note*: Filters also support markdown formatters like: {first}, {last} etc.. and buttons.
 Check `/markdownhelp` to know more!
-
 """
 
 __mod_name__ = "Filters"

@@ -518,7 +518,7 @@ def __chat_settings__(chat_id, user_id):
 
 __help__ = """
 *Admin only:*
- - /antispam <on/off/yes/no>: Check and/or change anti-spam settings.
+- /antispam <on/off/yes/no>: Check and/or change anti-spam settings.
 
 Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
 you and your groups by removing spam flooders as quickly as possible. They can be disabled for your group by calling \

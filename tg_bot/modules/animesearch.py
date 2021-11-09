@@ -18,7 +18,7 @@ sequel_btn = "Sequel ➡️"
 close_btn = "Close ❌"
 
 
-def site_search(update: Update, context: CallbackContext, site: str):
+def site_search(update: Update, _, site: str):
     message = update.effective_message
     args = message.text.strip().split(" ", 1)
     more_results = True
@@ -123,7 +123,7 @@ def anime_quote():
 
 
 @run_async
-def quotes(update: Update, context: CallbackContext):
+def quotes(update: Update, _):
     message = update.effective_message
     quote, character, anime = anime_quote()
     msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"
@@ -138,7 +138,7 @@ def quotes(update: Update, context: CallbackContext):
 
 
 @run_async
-def change_quote(update: Update, context: CallbackContext):
+def change_quote(update: Update, _):
     message = update.effective_message
     quote, character, anime = anime_quote()
     msg = f"<i>❝{quote}❞</i>\n\n<b>{character} from {anime}</b>"
