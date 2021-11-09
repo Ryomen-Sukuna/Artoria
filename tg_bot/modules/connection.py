@@ -273,8 +273,8 @@ def connected(bot, update, chat, user_id, need_admin=True):
             if need_admin is not True:
                 return conn_id
             if (
-                    getstatusadmin.status in ("administrator", "creator")
-                    or user_id in SUDO_USERS
+                getstatusadmin.status in ("administrator", "creator")
+                or user_id in SUDO_USERS
             ):
                 return conn_id
             send_message(

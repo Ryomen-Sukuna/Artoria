@@ -50,7 +50,7 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
 # Not async
 def warn(
-        user: User, chat: Chat, reason: str, message: Message, warner: User = None
+    user: User, chat: Chat, reason: str, message: Message, warner: User = None
 ) -> str:
     bot = dispatcher.bot
     if is_user_admin(chat, user.id):
@@ -221,8 +221,8 @@ def warn_user(update, context):
 
     if user_id:
         if (
-                message.reply_to_message
-                and message.reply_to_message.from_user.id == user_id
+            message.reply_to_message
+            and message.reply_to_message.from_user.id == user_id
         ):
             return warn(
                 message.reply_to_message.from_user,

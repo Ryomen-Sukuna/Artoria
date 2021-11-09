@@ -50,7 +50,7 @@ LOCK_TYPES = {
     "contact": Filters.contact,
     "photo": Filters.photo,
     "url": Filters.entity(MessageEntity.URL)
-           | Filters.caption_entity(MessageEntity.URL),
+    | Filters.caption_entity(MessageEntity.URL),
     "bots": Filters.status_update.new_chat_members,
     "forward": Filters.forwarded,
     "game": Filters.game,
@@ -111,14 +111,14 @@ REST_GROUP = 2
 
 # NOT ASYNC
 def restr_members(
-        bot,
-        update,
-        chat_id,
-        members,
-        messages=False,
-        media=False,
-        other=False,
-        previews=False,
+    bot,
+    update,
+    chat_id,
+    members,
+    messages=False,
+    media=False,
+    other=False,
+    previews=False,
 ):
     for mem in members:
         user = update.effective_user
@@ -139,7 +139,7 @@ def restr_members(
 
 # NOT ASYNC
 def unrestr_members(
-        bot, chat_id, members, messages=True, media=True, other=True, previews=True
+    bot, chat_id, members, messages=True, media=True, other=True, previews=True
 ):
     for mem in members:
         try:
@@ -175,8 +175,8 @@ def lock(update, context) -> str:
     user = update.effective_user
 
     if (
-            can_delete(chat, context.bot.id)
-            or update.effective_message.chat.type == "private"
+        can_delete(chat, context.bot.id)
+        or update.effective_message.chat.type == "private"
     ):
         if len(args) >= 1:
             ltype = args[0].lower()
@@ -401,10 +401,10 @@ def del_lockables(update, context):
             continue
         if lockable == "button":
             if (
-                    sql.is_locked(chat.id, lockable)
-                    and can_delete(chat, context.bot.id)
-                    and message.reply_markup
-                    and message.reply_markup.inline_keyboard
+                sql.is_locked(chat.id, lockable)
+                and can_delete(chat, context.bot.id)
+                and message.reply_markup
+                and message.reply_markup.inline_keyboard
             ):
                 try:
                     message.delete()
@@ -415,10 +415,10 @@ def del_lockables(update, context):
             continue
         if lockable == "inline":
             if (
-                    sql.is_locked(chat.id, lockable)
-                    and can_delete(chat, context.bot.id)
-                    and message
-                    and message.via_bot
+                sql.is_locked(chat.id, lockable)
+                and can_delete(chat, context.bot.id)
+                and message
+                and message.via_bot
             ):
                 try:
                     message.delete()
@@ -428,9 +428,9 @@ def del_lockables(update, context):
                 break
             continue
         if (
-                filt(update)
-                and sql.is_locked(chat.id, lockable)
-                and can_delete(chat, context.bot.id)
+            filt(update)
+            and sql.is_locked(chat.id, lockable)
+            and can_delete(chat, context.bot.id)
         ):
             if lockable == "bots":
                 new_members = update.effective_message.new_chat_members

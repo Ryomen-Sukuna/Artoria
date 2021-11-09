@@ -150,7 +150,7 @@ def get_user_admin_fed_name(user_id):
         FEDERATION_BYFEDID[f]["fname"]
         for f in FEDERATION_BYFEDID
         if int(user_id)
-           in ast.literal_eval(
+        in ast.literal_eval(
             ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["members"]
         )
     ]
@@ -161,7 +161,7 @@ def get_user_owner_fed_name(user_id):
         FEDERATION_BYFEDID[f]["fname"]
         for f in FEDERATION_BYFEDID
         if int(user_id)
-           == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
+        == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
     ]
 
 
@@ -170,7 +170,7 @@ def get_user_admin_fed_full(user_id):
         {"fed_id": f, "fed": FEDERATION_BYFEDID[f]}
         for f in FEDERATION_BYFEDID
         if int(user_id)
-           in ast.literal_eval(
+        in ast.literal_eval(
             ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["members"]
         )
     ]
@@ -181,7 +181,7 @@ def get_user_owner_fed_full(user_id):
         {"fed_id": f, "fed": FEDERATION_BYFEDID[f]}
         for f in FEDERATION_BYFEDID
         if int(user_id)
-           == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
+        == int(ast.literal_eval(FEDERATION_BYFEDID[f]["fusers"])["owner"])
     ]
 
 
@@ -510,12 +510,12 @@ def fban_user(fed_id, user_id, first_name, last_name, user_name, reason, time):
 
 
 def multi_fban_user(
-        multi_fed_id,
-        multi_user_id,
-        multi_first_name,
-        multi_last_name,
-        multi_user_name,
-        multi_reason,
+    multi_fed_id,
+    multi_user_id,
+    multi_first_name,
+    multi_last_name,
+    multi_user_name,
+    multi_reason,
 ):
     counter = 0
     time = 0

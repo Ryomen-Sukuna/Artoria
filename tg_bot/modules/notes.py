@@ -427,17 +427,17 @@ def __import_data__(chat_id, data):
 
         if match:
             failures.append(notename)
-            notedata = notedata[match.end():].strip()
+            notedata = notedata[match.end() :].strip()
             if notedata:
                 sql.add_note_to_db(chat_id, notename[1:], notedata, sql.Types.TEXT)
         elif matchsticker:
-            content = notedata[matchsticker.end():].strip()
+            content = notedata[matchsticker.end() :].strip()
             if content:
                 sql.add_note_to_db(
                     chat_id, notename[1:], notedata, sql.Types.STICKER, file=content
                 )
         elif matchbtn:
-            parse = notedata[matchbtn.end():].strip()
+            parse = notedata[matchbtn.end() :].strip()
             notedata = parse.split("<###button###>")[0]
             buttons = parse.split("<###button###>")[1]
             buttons = ast.literal_eval(buttons)
@@ -450,7 +450,7 @@ def __import_data__(chat_id, data):
                     buttons=buttons,
                 )
         elif matchfile:
-            file = notedata[matchfile.end():].strip()
+            file = notedata[matchfile.end() :].strip()
             file = file.split("<###TYPESPLIT###>")
             notedata = file[1]
             content = file[0]
@@ -459,7 +459,7 @@ def __import_data__(chat_id, data):
                     chat_id, notename[1:], notedata, sql.Types.DOCUMENT, file=content
                 )
         elif matchphoto:
-            photo = notedata[matchphoto.end():].strip()
+            photo = notedata[matchphoto.end() :].strip()
             photo = photo.split("<###TYPESPLIT###>")
             notedata = photo[1]
             content = photo[0]
@@ -468,7 +468,7 @@ def __import_data__(chat_id, data):
                     chat_id, notename[1:], notedata, sql.Types.PHOTO, file=content
                 )
         elif matchaudio:
-            audio = notedata[matchaudio.end():].strip()
+            audio = notedata[matchaudio.end() :].strip()
             audio = audio.split("<###TYPESPLIT###>")
             notedata = audio[1]
             content = audio[0]
@@ -477,7 +477,7 @@ def __import_data__(chat_id, data):
                     chat_id, notename[1:], notedata, sql.Types.AUDIO, file=content
                 )
         elif matchvoice:
-            voice = notedata[matchvoice.end():].strip()
+            voice = notedata[matchvoice.end() :].strip()
             voice = voice.split("<###TYPESPLIT###>")
             notedata = voice[1]
             content = voice[0]
@@ -486,7 +486,7 @@ def __import_data__(chat_id, data):
                     chat_id, notename[1:], notedata, sql.Types.VOICE, file=content
                 )
         elif matchvideo:
-            video = notedata[matchvideo.end():].strip()
+            video = notedata[matchvideo.end() :].strip()
             video = video.split("<###TYPESPLIT###>")
             notedata = video[1]
             content = video[0]
@@ -495,7 +495,7 @@ def __import_data__(chat_id, data):
                     chat_id, notename[1:], notedata, sql.Types.VIDEO, file=content
                 )
         elif matchvn:
-            video_note = notedata[matchvn.end():].strip()
+            video_note = notedata[matchvn.end() :].strip()
             video_note = video_note.split("<###TYPESPLIT###>")
             notedata = video_note[1]
             content = video_note[0]
@@ -514,8 +514,8 @@ def __import_data__(chat_id, data):
                 document=output,
                 filename="failed_imports.txt",
                 caption="These files/photos failed to import due to originating "
-                        "from another bot. This is a telegram API restriction, and can't "
-                        "be avoided. Sorry for the inconvenience!",
+                "from another bot. This is a telegram API restriction, and can't "
+                "be avoided. Sorry for the inconvenience!",
             )
 
 
