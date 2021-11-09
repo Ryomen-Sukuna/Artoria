@@ -21,7 +21,7 @@ Artoria
 .. image:: https://img.shields.io/github/last-commit/Ryomen-Sukuna/Artoria/master?label=Last%20Commit&logo=github
    :target: https://github.com/Ryomen-Sukuna/Artoria/commits/master/
 
-.. image:: https://gitlicense.com/badge/Ryomen-Sukuna/Artoria?label=License&logo=github
+.. image:: https://img.shields.io/github/license/Ryomen-Sukuna/Artoria?label=License&logo=github
    :target: https://gitlicense.com/license/Ryomen-Sukuna/Artoria
 
 .. image:: https://img.shields.io/badge/Maintained-Yes-brightgreen.svg
