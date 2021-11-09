@@ -1,5 +1,5 @@
 ======
-Saber
+Artoria
 ======
 
 .. image:: https://telegra.ph/file/b6fbf04a9018eac3a0308.jpg
@@ -45,9 +45,13 @@ Saber
    :target: https://t.me/ironbloodnations
    :alt: Join Support
 
+.. image:: https://img.shields.io/badge/PRs-Welcome-blue.svg?style=flat-round
+   :target: https://makeapullrequest.com
+   :alt: PRs
+
 A modular telegram Python bot running on *python3* with an *sqlalchemy* database.
 
-Originally a marie fork - Saber has evolved further and was built to be more useful for Anime Chats.
+Originally a marie fork - Artoria has evolved further and was built to be more useful for Anime Chats.
 
 Can be found on telegram as `Saber <https://t.me/saber_herobot>`_.
 
@@ -55,7 +59,7 @@ Can be found on telegram as `Saber <https://t.me/saber_herobot>`_.
 Fork at your own risks
 ======================
 
-* Saber is originally forked from `Saber <https://github.com/Godzilla-0/saber-3>`_ and `Shoko <https://github.com/gizmostuffin/Shoko>`_.
+* Artoria is originally forked from `Saber <https://github.com/Godzilla-0/saber-3>`_ and `Shoko <https://github.com/gizmostuffin/Shoko>`_.
 * The repo is still under development and its unstable.
 * Fork it at ur own risks.
 
