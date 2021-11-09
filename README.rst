@@ -33,7 +33,7 @@ Artoria
 .. image:: https://img.shields.io/github/contributors/Ryomen-Sukuna/Artoria?label=Contributors&logo=github
    :target: https://github.com/Ryomen-Sukuna/Artoria/graphs/contributors
 
-.. image:: https://img.shields.io/github/repo-size/Ryomen-Sukuna/Artoria?label=Size&logo=github
+.. image:: https://img.shields.io/github/repo-size/Ryomen-Sukuna/Artoria?label=Size&logo=github&color=success
    :target: https://github.com/Ryomen-Sukuna/Artoria
 
 .. image:: https://img.shields.io/badge/Telegram-Group-blue.svg?logo=telegram
