@@ -1,13 +1,21 @@
 import os
 import time
 import zipfile
+from datetime import datetime
 
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 from telethon import types
 from telethon.tl import functions
+from telethon.tl.types import DocumentAttributeVideo
 
-from tg_bot import TEMP_DOWNLOAD_DIRECTORY
-from tg_bot import client
+from tg_bot import TEMP_DOWNLOAD_DIRECTORY, client
 from tg_bot.events import register
+
+extracted = TEMP_DOWNLOAD_DIRECTORY + "extracted/"
+thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+if not os.path.isdir(extracted):
+    os.makedirs(extracted)
 
 
 async def is_register_admin(chat, user):
@@ -52,7 +60,7 @@ async def _(event):
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         try:
-            c_time = time.time()
+            time.time()
             downloaded_file_name = await event.client.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
@@ -79,37 +87,6 @@ def zipdir(path, ziph):
             os.remove(os.path.join(root, file))
 
 
-from datetime import datetime
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-from telethon.tl.types import DocumentAttributeVideo
-
-extracted = TEMP_DOWNLOAD_DIRECTORY + "extracted/"
-thumb_image_path = TEMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-if not os.path.isdir(extracted):
-    os.makedirs(extracted)
-
-
-async def is_register_admin(chat, user):
-    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-        return isinstance(
-            (
-                await client(functions.channels.GetParticipantRequest(chat, user))
-            ).participant,
-            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
-        )
-    if isinstance(chat, types.InputPeerChat):
-        ui = await client.get_peer_id(user)
-        ps = (
-            await client(functions.messages.GetFullChatRequest(chat.chat_id))
-        ).full_chat.participants.participants
-        return isinstance(
-            next((p for p in ps if p.user_id == ui), None),
-            (types.ChatParticipantAdmin, types.ChatParticipantCreator),
-        )
-    return None
-
-
 @register(pattern="^/unzip")
 async def _(event):
     if event.fwd_from:
@@ -133,7 +110,7 @@ async def _(event):
         start = datetime.now()
         reply_message = await event.get_reply_message()
         try:
-            c_time = time.time()
+            time.time()
             downloaded_file_name = await client.download_media(
                 reply_message, TEMP_DOWNLOAD_DIRECTORY
             )
@@ -141,7 +118,7 @@ async def _(event):
             await mone.reply(str(e))
         else:
             end = datetime.now()
-            ms = (end - start).seconds
+            (end - start).seconds
 
         with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
             zip_ref.extractall(extracted)
@@ -209,8 +186,8 @@ def get_lst_of_files(input_directory, output_lst):
 
 
 __help__ = """
- - /zip: reply to a telegram file to compress it in .zip format
- - /unzip: reply to a telegram file to decompress it from the .zip format
+- /zip: reply to a telegram file to compress it in .zip format
+- /unzip: reply to a telegram file to decompress it from the .zip format
 """
 
 __mod_name__ = "Zipper"

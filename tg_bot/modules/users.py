@@ -112,7 +112,7 @@ def broadcast(update: Update, context: CallbackContext):
 
 
 @run_async
-def log_user(update: Update, context: CallbackContext):
+def log_user(update: Update, _):
     chat = update.effective_chat
     msg = update.effective_message
 
@@ -133,6 +133,7 @@ def log_user(update: Update, context: CallbackContext):
 @run_async
 @sudo_plus
 def chats(update: Update, context: CallbackContext):
+    bot = context.bot
     all_chats = sql.get_all_chats() or []
     chatfile = "List of chats.\n0. Chat name | Chat ID | Members count | Invitelink\n"
     P = 1

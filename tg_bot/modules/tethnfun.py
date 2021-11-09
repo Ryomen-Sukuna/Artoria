@@ -1,13 +1,13 @@
 import glob
+import os
 from asyncio import sleep
+from datetime import datetime
 
 import html2text
 import requests
 from bing_image_downloader import downloader
 from requests import get, post
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
+from telethon.tl import functions, types
 
 from tg_bot import client
 from tg_bot.events import register
@@ -24,15 +24,13 @@ def progress(current, total):
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-
         return isinstance(
             (
                 await client(functions.channels.GetParticipantRequest(chat, user))
             ).participant,
             (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
         )
-    elif isinstance(chat, types.InputPeerChat):
-
+    if isinstance(chat, types.InputPeerChat):
         ui = await client.get_peer_id(user)
         ps = (
             await client(functions.messages.GetFullChatRequest(chat.chat_id))
@@ -41,8 +39,7 @@ async def is_register_admin(chat, user):
             next((p for p in ps if p.user_id == ui), None),
             (types.ChatParticipantAdmin, types.ChatParticipantCreator),
         )
-    else:
-        return None
+    return None
 
 
 @register(pattern="^/google (.*)")
@@ -95,9 +92,9 @@ async def img_sampler(event):
         timeout=60,
     )
     os.chdir(f'./store/"{query}"')
-    types = ("*.png", "*.jpeg", "*.jpg")  # the tuple of file types
+    zero = ("*.png", "*.jpeg", "*.jpg")  # the tuple of file types
     files_grabbed = []
-    for files in types:
+    for files in zero:
         files_grabbed.extend(glob.glob(files))
     await event.client.send_file(event.chat_id, files_grabbed, reply_to=event.id)
     os.remove(files_grabbed)

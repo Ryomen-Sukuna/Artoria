@@ -1,19 +1,20 @@
 import re
 from html import escape
+from typing import Optional
 
 import telegram
-from telegram import ParseMode, InlineKeyboardMarkup, Message
+from telegram import Chat, InlineKeyboardMarkup, Message, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import (
     CommandHandler,
-    MessageHandler,
     DispatcherHandlerStop,
-    run_async,
     Filters,
+    MessageHandler,
+    run_async,
 )
-from telegram.utils.helpers import mention_html, escape_markdown
+from telegram.utils.helpers import escape_markdown, mention_html
 
-from tg_bot import dispatcher, LOGGER
+from tg_bot import LOGGER, dispatcher
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
@@ -24,10 +25,10 @@ from tg_bot.modules.helper_funcs.handlers import MessageHandlerChecker
 from tg_bot.modules.helper_funcs.misc import build_keyboard_parser
 from tg_bot.modules.helper_funcs.msg_types import get_filter_type
 from tg_bot.modules.helper_funcs.string_handling import (
-    split_quotes,
     button_markdown_parser,
     escape_invalid_curly_brackets,
     markdown_to_html,
+    split_quotes,
 )
 from tg_bot.modules.sql import cust_filters_sql as sql
 
@@ -125,8 +126,7 @@ def filters(update, context):
                 "Please provide keyword for this filter to reply with!",
             )
             return
-        else:
-            keyword = args[1]
+        keyword = args[1]
     else:
         extracted = split_quotes(args[1])
         if len(extracted) < 1:
@@ -204,8 +204,8 @@ def filters(update, context):
         return
 
     add = addnew_filter(update, chat_id, keyword, text, file_type, file_id, buttons)
-    # This is an old method
-    # sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video, buttons)
+    # This is an old method sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio,
+    # is_voice, is_video, buttons)
 
     if add is True:
         send_message(
@@ -348,7 +348,7 @@ def reply_filter(update, context):
                                     reply_markup=keyboard,
                                 )
                             except BadRequest as excp:
-                                LOGGER.exception("Error in filters: ", excp.message)
+                                LOGGER.exception("Error in filters: " + excp.message)
                                 send_message(
                                     update.effective_message,
                                     get_exception(excp, filt, chat),
@@ -361,7 +361,7 @@ def reply_filter(update, context):
                                 )
                             except BadRequest as excp:
                                 LOGGER.exception(
-                                    "Failed to send message: ", excp.message
+                                    "Failed to send message: " + excp.message
                                 )
                 else:
                     ENUM_FUNC_MAP[filt.file_type](
@@ -409,7 +409,7 @@ def reply_filter(update, context):
                                 "again...",
                             )
                         except BadRequest as excp:
-                            LOGGER.exception("Error in filters: ", excp.message)
+                            LOGGER.exception("Error in filters: " + excp.message)
                     elif excp.message == "Reply message not found":
                         try:
                             context.bot.send_message(
@@ -420,7 +420,7 @@ def reply_filter(update, context):
                                 reply_markup=keyboard,
                             )
                         except BadRequest as excp:
-                            LOGGER.exception("Error in filters: ", excp.message)
+                            LOGGER.exception("Error in filters: " + excp.message)
                     else:
                         try:
                             send_message(
@@ -428,7 +428,7 @@ def reply_filter(update, context):
                                 "This message couldn't be sent as it's incorrectly formatted.",
                             )
                         except BadRequest as excp:
-                            LOGGER.exception("Error in filters: ", excp.message)
+                            LOGGER.exception("Error in filters: " + excp.message)
                         LOGGER.warning(
                             "Message %s could not be parsed", str(filt.reply)
                         )
@@ -443,14 +443,14 @@ def reply_filter(update, context):
                 try:
                     send_message(update.effective_message, filt.reply)
                 except BadRequest as excp:
-                    LOGGER.exception("Error in filters: ", excp.message)
+                    LOGGER.exception("Error in filters: " + excp.message)
             break
 
 
 @run_async
 @user_admin
 @typing_action
-def rmall_filters(update, context):
+def rmall_filters(update, _):
     chat = update.effective_chat
     user = update.effective_user
     msg = update.effective_message
@@ -481,15 +481,17 @@ def rmall_filters(update, context):
 # NOT ASYNC NOT A HANDLER
 def get_exception(excp, filt, chat):
     if excp.message == "Unsupported url protocol":
-        return "You seem to be trying to use the URL protocol which is not supported. Telegram does not support key for multiple protocols, such as tg: //. Please try again!"
-    elif excp.message == "Reply message not found":
-        return "noreply"
-    else:
-        LOGGER.warning("Message %s could not be parsed", str(filt.reply))
-        LOGGER.exception(
-            "Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id)
+        return (
+            "You seem to be trying to use the URL protocol which is not supported. Telegram does not support key "
+            "for multiple protocols, such as tg: //. Please try again! "
         )
-        return "This data could not be sent because it is incorrectly formatted."
+    if excp.message == "Reply message not found":
+        return "noreply"
+    LOGGER.warning("Message %s could not be parsed", str(filt.reply))
+    LOGGER.exception(
+        "Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id)
+    )
+    return "This data could not be sent because it is incorrectly formatted."
 
 
 # NOT ASYNC NOT A HANDLER
@@ -501,9 +503,8 @@ def addnew_filter(update, chat_id, keyword, text, file_type, file_id, buttons):
             "You can't have more that fifty filters at once! try removing some before adding new filters."
         )
         return False
-    else:
-        sql.new_add_filter(chat_id, keyword, text, file_type, file_id, buttons)
-        return True
+    sql.new_add_filter(chat_id, keyword, text, file_type, file_id, buttons)
+    return True
 
 
 def __stats__():
@@ -521,27 +522,26 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
+def __chat_settings__(chat_id, _):
     cust_filters = sql.get_chat_triggers(chat_id)
     return "There are `{}` custom filters here.".format(len(cust_filters))
 
 
 __help__ = """
- - /filters: List all active filters saved in the chat.
+- /filters: List all active filters saved in the chat.
 
 *Admin only:*
- - /filter <keyword> <reply message>: Add a filter to this chat. The bot will now reply that message whenever 'keyword'\
+- /filter <keyword> <reply message>: Add a filter to this chat. The bot will now reply that message whenever 'keyword'\
 is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
 keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter "hey there" How you \
 doin?
- - /stop <filter keyword>: Stop that filter.
+- /stop <filter keyword>: Stop that filter.
 
 *Chat creator only:*
- - /stopall: Stop all chat filters at once.
+- /stopall: Stop all chat filters at once.
 
 *Note*: Filters also support markdown formatters like: {first}, {last} etc.. and buttons.
 Check `/markdownhelp` to know more!
-
 """
 
 __mod_name__ = "Filters"

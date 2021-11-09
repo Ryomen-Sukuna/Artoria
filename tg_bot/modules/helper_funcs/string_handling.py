@@ -157,6 +157,7 @@ def button_markdown_parser(
 def escape_invalid_curly_brackets(text: str, valids: List[str]) -> str:
     new_text = ""
     idx = 0
+    v = []
     while idx < len(text):
         if text[idx] == "{":
             if idx + 1 < len(text) and text[idx + 1] == "{":
@@ -220,7 +221,7 @@ def split_quotes(text: str) -> List:
 def remove_escapes(text: str) -> str:
     res = ""
     is_escaped = False
-    for counter in range(len(text)):
+    for counter, _ in enumerate(text):
         if is_escaped:
             res += text[counter]
             is_escaped = False

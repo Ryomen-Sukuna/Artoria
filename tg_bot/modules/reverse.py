@@ -3,19 +3,21 @@ import re
 import urllib
 import urllib.parse
 import urllib.request
-from urllib.error import URLError, HTTPError
+from urllib.error import HTTPError, URLError
 
 import requests
 from bs4 import BeautifulSoup
-from telegram import InputMediaPhoto, TelegramError
-from telegram import Update
+from telegram import InputMediaPhoto, TelegramError, Update
 from telegram.ext import CallbackContext, run_async
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 opener = urllib.request.build_opener()
-useragent = "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36"
+useragent = (
+    "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/52.0.2743.98 Mobile Safari/537.36 "
+)
 opener.addheaders = [("User-agent", useragent)]
 
 
@@ -73,7 +75,8 @@ def reverse(update: Update, context: CallbackContext):
                 return
             if HE.reason == "Forbidden":
                 msg.reply_text(
-                    "Couldn't access the provided link, The website might have blocked accessing to the website by bot or the website does not existed."
+                    "Couldn't access the provided link, The website might have blocked accessing to the website by "
+                    "bot or the website does not existed. "
                 )
                 return
         except URLError as UE:
@@ -84,18 +87,19 @@ def reverse(update: Update, context: CallbackContext):
             return
     else:
         msg.reply_markdown(
-            "Please reply to a sticker, or an image to search it!\nDo you know that you can search an image with a link too? `/reverse [picturelink] <amount>`."
+            "Please reply to a sticker, or an image to search it!\nDo you know that you can search an image with a "
+            "link too? `/reverse [picturelink] <amount>`. "
         )
         return
 
     try:
-        searchUrl = "https://www.google.com/searchbyimage/upload"
+        search_url = "https://www.google.com/searchbyimage/upload"
         multipart = {
             "encoded_image": (imagename, open(imagename, "rb")),
             "image_content": "",
         }
-        response = requests.post(searchUrl, files=multipart, allow_redirects=False)
-        fetchUrl = response.headers["Location"]
+        response = requests.post(search_url, files=multipart, allow_redirects=False)
+        fetch_url = response.headers["Location"]
 
         if response != 400:
             xx = bot.send_message(
@@ -105,13 +109,13 @@ def reverse(update: Update, context: CallbackContext):
                 reply_to_message_id=rtmid,
             )
         else:
-            xx = bot.send_message(
+            bot.send_message(
                 chat_id, "Google told me to go away.", reply_to_message_id=rtmid
             )
             return
 
         os.remove(imagename)
-        match = ParseSauce(fetchUrl + "&hl=en")
+        match = parse_sauce(fetch_url + "&hl=en")
         guess = match["best_guess"]
         if match["override"] and match["override"] != "":
             imgspage = match["override"]
@@ -120,7 +124,7 @@ def reverse(update: Update, context: CallbackContext):
 
         if guess and imgspage:
             xx.edit_text(
-                f"[{guess}]({fetchUrl})\nProcessing...",
+                f"[{guess}]({fetch_url})\nProcessing...",
                 parse_mode="Markdown",
                 disable_web_page_preview=True,
             )
@@ -131,8 +135,7 @@ def reverse(update: Update, context: CallbackContext):
         images = scam(imgspage, lim)
         if len(images) == 0:
             xx.edit_text(
-                f"[{guess}]({fetchUrl})\n[Visually similar images]({imgspage})"
-                "\nCouldn't fetch any images.",
+                f"[{guess}]({fetch_url})\n\n" f"[Visually similar images]({imgspage})",
                 parse_mode="Markdown",
                 disable_web_page_preview=True,
             )
@@ -145,7 +148,7 @@ def reverse(update: Update, context: CallbackContext):
 
         bot.send_media_group(chat_id=chat_id, media=imglinks, reply_to_message_id=rtmid)
         xx.edit_text(
-            f"[{guess}]({fetchUrl})\n[Visually similar images]({imgspage})",
+            f"[{guess}]({fetch_url})\n\n" f"[Visually similar images]({imgspage})",
             parse_mode="Markdown",
             disable_web_page_preview=True,
         )
@@ -155,7 +158,7 @@ def reverse(update: Update, context: CallbackContext):
         print(exception)
 
 
-def ParseSauce(googleurl):
+def parse_sauce(googleurl):
     """Parse/Scrape the HTML code for the info we want."""
 
     source = opener.open(googleurl).read()

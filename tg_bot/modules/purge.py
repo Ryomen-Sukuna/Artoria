@@ -5,7 +5,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from tg_bot import client, SUDO_USERS
+from tg_bot import SUDO_USERS, client
 
 
 # Check if user has admin rights
@@ -91,8 +91,8 @@ Deleting messages made easy with this command. Bot purges \
 messages all together or individually.
 
 *Admin only:*
- - /del: Deletes the message you replied to
- - /purge: Deletes all messages between this and the replied to message.
+- /del: Deletes the message you replied to
+- /purge: Deletes all messages between this and the replied to message.
 """
 
 __mod_name__ = "Purges"

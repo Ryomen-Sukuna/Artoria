@@ -10,30 +10,30 @@ from bs4 import BeautifulSoup
 from requests import get
 from telegram import (
     Chat,
-    ParseMode,
     ChatAction,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    ParseMode,
+    ReplyKeyboardRemove,
     TelegramError,
     Update,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    ReplyKeyboardRemove,
 )
 from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler, run_async, Filters
+from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
 from telegram.utils.helpers import escape_markdown
 from tswift import Song
 
 from tg_bot import (
+    DEV_USERS,
     OWNER_ID,
     SUDO_USERS,
     SUPPORT_USERS,
     WHITELIST_USERS,
-    DEV_USERS,
     dispatcher,
 )
-from tg_bot.__main__ import STATS, GDPR
+from tg_bot.__main__ import GDPR, STATS
 from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
+from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 
@@ -171,12 +171,11 @@ def github(update, context):
 
 @run_async
 def repo(update, context):
-    args = context.args
     message = update.effective_message
     text = message.text[len("/repo ") :]
     usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()
     reply_text = "*Repositorys*\n"
-    for i in range(len(usr)):
+    for i, _ in enumerate(usr):
         reply_text += f"[{usr[i]['name']}]({usr[i]['html_url']})\n"
     message.reply_text(
         reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
@@ -211,9 +210,9 @@ def mpaste(update, context):
 
     key = res["key"]
     if res["isUrl"]:
-        reply = "Shortened URL: {}/{}\nYou can view stats, etc. [here]({}/v/{})".format(
-            BURL, key, BURL, key
-        )
+        reply = (
+            reply
+        ) = f"Shortened URL: {BURL}/{key}\nYou can view stats, etc. [here]({BURL}/v/{key})"
     else:
         reply = f"{BURL}/{key}"
     update.effective_message.reply_text(
@@ -520,7 +519,7 @@ def rmemes(update, context):
     ]
 
     subreddit = random.choice(SUBREDS)
-    res = r.get(f"https://meme-api.herokuapp.com/gimme/{subreddit}")
+    res = requests.get(f"https://meme-api.herokuapp.com/gimme/{subreddit}")
 
     if res.status_code != 200:  # Like if api is down?
         msg.reply_text("Sorry some error occurred :(")
@@ -583,11 +582,11 @@ def reply_keyboard_remove(update, context):
 
 @run_async
 def stats(update, context):
-    stats = (
+    statistics = (
         f"┎─⌈ <b>Current {dispatcher.bot.first_name} Stats</b> ⌋\n┇\n"
         + "\n┋\n".join([mod.__stats__() for mod in STATS])
     )
-    result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
+    result = re.sub(r"(\d+)", r"<code>\1</code>", statistics)
     update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
 
 

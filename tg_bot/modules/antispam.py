@@ -24,8 +24,8 @@ from tg_bot import (
     SUPPORT_CHAT,
     SUPPORT_USERS,
     WHITELIST_USERS,
-    spamwtc,
     dispatcher,
+    spamwtc,
 )
 from tg_bot.modules.helper_funcs.chat_status import (
     is_user_admin,
@@ -179,7 +179,7 @@ def gban(update: Update, context: CallbackContext):
     if EVENT_LOGS:
         try:
             log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
-        except BadRequest as excp:
+        except BadRequest:
             log = context.bot.send_message(
                 EVENT_LOGS,
                 log_message
@@ -306,7 +306,7 @@ def ungban(update: Update, context: CallbackContext):
     if EVENT_LOGS:
         try:
             log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
-        except BadRequest as excp:
+        except BadRequest:
             log = bot.send_message(
                 EVENT_LOGS,
                 log_message
@@ -518,7 +518,7 @@ def __chat_settings__(chat_id, user_id):
 
 __help__ = """
 *Admin only:*
- - /antispam <on/off/yes/no>: Check and/or change anti-spam settings.
+- /antispam <on/off/yes/no>: Check and/or change anti-spam settings.
 
 Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
 you and your groups by removing spam flooders as quickly as possible. They can be disabled for your group by calling \

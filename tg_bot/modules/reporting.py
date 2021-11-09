@@ -208,11 +208,11 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(update, context, chat, chatP, user):
+def __chat_settings__(chat_id, _):
     return f"This chat is setup to send user reports to admins, via /report and @admin: `{sql.chat_should_report(chat_id)}`"
 
 
-def __user_settings__(update, context, user):
+def __user_settings__(_, user):
     if sql.user_should_report(user.id) is True:
         text = "You will receive reports from chats you're admin."
         keyboard = [
@@ -279,13 +279,13 @@ def buttons(update: Update, context: CallbackContext):
 
 
 __help__ = """
- • `/report <reason>`*:* reply to a message to report it to admins.
- • `@admin`*:* reply to a message to report it to admins.
- • `/spam` *:* its telethon based module work like a charm
+• `/report <reason>`*:* reply to a message to report it to admins.
+• `@admin`*:* reply to a message to report it to admins.
+• `/spam` *:* its telethon based module work like a charm.
 *NOTE:* Neither of these will get triggered if used by admins.
 
 *Admins only:*
- • `/reports <on/off>`*:* change report setting, or view current status.
+• `/reports <on/off>`*:* change report setting, or view current status.
    • If done in pm, toggles your status.
    • If in group, toggles that groups's status.
 """

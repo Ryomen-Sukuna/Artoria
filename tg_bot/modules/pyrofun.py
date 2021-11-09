@@ -12,7 +12,7 @@ from pyrogram.types import Message
 from pytube import YouTube
 from youtubesearchpython import VideosSearch
 
-from tg_bot import pbot, LOGGER
+from tg_bot import LOGGER, pbot
 from tg_bot.utils.ut import get_arg
 
 DART_E_MOJI = "🎯"
@@ -54,7 +54,6 @@ speedtest_create = filters.create(speedtest_callback)
 
 @pbot.on_message(filters.command("song"))
 async def song(client, message):
-    chat_id = message.chat.id
     user_id = message.from_user["id"]
     args = get_arg(message) + " " + "song"
     if args.startswith(" "):
@@ -73,7 +72,7 @@ async def song(client, message):
         await status.edit("Failed to download song")
         LOGGER.error(ex)
         return ""
-    rename = os.rename(download, f"{str(user_id)}.mp3")
+    os.rename(download, f"{str(user_id)}.mp3")
     await pbot.send_chat_action(message.chat.id, "upload_audio")
     await pbot.send_audio(
         chat_id=message.chat.id,
@@ -219,21 +218,18 @@ async def sed(c: Client, m: Message):
 class AioHttp:
     @staticmethod
     async def get_json(link):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(link) as resp:
-                return await resp.json()
+        async with aiohttp.ClientSession() as session, session.get(link) as resp:
+            return await resp.json()
 
     @staticmethod
     async def get_text(link):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(link) as resp:
-                return await resp.text()
+        async with aiohttp.ClientSession() as session, session.get(link) as resp:
+            return await resp.text()
 
     @staticmethod
     async def get_raw(link):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(link) as resp:
-                return await resp.read()
+        async with aiohttp.ClientSession() as session, session.get(link) as resp:
+            return await resp.read()
 
 
 @pbot.on_message(filters.command("spbinfo"))
@@ -261,7 +257,7 @@ async def lookup(client, message):
     url = f"https://api.intellivoid.net/spamprotection/v1/lookup?query={user.id}"
     a = await AioHttp().get_json(url)
     response = a["success"]
-    if response == True:
+    if response is True:
         date = a["results"]["last_updated"]
         stats = "**◢ Intellivoid• SpamProtection Info**:\n"
         stats += f' • **Updated on**: `{datetime.fromtimestamp(date).strftime("%Y-%m-%d %I:%M:%S %p")}`\n'
@@ -269,13 +265,13 @@ async def lookup(client, message):
             f" • **Chat Info**: [Link](t.me/SpamProtectionBot/?start=00_{user.id})\n"
         )
 
-        if a["results"]["attributes"]["is_potential_spammer"] == True:
+        if a["results"]["attributes"]["is_potential_spammer"] is True:
             stats += " • **User**: `USERxSPAM`\n"
-        elif a["results"]["attributes"]["is_operator"] == True:
+        elif a["results"]["attributes"]["is_operator"] is True:
             stats += " • **User**: `USERxOPERATOR`\n"
-        elif a["results"]["attributes"]["is_agent"] == True:
+        elif a["results"]["attributes"]["is_agent"] is True:
             stats += " • **User**: `USERxAGENT`\n"
-        elif a["results"]["attributes"]["is_whitelisted"] == True:
+        elif a["results"]["attributes"]["is_whitelisted"] is True:
             stats += " • **User**: `USERxWHITELISTED`\n"
 
         stats += f' • **Type**: `{a["results"]["entity_type"]}`\n'
@@ -287,7 +283,7 @@ async def lookup(client, message):
         stats += f' • **Ham Prediction**: `{a["results"]["spam_prediction"]["ham_prediction"]}`\n'
         stats += f' • **Spam Prediction**: `{a["results"]["spam_prediction"]["spam_prediction"]}`\n'
         stats += f'**Blacklisted**: `{a["results"]["attributes"]["is_blacklisted"]}`\n'
-        if a["results"]["attributes"]["is_blacklisted"] == True:
+        if a["results"]["attributes"]["is_blacklisted"] is True:
             stats += (
                 f' • **Reason**: `{a["results"]["attributes"]["blacklist_reason"]}`\n'
             )

@@ -1,13 +1,12 @@
 import html
 from typing import Optional
 
-from telegram import Message, Update
-from telegram import ParseMode, MAX_MESSAGE_LENGTH
-from telegram.ext.dispatcher import run_async, CallbackContext
+from telegram import MAX_MESSAGE_LENGTH, Message, ParseMode, Update
+from telegram.ext.dispatcher import CallbackContext, run_async
 from telegram.utils.helpers import escape_markdown
 
 import tg_bot.modules.sql.userinfo_sql as sql
-from tg_bot import dispatcher, DEV_USERS
+from tg_bot import DEV_USERS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.extraction import extract_user
@@ -162,10 +161,10 @@ promoting your profile.
 
 All bios are displayed on /info command.
 
- - /setbio <text>: While replying, will save another user's bio
- - /bio: Will get your or another user's bio. This cannot be set by yourself.
- - /setme <text>: Will set your info
- - /me: Will get your or another user's info
+- /setbio <text>: While replying, will save another user's bio
+- /bio: Will get your or another user's bio. This cannot be set by yourself.
+- /setme <text>: Will set your info
+- /me: Will get your or another user's info
 
 An example of setting a bio for yourself:
 `/setme I work for Telegram`; Bio is set to yourself.

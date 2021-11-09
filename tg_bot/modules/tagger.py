@@ -1,12 +1,11 @@
 # This Module (Tagall) Is Taken From @zoldycktmbot
 
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.error import BadRequest
-from telegram.ext import run_async, Filters, CommandHandler, CallbackQueryHandler
+from telegram.ext import CallbackQueryHandler, CommandHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, REDIS
+from tg_bot import REDIS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
@@ -19,7 +18,6 @@ from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
 @typing_action
 def addtag(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -74,7 +72,6 @@ def addtag(update, context):
 @typing_action
 def removetag(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -203,7 +200,6 @@ def tagme(update, context):
 @typing_action
 def tagall(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     args = context.args
     query = " ".join(args)
@@ -211,24 +207,24 @@ def tagall(update, context):
         message.reply_text("Please give a reason why are you want to tag all!")
         return
     chat_id = str(chat.id)[1:]
-    tagall = list(REDIS.sunion(f"tagall2_{chat_id}"))
-    tagall.sort()
-    tagall = ", ".join(tagall)
+    t_all = list(REDIS.sunion(f"tagall2_{chat_id}"))
+    t_all.sort()
+    t_all = ", ".join(t_all)
 
-    if tagall:
+    if t_all:
         tagall_reason = query
         if message.reply_to_message:
             message.reply_to_message.reply_text(
                 "{}"
                 "\n\n<b>• Tagged Reason : </b>"
-                "\n{}".format(tagall, tagall_reason),
+                "\n{}".format(t_all, tagall_reason),
                 parse_mode=ParseMode.HTML,
             )
         else:
             message.reply_text(
                 "{}"
                 "\n\n<b>• Tagged Reason : </b>"
-                "\n{}".format(tagall, tagall_reason),
+                "\n{}".format(t_all, tagall_reason),
                 parse_mode=ParseMode.HTML,
             )
     else:
@@ -241,7 +237,6 @@ def tagall(update, context):
 @typing_action
 def untagall(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     chat_id = str(chat.id)[1:]
     tagall_list = list(REDIS.sunion(f"tagall2_{chat_id}"))

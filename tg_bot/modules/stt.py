@@ -1,9 +1,15 @@
-import requests
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
+import os
+from datetime import datetime
 
-from tg_bot import *
+import requests
+from telethon.tl import functions, types
+
+from tg_bot import (
+    IBM_WATSON_CRED_PASSWORD,
+    IBM_WATSON_CRED_URL,
+    TEMP_DOWNLOAD_DIRECTORY,
+    client,
+)
 from tg_bot.events import register
 
 
@@ -57,7 +63,7 @@ async def _(event):
             headers = {
                 "Content-Type": previous_message.media.document.mime_type,
             }
-            data = open(required_file_name, "rb").read()
+            data = open(required_file_name, "rb").read()  # pylint: disable=PTC-W0010
             response = requests.post(
                 IBM_WATSON_CRED_URL + "/v1/recognize",
                 headers=headers,

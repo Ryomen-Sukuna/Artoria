@@ -1,14 +1,14 @@
 from emoji import UNICODE_EMOJI
 from google_trans_new import LANGUAGES, google_translator
-from telegram import Update, ParseMode
-from telegram.ext import run_async, CallbackContext
+from telegram import ParseMode, Update
+from telegram.ext import CallbackContext, run_async
 
 from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 
 @run_async
-def totranslate(update: Update, context: CallbackContext):
+def totranslate(update: Update, _):
     message = update.effective_message
     problem_lang_code = [key for key in LANGUAGES if "-" in key]
     try:

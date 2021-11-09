@@ -3,9 +3,9 @@ from asyncio import sleep
 from telethon import events
 from telethon.errors import ChatAdminRequiredError, UserAdminInvalidError
 from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins
+from telethon.tl.types import ChannelParticipantsAdmins, ChatBannedRights
 
-from tg_bot import client, OWNER_ID, DEV_USERS, SUDO_USERS, SUPPORT_USERS
+from tg_bot import DEV_USERS, OWNER_ID, SUDO_USERS, SUPPORT_USERS, client
 
 # =================== CONSTANT ===================
 

@@ -3,33 +3,39 @@ import re
 from typing import Optional
 
 import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User
-from telegram import Message, Chat
+from telegram import (
+    Chat,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
+    User,
+)
 from telegram.error import BadRequest
 from telegram.ext import (
-    CommandHandler,
-    run_async,
-    DispatcherHandlerStop,
-    MessageHandler,
-    Filters,
     CallbackQueryHandler,
+    CommandHandler,
+    DispatcherHandlerStop,
+    Filters,
+    MessageHandler,
+    run_async,
 )
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.rules_sql as rules_sql
-from tg_bot import dispatcher, REDIS, SUPPORT_CHAT
+from tg_bot import REDIS, SUPPORT_CHAT, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
-    is_user_admin,
     bot_admin,
-    user_admin,
     can_restrict,
+    is_user_admin,
+    user_admin,
 )
 from tg_bot.modules.helper_funcs.extraction import (
     extract_text,
-    extract_user_and_text,
     extract_user,
+    extract_user_and_text,
 )
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.misc import split_message
@@ -573,26 +579,26 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- If you're looking for a way to automatically warn users when they say certain things, use the /addwarn command.
- An example of setting multiword warns filter:
- - `/addwarn "very angry" This is an angry user`
- This will automatically warn a user that triggers "very angry", with reason of 'This is an angry user'.
- An example of how to set a new multiword warning:
+If you're looking for a way to automatically warn users when they say certain things, use the /addwarn command.
+An example of setting multiword warns filter:
+- `/addwarn "very angry" This is an angry user`
+This will automatically warn a user that triggers "very angry", with reason of 'This is an angry user'.
+An example of how to set a new multiword warning:
 `/warn @user Because warning is fun`
 
- - /warns <userhandle>: Gets a user's number, and reason, of warnings.
- - /warnlist: Lists all current warning filters
+- /warns <userhandle>: Gets a user's number, and reason, of warnings.
+- /warnlist: Lists all current warning filters
 
 *Admin only:*
- - /warn <userhandle>: Warns a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
- - /resetwarn <userhandle>: Resets the warnings for a user. Can also be used as a reply.
- - /rmwarn <userhandle>: Removes latest warn for a user. It also can be used as reply.
- - /unwarn <userhandle>: Same as /rmwarn
- - /addwarn <keyword> <reply message>: Sets a warning filter on a certain keyword. If you want your keyword to \
+- /warn <userhandle>: Warns a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
+- /resetwarn <userhandle>: Resets the warnings for a user. Can also be used as a reply.
+- /rmwarn <userhandle>: Removes latest warn for a user. It also can be used as reply.
+- /unwarn <userhandle>: Same as /rmwarn
+- /addwarn <keyword> <reply message>: Sets a warning filter on a certain keyword. If you want your keyword to \
 be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
- - /nowarn <keyword>: Stops a warning filter
- - /warnlimit <num>: Sets the warning limit
- - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
+- /nowarn <keyword>: Stops a warning filter
+- /warnlimit <num>: Sets the warning limit
+- /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
 """
 
 __mod_name__ = "Warnings"

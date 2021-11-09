@@ -10,7 +10,7 @@ FILENAME = __name__.rsplit(".", 1)[-1]
 if is_module_loaded(FILENAME):
     from telegram import ParseMode, Update
     from telegram.error import BadRequest, Unauthorized
-    from telegram.ext import CommandHandler, JobQueue, run_async
+    from telegram.ext import CommandHandler, run_async
     from telegram.utils.helpers import escape_markdown
 
     from tg_bot import EVENT_LOGS, LOGGER, dispatcher
@@ -19,18 +19,8 @@ if is_module_loaded(FILENAME):
 
     def loggable(func):
         @wraps(func)
-        def log_action(
-            update: Update,
-            context: CallbackContext,
-            job_queue: JobQueue = None,
-            *args,
-            **kwargs,
-        ):
-            if not job_queue:
-                result = func(update, context, *args, **kwargs)
-            else:
-                result = func(update, context, job_queue, *args, **kwargs)
-
+        def log_action(update, context, *args, **kwargs):
+            result = func(update, context, *args, **kwargs)
             chat = update.effective_chat
             message = update.effective_message
 

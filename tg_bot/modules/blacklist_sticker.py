@@ -1,7 +1,7 @@
 import html
 from typing import Optional
 
-from telegram import Chat, Message, ParseMode, User, ChatPermissions
+from telegram import Chat, ChatPermissions, Message, ParseMode, User
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, MessageHandler
 from telegram.ext.dispatcher import run_async
@@ -59,7 +59,7 @@ def blackliststicker(update, context):
                 parse_mode=ParseMode.HTML,
             )
             return
-    send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
+    send_message(msg, text, parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -70,7 +70,6 @@ def add_blackliststicker(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     words = msg.text.split(None, 1)
-    bot = context.bot
     conn = connected(bot, update, chat, user.id)
     if conn:
         chat_id = conn
@@ -89,7 +88,7 @@ def add_blackliststicker(update, context):
         added = 0
         for trigger in to_blacklist:
             try:
-                get = bot.getStickerSet(trigger)
+                bot.getStickerSet(trigger)
                 sql.add_to_stickers(chat_id, trigger.lower())
                 added += 1
             except BadRequest:
@@ -125,7 +124,7 @@ def add_blackliststicker(update, context):
             send_message(update.effective_message, "Sticker is invalid!")
             return
         try:
-            get = bot.getStickerSet(trigger)
+            bot.getStickerSet(trigger)
             sql.add_to_stickers(chat_id, trigger.lower())
             added += 1
         except BadRequest:
@@ -160,7 +159,6 @@ def unblackliststicker(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     words = msg.text.split(None, 1)
-    bot = context.bot
     conn = connected(bot, update, chat, user.id)
     if conn:
         chat_id = conn
@@ -261,14 +259,12 @@ def blacklist_mode(update, context):
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
-        if update.effective_message.chat.type == "private":
-            send_message(
-                update.effective_message, "You can do this command in groups, not PM"
-            )
+        if msg.chat.type == "private":
+            send_message(msg, "You can do this command in groups, not PM")
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
-        chat_name = update.effective_message.chat.title
+        chat_name = msg.chat.title
 
     if args:
         if args[0].lower() in ["off", "nothing", "no"]:
@@ -291,23 +287,27 @@ def blacklist_mode(update, context):
             sql.set_blacklist_strength(chat_id, 5, "0")
         elif args[0].lower() == "tban":
             if len(args) == 1:
-                teks = """It looks like you are trying to set a temporary value to blacklist, but has not determined the time; use `/blstickermode tban <timevalue>`.
-                                              Examples of time values: 4m = 4 minute, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
-                send_message(update.effective_message, teks, parse_mode="markdown")
+                teks = """It looks like you are trying to set a temporary value to blacklist, but has not determined \
+                the time; use `/blstickermode tban <timevalue>`. Examples of time values: \
+                4m = 4 minute, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+                """
+                send_message(msg, teks, parse_mode="markdown")
                 return
             settypeblacklist = "temporary banned for {}".format(args[1])
             sql.set_blacklist_strength(chat_id, 6, str(args[1]))
         elif args[0].lower() == "tmute":
             if len(args) == 1:
-                teks = """It looks like you are trying to set a temporary value to blacklist, but has not determined the time; use `/blstickermode tmute <timevalue>`.
-                                              Examples of time values: 4m = 4 minute, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
-                send_message(update.effective_message, teks, parse_mode="markdown")
+                teks = """It looks like you are trying to set a temporary value to blacklist, but has not determined\
+                 the time; use `/blstickermode tmute <timevalue>`. Examples of time values: \
+                 4m = 4 minute, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks.
+                 """
+                send_message(msg, teks, parse_mode="markdown")
                 return
             settypeblacklist = "temporary muted for {}".format(args[1])
             sql.set_blacklist_strength(chat_id, 7, str(args[1]))
         else:
             send_message(
-                update.effective_message,
+                msg,
                 "I only understand off/del/warn/ban/kick/mute/tban/tmute!",
             )
             return
@@ -362,7 +362,6 @@ def blacklist_mode(update, context):
 @run_async
 @user_not_admin
 def del_blackliststicker(update, context):
-    bot = context.bot
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user
@@ -397,7 +396,7 @@ def del_blackliststicker(update, context):
                         ),
                         message,
                         update.effective_user,
-                        conn=False,
+                        # conn=False,
                     )
                     return
                 elif getmode == 3:
@@ -485,7 +484,7 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
+def __chat_settings__(chat_id, _):
     blacklisted = sql.num_stickers_chat_filters(chat_id)
     return "There are `{} `blacklisted stickers.".format(blacklisted)
 

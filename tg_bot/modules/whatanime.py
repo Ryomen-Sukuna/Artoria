@@ -119,17 +119,17 @@ async def whatanime(c: Client, m: Message):
 
             async def _send_preview():
                 url = f"https://media.trace.moe/video/{anilist_id}/{urlencode(filename)}?t={at_time}&token={tokenthumb}"
-                with tempfile.NamedTemporaryFile() as file:
-                    async with session.get(url) as resp:
+                with tempfile.NamedTemporaryFile() as fil:
+                    async with session.get(url) as res:
                         while True:
-                            chunk = await resp.content.read(10)
+                            chunk = await res.content.read(10)
                             if not chunk:
                                 break
-                            file.write(chunk)
-                    file.seek(0)
+                            fil.write(chunk)
+                    fil.seek(0)
                     try:
                         await reply.reply_video(
-                            file.name, caption=f"{from_time} - {to_time}"
+                            fil.name, caption=f"{from_time} - {to_time}"
                         )
                     except Exception:
                         await reply.reply_text("Cannot send preview :/")

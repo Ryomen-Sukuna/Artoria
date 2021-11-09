@@ -6,28 +6,41 @@ import traceback
 from sys import argv
 from typing import Optional
 
-from telegram import Message, Chat, User, Update
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CallbackContext
-from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
-from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
+from telegram import (
+    Chat,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
+    Update,
+    User,
+)
+from telegram.error import BadRequest
+from telegram.ext import (
+    CallbackContext,
+    CallbackQueryHandler,
+    CommandHandler,
+    Filters,
+    MessageHandler,
+)
+from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
 
 from tg_bot import (
-    dispatcher,
-    updater,
-    TOKEN,
-    OWNER_ID,
-    WEBHOOK,
-    SUPPORT_CHAT,
-    CERT_PATH,
-    PORT,
-    URL,
-    LOGGER,
     BLACKLIST_CHATS,
+    CERT_PATH,
+    LOGGER,
+    OWNER_ID,
+    PORT,
+    SUPPORT_CHAT,
+    TOKEN,
+    URL,
+    WEBHOOK,
     WHITELIST_CHATS,
-    pbot,
     client,
+    dispatcher,
+    pbot,
+    updater,
 )
 
 # needed to dynamically load modules
@@ -306,7 +319,6 @@ def get_help(update, context):
 
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
-
         update.effective_message.reply_text(
             "Click the button below to get help manu in your pm.",
             reply_markup=InlineKeyboardMarkup(
@@ -328,7 +340,7 @@ def get_help(update, context):
         )
         return
 
-    elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
+    if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = (
             "Here is the available help for the *{}* module:\n".format(
@@ -567,7 +579,7 @@ def is_chat_allowed(update, context):
                 context.bot.leave_chat(chat_id)
             finally:
                 raise DispatcherHandlerStop
-    if len(WHITELIST_CHATS) != 0 and len(BLACKLIST_CHATS) != 0:
+    if 0 not in (len(WHITELIST_CHATS), len(BLACKLIST_CHATS)):
         chat_id = update.effective_message.chat_id
         if chat_id in BLACKLIST_CHATS:
             context.bot.send_message(
@@ -630,7 +642,7 @@ def main():
 
 
 if __name__ == "__main__":
-    LOGGER.info("Successfully loaded modules: ", str(ALL_MODULES))
+    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     client.start(bot_token=TOKEN)
     pbot.start()
     main()

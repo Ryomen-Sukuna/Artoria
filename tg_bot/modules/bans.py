@@ -1,21 +1,21 @@
 import html
 
-from telegram import Chat, User, ParseMode
+from telegram import Chat, ParseMode, User
 from telegram.error import BadRequest
-from telegram.ext import run_async, CommandHandler, Filters
+from telegram.ext import CommandHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, LOGGER
+from tg_bot import LOGGER, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.admin_rights import user_can_ban
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
     bot_admin,
-    user_admin,
-    is_user_ban_protected,
     can_restrict,
     is_user_admin,
+    is_user_ban_protected,
     is_user_in_chat,
+    user_admin,
 )
 from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
 from tg_bot.modules.helper_funcs.string_handling import extract_time
@@ -407,16 +407,17 @@ __help__ = """
 Some people need to be publicly banned; spammers, annoyances, or just trolls.
 This module allows you to do that easily, by exposing some common actions, so everyone will see!
 
- - /kickme: Kicks the user who issued the command
- - /banme: Bans the user who issued the command
+- /kickme: Kicks the user who issued the command
+- /banme: Bans the user who issued the command
+
 *Admin only:*
- - /ban <userhandle>: Bans a user. (via handle, or reply)
- - /tban <userhandle> x(m/h/d): Bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unban <userhandle>: Unbans a user. (via handle, or reply)
- - /kick <userhandle>: Kicks a user, (via handle, or reply)
- - /mute <userhandle>: Silences a user. Can also be used as a reply, muting the replied to user.
- - /tmute <userhandle> x(m/h/d): Mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unmute <userhandle>: Unmutes a user. Can also be used as a reply, muting the replied to user. 
+- /ban <userhandle>: Bans a user. (via handle, or reply)
+- /tban <userhandle> x(m/h/d): Bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+- /unban <userhandle>: Unbans a user. (via handle, or reply)
+- /kick <userhandle>: Kicks a user, (via handle, or reply)
+- /mute <userhandle>: Silences a user. Can also be used as a reply, muting the replied to user.
+- /tmute <userhandle> x(m/h/d): Mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+- /unmute <userhandle>: Unmutes a user. Can also be used as a reply, muting the replied to user. 
 
 An example of temporarily banning someone:
 `/tban @username 2h`; this bans a user for 2 hours.

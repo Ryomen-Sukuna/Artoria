@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import OWNER_ID, SUDO_USERS, REDIS, dispatcher
+from tg_bot import REDIS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 info_btn = "More Information"
@@ -184,13 +184,11 @@ def airing(update, context):
 @run_async
 def anime(update, context):
     message = update.effective_message
-    user = update.effective_user
     search = message.text.split(" ", 1)
     if len(search) == 1:
         update.effective_message.reply_text("Format : /anime < anime name >")
         return
-    else:
-        search = search[1]
+    search = search[1]
     variables = {"search": search}
     json = requests.post(
         url, json={"query": anime_query, "variables": variables}
@@ -211,7 +209,6 @@ def anime(update, context):
         anime_name_w = f"{json['title']['romaji']}"
         info = json.get("siteUrl")
         trailer = json.get("trailer", None)
-        anime_id = json["id"]
         if trailer:
             trailer_id = trailer.get("id", None)
             site = trailer.get("site", None)
@@ -402,7 +399,7 @@ def user(update, context):
     jikan = jikanpy.jikan.Jikan()
 
     try:
-        user = jikan.user(search_query)
+        us = jikan.user(search_query)
     except jikanpy.APIException:
         update.effective_message.reply_text("Username not found.")
         return
@@ -413,22 +410,22 @@ def user(update, context):
     if user["image_url"] is None:
         img = "https://cdn.myanimelist.net/images/questionmark_50.gif"
     else:
-        img = user["image_url"]
+        img = us["image_url"]
 
     try:
-        user_birthday = datetime.datetime.fromisoformat(user["birthday"])
+        user_birthday = datetime.datetime.fromisoformat(us["birthday"])
         user_birthday_formatted = user_birthday.strftime(date_format)
     except:
         user_birthday_formatted = "Unknown"
 
-    user_joined_date = datetime.datetime.fromisoformat(user["joined"])
+    user_joined_date = datetime.datetime.fromisoformat(us["joined"])
     user_joined_date_formatted = user_joined_date.strftime(date_format)
 
-    for entity in user:
-        if user[entity] is None:
-            user[entity] = "Unknown"
+    for entity in us:
+        if us[entity] is None:
+            us[entity] = "Unknown"
 
-    about = user["about"].split(" ", 60)
+    about = us["about"].split(" ", 60)
 
     try:
         about.pop(60)
@@ -442,19 +439,19 @@ def user(update, context):
 
     caption += textwrap.dedent(
         f"""
-    *Username*: [{user['username']}]({user['url']})
-    *Gender*: `{user['gender']}`
+    *Username*: [{us['username']}]({us['url']})
+    *Gender*: `{us['gender']}`
     *Birthday*: `{user_birthday_formatted}`
     *Joined*: `{user_joined_date_formatted}`
-    *Days wasted watching anime*: `{user['anime_stats']['days_watched']}`
-    *Days wasted reading manga*: `{user['manga_stats']['days_read']}`
+    *Days wasted watching anime*: `{us['anime_stats']['days_watched']}`
+    *Days wasted reading manga*: `{us['manga_stats']['days_read']}`
     """
     )
 
     caption += f"*About*: {about_string}"
 
     buttons = [
-        [InlineKeyboardButton(info_btn, url=user["url"])],
+        [InlineKeyboardButton(info_btn, url=us["url"])],
         [
             InlineKeyboardButton(
                 close_btn, callback_data=f"anime_close, {message.from_user.id}"
@@ -475,12 +472,12 @@ def user(update, context):
 @run_async
 def upcoming(update, context):
     jikan = jikanpy.jikan.Jikan()
-    upcoming = jikan.top("anime", page=1, subtype="upcoming")
+    upcomin = jikan.top("anime", page=1, subtype="upcoming")
 
-    upcoming_list = [entry["title"] for entry in upcoming["top"]]
+    upcoming_list = [entry["title"] for entry in upcomin["top"]]
     upcoming_message = ""
 
-    for entry_num in range(len(upcoming_list)):
+    for entry_num, _ in enumerate(upcoming_list):
         if entry_num == 10:
             break
         upcoming_message += f"{entry_num + 1}. {upcoming_list[entry_num]}\n"
@@ -490,25 +487,24 @@ def upcoming(update, context):
 
 @run_async
 def watchlist(update, context):
-    chat = update.effective_chat
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
-    watchlist = list(REDIS.sunion(f"anime_watch_list{user.id}"))
-    watchlist.sort()
-    watchlist = "\n• ".join(watchlist)
-    if watchlist:
+    watchlis = list(REDIS.sunion(f"anime_watch_list{us.id}"))
+    watchlis.sort()
+    watchlis = "\n• ".join(watchlis)
+    if watchlis:
         message.reply_text(
             "{}<b>'s Watchlist:</b>"
-            "\n• {}".format(mention_html(user.id, user.first_name), watchlist),
+            "\n• {}".format(mention_html(us.id, us.first_name), watchlis),
             parse_mode=ParseMode.HTML,
         )
     else:
-        message.reply_text("You havn't added anything in your watchlist!")
+        message.reply_text("You haven't added anything in your watchlist!")
 
 
 @run_async
 def removewatchlist(update, context):
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
     removewlist = message.text.split(" ", 1)
     args = context.args
@@ -516,10 +512,10 @@ def removewatchlist(update, context):
     if not query:
         message.reply_text("Please enter a anime name to remove from your watchlist.")
         return
-    watchlist = list(REDIS.sunion(f"anime_watch_list{user.id}"))
+    watchlis = list(REDIS.sunion(f"anime_watch_list{us.id}"))
     removewlist = removewlist[1]
 
-    if removewlist not in watchlist:
+    if removewlist not in watchlis:
         message.reply_text(
             f"<code>{removewlist}</code> doesn't exist in your watch list.",
             parse_mode=ParseMode.HTML,
@@ -529,32 +525,31 @@ def removewatchlist(update, context):
             f"<code>{removewlist}</code> has been removed from your watch list.",
             parse_mode=ParseMode.HTML,
         )
-        REDIS.srem(f"anime_watch_list{user.id}", removewlist)
+        REDIS.srem(f"anime_watch_list{us.id}", removewlist)
 
 
 @run_async
 def fvrtchar(update, context):
-    chat = update.effective_chat
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
-    fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{user.id}"))
+    fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{us.id}"))
     fvrt_char.sort()
     fvrt_char = "\n• ".join(fvrt_char)
     if fvrt_char:
         message.reply_text(
             "{}<b>'s Favorite Characters List:</b>"
-            "\n• {}".format(mention_html(user.id, user.first_name), fvrt_char),
+            "\n• {}".format(mention_html(us.id, us.first_name), fvrt_char),
             parse_mode=ParseMode.HTML,
         )
     else:
         message.reply_text(
-            "You havn't added anything in your favorite characters list!"
+            "You haven't added anything in your favorite characters list!"
         )
 
 
 @run_async
 def removefvrtchar(update, context):
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
     removewlist = message.text.split(" ", 1)
     args = context.args
@@ -564,7 +559,7 @@ def removefvrtchar(update, context):
             "Please enter a your favorite character name to remove from your favorite characters list."
         )
         return
-    fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{user.id}"))
+    fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{us.id}"))
     removewlist = removewlist[1]
 
     if removewlist not in fvrt_char:
@@ -577,30 +572,29 @@ def removefvrtchar(update, context):
             f"<code>{removewlist}</code> has been removed from your favorite characters list.",
             parse_mode=ParseMode.HTML,
         )
-        REDIS.srem(f"anime_fvrtchar{user.id}", removewlist)
+        REDIS.srem(f"anime_fvrtchar{us.id}", removewlist)
 
 
 @run_async
 def readmanga(update, context):
-    chat = update.effective_chat
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
-    manga_list = list(REDIS.sunion(f"anime_mangaread{user.id}"))
+    manga_list = list(REDIS.sunion(f"anime_mangaread{us.id}"))
     manga_list.sort()
     manga_list = "\n• ".join(manga_list)
     if manga_list:
         message.reply_text(
             "{}<b>'s Manga Lists:</b>"
-            "\n• {}".format(mention_html(user.id, user.first_name), manga_list),
+            "\n• {}".format(mention_html(us.id, us.first_name), manga_list),
             parse_mode=ParseMode.HTML,
         )
     else:
-        message.reply_text("You havn't added anything in your manga list!")
+        message.reply_text("You haven't added anything in your manga list!")
 
 
 @run_async
 def removemangalist(update, context):
-    user = update.effective_user
+    us = update.effective_user
     message = update.effective_message
     removewlist = message.text.split(" ", 1)
     args = context.args
@@ -608,7 +602,7 @@ def removemangalist(update, context):
     if not query:
         message.reply_text("Please enter a manga name to remove from your manga list.")
         return
-    fvrt_char = list(REDIS.sunion(f"anime_mangaread{user.id}"))
+    fvrt_char = list(REDIS.sunion(f"anime_mangaread{us.id}"))
     removewlist = removewlist[1]
 
     if removewlist not in fvrt_char:
@@ -621,19 +615,20 @@ def removemangalist(update, context):
             f"<code>{removewlist}</code> has been removed from your favorite characters list.",
             parse_mode=ParseMode.HTML,
         )
-        REDIS.srem(f"anime_mangaread{user.id}", removewlist)
+        REDIS.srem(f"anime_mangaread{us.id}", removewlist)
 
 
+# pylint: disable=PYL-E0602
 def animestuffs(update, context):
     query = update.callback_query
-    user = update.effective_user
+    us = update.effective_user
     splitter = query.data.split("=")
     query_match = splitter[0]
     callback_anime_data = splitter[1]
     if query_match == "xanime_watchlist":
-        watchlist = list(REDIS.sunion(f"anime_watch_list{user.id}"))
-        if callback_anime_data not in watchlist:
-            REDIS.sadd(f"anime_watch_list{user.id}", callback_anime_data)
+        watchlis = list(REDIS.sunion(f"anime_watch_list{us.id}"))
+        if callback_anime_data not in watchlis:
+            REDIS.sadd(f"anime_watch_list{us.id}", callback_anime_data)
             context.bot.answer_callback_query(
                 query.id,
                 text=f"{callback_anime_data} is successfully added to your watch list.",
@@ -647,7 +642,7 @@ def animestuffs(update, context):
             )
 
     elif query_match == "xanime_fvrtchar":
-        fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{user.id}"))
+        fvrt_char = list(REDIS.sunion(f"anime_fvrtchar{us.id}"))
         if callback_anime_data not in fvrt_char:
             REDIS.sadd(f"anime_fvrtchar{user.id}", callback_anime_data)
             context.bot.answer_callback_query(
@@ -662,9 +657,9 @@ def animestuffs(update, context):
                 show_alert=True,
             )
     elif query_match == "xanime_manga":
-        fvrt_char = list(REDIS.sunion(f"anime_mangaread{user.id}"))
+        fvrt_char = list(REDIS.sunion(f"anime_mangaread{us.id}"))
         if callback_anime_data not in fvrt_char:
-            REDIS.sadd(f"anime_mangaread{user.id}", callback_anime_data)
+            REDIS.sadd(f"anime_mangaread{us.id}", callback_anime_data)
             context.bot.answer_callback_query(
                 query.id,
                 text=f"{callback_anime_data} is successfully added to your favorite character.",
@@ -678,6 +673,7 @@ def animestuffs(update, context):
             )
 
 
+"""
 def button(update, context):
     bot = context.bot
     query = update.callback_query
@@ -714,26 +710,27 @@ def button(update, context):
             progress_message.delete()
         else:
             query.answer("You are not allowed to use this.")
-
+"""
 
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
+
 *Available commands:*
- - /whatanime : search source of anime reply to photo or gif
- - /anime <anime>: returns information about the anime.
- - /character <character>: returns information about the character.
- - /manga <manga>: returns information about the manga.
- - /user <user>: returns information about a MyAnimeList user.
- - /upcoming: returns a list of new anime in the upcoming seasons.
- - /airing <anime>: returns anime airing info.
- - /quote : get random anime quote
- - /watchlist: to get your saved watchlist.
- - /mangalist: to get your saved manga read list.
- - /characterlist | fcl: to get your favorite characters list.
- - /removewatchlist | rwl <anime>: to remove a anime from your list.
- - /rfcharacter | rfcl <character>: to remove a character from your list.  
- - /rmanga | rml <manga>: to remove a manga from your list.
- """
+- /whatanime : search source of anime reply to photo or gif
+- /anime <anime>: returns information about the anime.
+- /character <character>: returns information about the character.
+- /manga <manga>: returns information about the manga.
+- /user <user>: returns information about a MyAnimeList user.
+- /upcoming: returns a list of new anime in the upcoming seasons.
+- /airing <anime>: returns anime airing info.
+- /quote : get random anime quote
+- /watchlist: to get your saved watchlist.
+- /mangalist: to get your saved manga read list.
+- /characterlist | fcl: to get your favorite characters list.
+- /removewatchlist | rwl <anime>: to remove a anime from your list.
+- /rfcharacter | rfcl <character>: to remove a character from your list.  
+- /rmanga | rml <manga>: to remove a manga from your list.
+"""
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
 AIRING_HANDLER = DisableAbleCommandHandler("airing", airing)
@@ -753,10 +750,10 @@ REMOVE_FVRT_CHAR_HANDLER = DisableAbleCommandHandler(
 REMOVE_MANGA_CHAR_HANDLER = DisableAbleCommandHandler(
     ["rmanga", "rml"], removemangalist
 )
-BUTTON_HANDLER = CallbackQueryHandler(button, pattern="anime_.*")
+# BUTTON_HANDLER = CallbackQueryHandler(button, pattern="anime_.*")
 ANIME_STUFFS_HANDLER = CallbackQueryHandler(animestuffs, pattern="xanime_.*")
 
-dispatcher.add_handler(BUTTON_HANDLER)
+# dispatcher.add_handler(BUTTON_HANDLER)
 dispatcher.add_handler(ANIME_STUFFS_HANDLER)
 dispatcher.add_handler(ANIME_HANDLER)
 dispatcher.add_handler(CHARACTER_HANDLER)

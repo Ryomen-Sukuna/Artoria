@@ -7,7 +7,7 @@ import urllib
 import emoji
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from fontTools.ttLib import TTFont
-from telethon.tl import types, functions
+from telethon.tl import functions, types
 
 from tg_bot.events import register
 
@@ -68,7 +68,6 @@ async def process(msg, user, client, reply, replied=None):
                     width = mono.getsize(line[:43])[0] + 30
                 else:
                     width = fallback.getsize(line[:43])[0]
-            next
         else:
             text.append(line + "\n")
             if width < fallback.getsize(line)[0]:
@@ -141,14 +140,16 @@ async def process(msg, user, client, reply, replied=None):
         # Creating a big canvas to gather all the elements
         replname = "" if not replied.sender.last_name else replied.sender.last_name
         reptot = replied.sender.first_name + " " + replname
-        replywidth = font2.getsize(reptot)[0]
+        font2.getsize(reptot)[0]
         if reply.sticker:
             sticker = await reply.download_media()
             stimg = Image.open(sticker)
             canvas = canvas.resize((stimg.width + pfpbg.width, stimg.height + 160))
             top = Image.new("RGBA", (200 + stimg.width, 300), (29, 29, 29, 255))
             draw = ImageDraw.Draw(top)
-            await replied_user(draw, reptot, replied.message.replace("\n", " "), 20)
+            await replied_user(
+                draw, reptot, replied.message.replace("\n", " "), 20
+            )  # pylint: disable=PYL-E1120
             top = top.crop((135, 70, top.width, 300))
             canvas.paste(pfpbg, (0, 0))
             canvas.paste(top, (pfpbg.width + 10, 0))
@@ -189,8 +190,8 @@ async def process(msg, user, client, reply, replied=None):
         os.remove(sticker)
         return True, canvas
     elif reply.document and not reply.audio:
-        docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
-        doctype = reply.document.attributes[-1].file_name.split(".")[-1].upper()
+        docname_ = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
+        doctype_ = reply.document.attributes[-1].file_name.split(".")[-1].upper()
         if reply.document.size < 1024:
             docsize = str(reply.document.size) + " Bytes"
         elif reply.document.size < 1048576:
@@ -201,8 +202,8 @@ async def process(msg, user, client, reply, replied=None):
             docsize = str(round(reply.document.size / 1024 ** 3, 2)) + " GB "
         docbglen = (
             font.getsize(docsize)[0]
-            if font.getsize(docsize)[0] > font.getsize(docname)[0]
-            else font.getsize(docname)[0]
+            if font.getsize(docsize)[0] > font.getsize(docname_)[0]
+            else font.getsize(docname_)[0]
         )
         canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
         top, middle, bottom = await drawer(width + docbglen, height + 30)
@@ -210,7 +211,7 @@ async def process(msg, user, client, reply, replied=None):
         canvas.paste(top, (pfpbg.width, 0))
         canvas.paste(middle, (pfpbg.width, top.height))
         canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-        canvas = await doctype(docname, docsize, doctype, canvas)
+        canvas = await doctype_(docname_, docsize, doctype_, canvas)
         y = 80 if text else 0
     else:
         canvas.paste(pfpbg, (0, 0))
@@ -243,7 +244,6 @@ async def process(msg, user, client, reply, replied=None):
     # Writing all separating emojis and regular texts
     x = pfpbg.width + 30
     bold, mono, italic, link = await get_entity(reply)
-    mdlength = 0
     index = 0
     emojicount = 0
     textfallback = ImageFont.truetype("resources/Quivira.otf", 33, encoding="utf-16")
@@ -342,7 +342,7 @@ async def get_entity(msg):
     return bold, mono, italic, link
 
 
-async def doctype(name, size, type, canvas):
+async def doctype(name, size, canvas):
     font = ImageFont.truetype("resources/Roboto-Medium.ttf", 38)
     doc = Image.new("RGBA", (130, 130), (29, 29, 29, 255))
     draw = ImageDraw.Draw(doc)
@@ -381,11 +381,8 @@ async def emoji_fetch(emoji):
         return await transparent(
             urllib.request.urlretrieve(img, "resources/emoji.png")[0]
         )
-    else:
-        img = emojis["⛔"]
-        return await transparent(
-            urllib.request.urlretrieve(img, "resources/emoji.png")[0]
-        )
+    img = emojis["⛔"]
+    return await transparent(urllib.request.urlretrieve(img, "resources/emoji.png")[0])
 
 
 async def transparent(emoji):

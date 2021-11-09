@@ -6,18 +6,20 @@ from typing import Optional
 
 from telegram import (
     MAX_MESSAGE_LENGTH,
-    ParseMode,
-    InlineKeyboardMarkup,
     InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
+    User,
+    Chat,
 )
-from telegram import Message
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import CallbackQueryHandler, CommandHandler, Filters, MessageHandler
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.notes_sql as sql
-from tg_bot import dispatcher, MESSAGE_DUMP, LOGGER
+from tg_bot import LOGGER, MESSAGE_DUMP, dispatcher
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
@@ -54,16 +56,13 @@ ENUM_FUNC_MAP = {
 
 # Do not async
 def get(bot, update, notename, show_none=True, no_format=False):
-    chat_id = update.effective_chat.id
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(bot, update, chat, user.id, need_admin=False)
     if conn:
         chat_id = conn
-        send_id = user.id
     else:
         chat_id = update.effective_chat.id
-        send_id = chat_id
 
     note = sql.get_note(chat_id, notename)
     message = update.effective_message  # type: Optional[Message]
@@ -310,7 +309,6 @@ def clear(update, context):
 @run_async
 @typing_action
 def list_notes(update, context):
-    chat_id = update.effective_chat.id
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
@@ -346,13 +344,14 @@ def list_notes(update, context):
             )
         except ValueError:
             update.effective_message.reply_text(
-                "There was a problem in showing notes list, maybe due to some invalid character in note names. Ask in @ElitesOfRobotbot if you're unable to figure it out!"
+                "There was a problem in showing notes list, maybe due to some invalid character in note names. Ask in "
+                "@ElitesOfRobotbot if you're unable to figure it out! "
             )
 
 
 @run_async
 @user_admin
-def clear_notes(update, context):
+def clear_notes(update, _):
     chat = update.effective_chat
     user = update.effective_user
     msg = update.effective_message
@@ -387,7 +386,7 @@ def clear_notes(update, context):
 
 @run_async
 @user_admin_no_reply
-def rmbutton(update, context):
+def rmbutton(update, _):
     query = update.callback_query
     userid = update.effective_user.id
     match = query.data.split("_")[1]
@@ -528,7 +527,7 @@ def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(chat_id, user_id):
+def __chat_settings__(chat_id, _):
     notes = sql.get_all_chat_notes(chat_id)
     return "There are `{}` notes in this chat.".format(len(notes))
 
@@ -538,33 +537,34 @@ Save data for future users with notes!
 
 Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
 
- - /get <notename>: Get the note with this notename
- - #<notename>: Same as /get
- - /notes or /saved: Lists all saved notes in the chat
+- /get <notename>: Get the note with this notename
+- #<notename>: Same as /get
+- /notes or /saved: Lists all saved notes in the chat
 
 If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \
 be useful when updating a current note.
 
 *Admin only:*
- - /save <notename> <notedata>: Saves notedata as a note with name notename
+- /save <notename> <notedata>: Saves notedata as a note with name notename
 A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
 `buttonurl:` section, as such: `[somelink](buttonurl:example.com)`. Check /markdownhelp for more info.
- - /save <notename>: Saves the replied message as a note with name notename
- - /clear <notename>: Clears note with this name
+- /save <notename>: Saves the replied message as a note with name notename
+- /clear <notename>: Clears note with this name
 
 *Chat creator only:*
- - /clearall: Clear all notes saved in chat at once.
+- /clearall: Clear all notes saved in chat at once.
 
  An example of how to save a note would be via:
 `/save Data This is some data!`
 
 Now, anyone using "/get notedata", or "#notedata" will be replied to with "This is some data!".
 
-If you want to save an image, gif, or sticker, or any other data, do the following:
-`/save notename` while replying to a sticker or whatever data you'd like. Now, the note at "#notename" contains a sticker which will be sent as a reply.
+If you want to save an image, gif, or sticker, or any other data, do the following: `/save notename` while replying 
+to a sticker or whatever data you'd like. Now, the note at "#notename" contains a sticker which will be sent as a 
+reply. 
 
-Tip: to retrieve a note without the formatting, use /get <notename> noformat
-This will retrieve the note and send it without formatting it; getting you the raw markdown, allowing you to make easy edits.
+Tip: to retrieve a note without the formatting, use /get <notename> noformat This will retrieve the note and send it 
+without formatting it; getting you the raw markdown, allowing you to make easy edits.
 """
 
 __mod_name__ = "Notes"

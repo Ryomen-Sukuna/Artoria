@@ -1,9 +1,9 @@
 from telegram import ParseMode
 from telegram.error import BadRequest
-from telegram.ext import run_async, Filters
+from telegram.ext import Filters, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, REDIS
+from tg_bot import REDIS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import typing_action
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin
@@ -14,7 +14,6 @@ from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
 @typing_action
 def approval(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -60,7 +59,6 @@ def approval(update, context):
 @typing_action
 def approve(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -108,7 +106,6 @@ def approve(update, context):
 @typing_action
 def unapprove(update, context):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     args = context.args
     user_id, reason = extract_user_and_text(message, args)
@@ -153,9 +150,8 @@ def unapprove(update, context):
 @bot_admin
 @user_admin
 @typing_action
-def approved(update, context):
+def approved(update, _):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     chat_id = str(chat.id)[1:]
     approved_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
@@ -178,9 +174,8 @@ def approved(update, context):
 @bot_admin
 @user_admin
 @typing_action
-def unapproveall(update, context):
+def unapproveall(update, _):
     chat = update.effective_chat
-    user = update.effective_user
     message = update.effective_message
     chat_id = str(chat.id)[1:]
     approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))

@@ -2,9 +2,9 @@ import telegram.ext as tg
 from pyrate_limiter import (
     BucketFullException,
     Duration,
-    RequestRate,
     Limiter,
     MemoryListBucket,
+    RequestRate,
 )
 from telegram import Update
 from telegram.ext import Filters

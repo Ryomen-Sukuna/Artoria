@@ -1,32 +1,40 @@
+import ast
 import html
+from typing import Optional
 
 from alphabet_detector import AlphabetDetector
-from telegram import Message, Chat, ParseMode, MessageEntity
-from telegram import TelegramError, ChatPermissions
+from telegram import (
+    Chat,
+    ChatPermissions,
+    Message,
+    MessageEntity,
+    ParseMode,
+    TelegramError,
+)
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, Filters, MessageHandler
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
 import tg_bot.modules.sql.locks_sql as sql
 from tg_bot import (
-    dispatcher,
-    OWNER_ID,
     DEV_USERS,
+    LOGGER,
+    OWNER_ID,
+    REDIS,
     SUDO_USERS,
     SUPPORT_USERS,
-    LOGGER,
-    REDIS,
+    dispatcher,
 )
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.alternate import send_message, typing_action
 from tg_bot.modules.helper_funcs.chat_status import (
     can_delete,
-    is_user_admin,
-    user_not_admin,
     is_bot_admin,
+    is_user_admin,
     user_admin,
+    user_not_admin,
 )
 from tg_bot.modules.log_channel import loggable
 
@@ -114,8 +122,8 @@ def restr_members(
 ):
     for mem in members:
         user = update.effective_user
-        approve_list = list(REDIS.sunion(f"approve_list_{chat_id}"))
-        target_user = mention_html(user.id, user.first_name)
+        list(REDIS.sunion(f"approve_list_{chat_id}"))
+        mention_html(user.id, user.first_name)
         try:
             bot.restrict_chat_member(
                 chat_id,
@@ -233,7 +241,7 @@ def lock(update, context) -> str:
                 context.bot.set_chat_permissions(
                     chat_id=chat_id,
                     permissions=get_permission_list(
-                        eval(str(current_permission)),
+                        ast.literal_eval(str(current_permission)),
                         LOCK_CHAT_RESTRICTION[ltype.lower()],
                     ),
                 )
@@ -335,7 +343,7 @@ def unlock(update, context) -> str:
                 context.bot.set_chat_permissions(
                     chat_id=chat_id,
                     permissions=get_permission_list(
-                        eval(str(current_permission)),
+                        ast.literal_eval(str(current_permission)),
                         UNLOCK_CHAT_RESTRICTION[ltype.lower()],
                     ),
                 )
@@ -369,7 +377,7 @@ def del_lockables(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
 
-    for lockable, filter in LOCK_TYPES.items():
+    for lockable, filt in LOCK_TYPES.items():
         if lockable == "rtl":
             if sql.is_locked(chat.id, lockable) and can_delete(chat, context.bot.id):
                 if message.caption:
@@ -420,7 +428,7 @@ def del_lockables(update, context):
                 break
             continue
         if (
-            filter(update)
+            filt(update)
             and sql.is_locked(chat.id, lockable)
             and can_delete(chat, context.bot.id)
         ):
@@ -567,12 +575,12 @@ You're in the right place!
 The locks module allows you to lock away some common items in the \
 telegram world; the bot will automatically delete them!
 
- - /locktypes: Lists all possible locktypes
+- /locktypes: Lists all possible locktypes
  
 *Admin only:*
- - /lock <type>: Lock items of a certain type (not available in private)
- - /unlock <type>: Unlock items of a certain type (not available in private)
- - /locks: The current list of locks in this chat.
+- /lock <type>: Lock items of a certain type (not available in private)
+- /unlock <type>: Unlock items of a certain type (not available in private)
+- /locks: The current list of locks in this chat.
  
 Locks can be used to restrict a group's users.
 eg:
@@ -581,8 +589,8 @@ non-admin users from sending stickers, etc.
 Locking bots will stop non-admins from adding bots to the chat.
 
 Note:
- • Unlocking permission *info* will allow members (non-admins) to change the group information, such as the description or the group name
- • Unlocking permission *pin* will allow members (non-admins) to pinned a message in a group
+• Unlocking permission *info* will allow members (non-admins) to change the group information, such as the description or the group name
+• Unlocking permission *pin* will allow members (non-admins) to pinned a message in a group
 """
 
 __mod_name__ = "Locks"

@@ -1,7 +1,7 @@
 import html
 
 import requests
-from telegram import Update, ParseMode
+from telegram import MessageEntity, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from telegram.ext.dispatcher import run_async
@@ -16,10 +16,10 @@ from tg_bot import (
     SUDO_USERS,
     SUPPORT_USERS,
     WHITELIST_USERS,
-    dispatcher,
     client,
+    dispatcher,
 )
-from tg_bot.__main__ import USER_INFO, TOKEN
+from tg_bot.__main__ import TOKEN, USER_INFO
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.extraction import extract_user, get_user
 from tg_bot.modules.sql.afk_sql import is_afk
@@ -86,7 +86,7 @@ def info(update: Update, context: CallbackContext):
         pass
 
     try:
-        status = status = bot.get_chat_member(chat.id, user.id).status
+        status = bot.get_chat_member(chat.id, user.id).status
         if status:
             if status in "left":
                 text += "\n∘ Chat Status: <em>Not Here!</em>"
@@ -139,7 +139,10 @@ def info(update: Update, context: CallbackContext):
         )
 
     elif user.id == bot.id:
-        text += "\n\nI've Seen Them In... Wow. Are They Stalking Me? They're In All The Same Places I Am... Oh. It's Me.\n"
+        text += (
+            "\n\nI've Seen Them In... Wow. Are They Stalking Me? They're In All The Same Places I Am... Oh. It's "
+            "Me.\n "
+        )
 
     text += "\n"
     text += "\nCAS banned: "
@@ -166,7 +169,7 @@ def info(update: Update, context: CallbackContext):
 
         message.reply_document(
             document=open(f"{user.id}.png", "rb"),
-            caption=(text),
+            caption=text,
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True,
         )
@@ -182,13 +185,12 @@ def info(update: Update, context: CallbackContext):
 @client.on(events.NewMessage(pattern="^[!/]id(?: |$)(.*)"))
 async def useridgetter(target):
     replied_user = await get_user(target)
-    user_id = target.from_id
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     username = replied_user.user.username
 
     first_name = (
-        first_name.replace("\u2060", "") if first_name else ("☠️ Deleted Account")
+        first_name.replace("\u2060", "") if first_name else "☠️ Deleted Account"
     )
     username = "@{}".format(username) if username else ("{}".format(first_name))
 

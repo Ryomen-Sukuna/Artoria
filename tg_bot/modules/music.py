@@ -6,8 +6,8 @@ import time
 from telethon.tl.types import DocumentAttributeAudio
 from youtube_dl import YoutubeDL
 from youtube_dl.utils import (
-    DownloadError,
     ContentTooShortError,
+    DownloadError,
     ExtractorError,
     GeoRestrictedError,
     MaxDownloadsReached,
@@ -47,9 +47,9 @@ async def download_video(v_url):
         url = q[0]["link"]
     except:
         return await rkp.edit("`failed to find`")
-    type = "audio"
+    zero = "audio"
     await rkp.edit("`Preparing to download...`")
-    if type == "audio":
+    if zero == "audio":
         opts = {
             "format": "best",
             "addmetadata": True,
@@ -143,13 +143,12 @@ async def download_video(v_url):
 
 
 __help__ = """
- *You can either enter just the song name or both the artist and song
-  name. *
+*You can either enter just the song name or both the artist and song
+name. *
 
-  /song <songname artist(optional)>: uploads the song in it's best quality available
-  /video <songname artist(optional)>: uploads the video song in it's best quality available
-  /lyrics <song>: returns the lyrics of that song.
-
+/song <songname artist(optional)>: uploads the song in it's best quality available
+/video <songname artist(optional)>: uploads the video song in it's best quality available
+/lyrics <song>: returns the lyrics of that song.
 """
 
 __mod_name__ = "Music"

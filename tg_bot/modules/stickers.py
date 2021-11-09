@@ -6,12 +6,17 @@ from html import escape
 import requests
 from PIL import Image
 from bs4 import BeautifulSoup as bs
-from telegram import TelegramError
-from telegram import Update, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import run_async, CallbackContext
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    ParseMode,
+    TelegramError,
+    Update,
+)
+from telegram.ext import CallbackContext, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, REDIS
+from tg_bot import REDIS, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
@@ -561,9 +566,7 @@ def delsticker(update, context):
 
 @run_async
 def add_fvrtsticker(update, context):
-    bot = context.bot
     message = update.effective_message
-    chat = update.effective_chat
     user = update.effective_user
     args = context.args
     query = " ".join(args)
@@ -594,7 +597,6 @@ def add_fvrtsticker(update, context):
 @run_async
 def list_fvrtsticker(update, context):
     message = update.effective_message
-    chat = update.effective_chat
     user = update.effective_user
     fvrt_stickers_list = REDIS.hvals(f"fvrt_stickers2_{user.id}")
     fvrt_stickers_list.sort()
@@ -613,7 +615,6 @@ def list_fvrtsticker(update, context):
 @run_async
 def remove_fvrtsticker(update, context):
     message = update.effective_message
-    chat = update.effective_chat
     user = update.effective_user
     args = context.args
     del_stick = " ".join(args)
