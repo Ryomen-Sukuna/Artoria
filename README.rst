@@ -33,6 +33,10 @@ Artoria
    :target: https://www.codacy.com/app/Ryomen-Sukuna/Artoria?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ryomen-Sukuna/Saber-Clone&amp;utm_campaign=Badge_Grade
    :alt: Codacy Badge
 
+.. image:: https://www.codefactor.io/repository/github/ryomen-sukuna/artoria/badge
+   :target: https://www.codefactor.io/repository/github/ryomen-sukuna/artoria
+   :alt: CodeFactor
+
 .. image:: https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg
    :target: https://GitHub.com/Ryomen-Sukuna/Artoria/graphs/contributors
    :alt: GitHub contributors
